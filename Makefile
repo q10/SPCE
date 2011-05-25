@@ -8,8 +8,8 @@ EXECUTABLE=SPCE
 all: $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
-        $(CC) $(LDFLAGS) $(OBJECTS) -o $@
-        rm -rf *.o
+	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
+	rm -rf *.o
 
 .cpp.o:
-        $(CC) $(CFLAGS) $< -o $@
+	$(CC) $(CFLAGS) $< -o $@
