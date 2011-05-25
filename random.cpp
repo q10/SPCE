@@ -1,0 +1,87 @@
+#include "common.h"
+
+const long MBIG = 1000000000;
+const long MSEED = time(NULL);
+const long MZ = 0;
+const double FAC = (1.0 / MBIG);
+double idum;
+
+double RAN3() {
+    static int inext, inextp;
+    static double ma[56];
+    static int iff = 0;
+    long mj, mk;
+    int i, ii, k;
+    if (idum < 0 || iff == 0) {
+        iff = 1;
+        mj = MSEED - (idum < 0 ? -idum : idum);
+        mj = mj % MBIG;
+        ma[55] = mj;
+        mk = 1;
+        for (i = 1; i <= 54; i++) {
+            ii = (21 * i) % 55;
+            ma[ii] = mk;
+            mk = mj - mk;
+            if (mk < MZ) {
+                mk += MBIG;
+            }
+            mj = ma[ii];
+        }
+        for (k = 1; k <= 4; k++)
+            for (i = 1; i <= 55; i++) {
+                ma[i] -= ma[1 + (i + 30) % 55];
+                if (ma[i] < MZ) {
+                    ma[i] += MBIG;
+                }
+            }
+        inext = 0;
+        inextp = 31;
+        idum = 1;
+    }
+    if (++inext == 56) inext = 1;
+    if (++inextp == 56) inextp = 1;
+    mj = ma[inext] - ma[inextp];
+    if (mj < MZ) {
+        mj += MBIG;
+    }
+    ma[inext] = mj;
+    return mj*FAC;
+
+}
+
+int RANDINT(int low, int high) {
+    return (int) (RAN3()*((double) high - low)) + low;
+}
+
+double min(double a, double b) {
+    return (a < b ? a : b);
+}
+
+/* The following two functions draw random numbers from a 
+ * Gaussian distribution with a set mean and standard deviation.
+ * Uses the Box-Mueller algorithm.
+ */
+
+double RANDGAUSS() {
+    return RANDGAUSS(0.0, 1.0);
+}
+
+double RANDGAUSS(double mean, double stdev) {
+    static int turn = 0;
+    static double x1, x2, r;
+
+    if (turn == 1) {
+        turn = 0;
+        return mean + x2 * r*stdev;
+    } else {
+        r = 1.0;
+        while (r >= 1.0) {
+            x1 = (2.0 * RAN3()) - 1.0;
+            x2 = (2.0 * RAN3()) - 1.0;
+            r = x1 * x1 + x2*x2;
+        }
+        r = sqrt(-2.0 * log(r) / r);
+        turn = 1;
+        return mean + x1 * r*stdev;
+    }
+}

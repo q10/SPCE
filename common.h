@@ -1,0 +1,39 @@
+/* 
+ * File:   common.h
+ * Author: BENSON J MA
+ *
+ * Created on May 25, 2011, 12:57 PM
+ */
+
+#pragma once
+#ifndef COMMON_H
+#define	COMMON_H
+
+#include <iostream>
+#include <fstream>
+#include <stdio.h>
+#include <cstdlib>
+#include <time.h>
+#include <math.h>
+#include <cmath>
+#include <string.h>
+#include <pthread.h>
+#include <string>
+#include <sstream>
+#include <vector>
+#include <iterator>
+#include <limits.h>
+#include <float.h>
+#include <stdarg.h>
+#include <iomanip>
+#include <algorithm>
+#include <valarray>
+#include <ctype.h>
+#include <stdlib.h>
+
+#include "random.h"
+
+using namespace std;
+
+#endif	/* COMMON_H */
+
