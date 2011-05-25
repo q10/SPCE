@@ -9,7 +9,7 @@
 
 int main(int argc, char** argv) {
     for(int i=0; i<100; i++)
-        cout<<RANDINT(100, 10000)<<endl;
+        cout<<RANDGAUSS(100.0, 2.0)<<endl;
     return 0;
 }
 
