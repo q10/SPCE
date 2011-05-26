@@ -14,11 +14,11 @@
 #define TEMPERATURE 1.0
 #define NUM_WATERS 108
 
-const double SIGMA = 2; // particle diameter
-const double DISPLACEMENT = 0.0034; // max random displacement distance 
-const int NUM_MC_STEPS = 200; // number of MC steps
+extern const double SIGMA; // particle diameter
+extern const double DISPLACEMENT; // max random displacement distance 
+extern const int NUM_MC_STEPS; // number of MC steps
 
-static double water_positions[NUM_WATERS][3];
-static double LJEnergy;
+extern double water_positions[NUM_WATERS][3];
+extern double LJEnergy;
 
 #endif	/* CONSTVARS_H */

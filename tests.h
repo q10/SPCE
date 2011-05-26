@@ -12,4 +12,3 @@
 void test_RANDGAUSS();
 
 #endif	/* TESTS_H */
-

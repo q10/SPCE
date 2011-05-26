@@ -15,4 +15,3 @@ double RANDGAUSS(double mean, double stdev);
 double RANDGAUSS();
 
 #endif	/* RANDOM_H */
-

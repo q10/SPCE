@@ -9,7 +9,10 @@
 
 int main(int argc, char** argv) {
     initialize();
+    cout<<LJEnergy<<endl;
     run_mc();
+    cout<<LJEnergy<<endl;
+    cout<<SIGMA<<endl;
     
     return 0;
 }
