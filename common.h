@@ -20,8 +20,6 @@
 #include <pthread.h>
 #include <string>
 #include <sstream>
-#include <vector>
-#include <iterator>
 #include <limits.h>
 #include <float.h>
 #include <stdarg.h>
@@ -30,10 +28,16 @@
 #include <valarray>
 #include <ctype.h>
 #include <stdlib.h>
+//#include <vector>
+//#include <iterator>
 
+#include "constvars.h"
+#include "tests.h"
 #include "random.h"
+#include "initializers.h"
+#include "energy.h"
+#include "mc.h"
 
 using namespace std;
 
 #endif	/* COMMON_H */
-

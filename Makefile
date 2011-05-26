@@ -1,7 +1,7 @@
 CC=g++
 CFLAGS=-c -Wall
 LDFLAGS=
-SOURCES=main.cpp random.cpp
+SOURCES=main.cpp random.cpp initializers.cpp energy.cpp mc.cpp tests.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=SPCE
 

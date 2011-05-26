@@ -53,7 +53,7 @@ int RANDINT(int low, int high) {
     return (int) (RAN3()*((double) high - low)) + low;
 }
 
-double min(double a, double b) {
+double MIN(double a, double b) {
     return (a < b ? a : b);
 }
 

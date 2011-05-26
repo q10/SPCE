@@ -8,8 +8,8 @@
 #include "common.h"
 
 int main(int argc, char** argv) {
-    for(int i=0; i<100; i++)
-        cout<<RANDGAUSS(100.0, 2.0)<<endl;
+    initialize();
+    run_mc();
+    
     return 0;
 }
-
