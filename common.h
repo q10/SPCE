@@ -28,10 +28,12 @@
 #include <valarray>
 #include <ctype.h>
 #include <stdlib.h>
+#include <getopt.h>
 //#include <vector>
 //#include <iterator>
 
 #include "constvars.h"
+#include "input.h"
 #include "tests.h"
 #include "random.h"
 #include "initializers.h"

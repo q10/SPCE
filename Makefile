@@ -1,7 +1,7 @@
 CC=g++
 CFLAGS=-c -Wall
 LDFLAGS=
-SOURCES=constvars.cpp main.cpp random.cpp initializers.cpp energy.cpp mc.cpp tests.cpp
+SOURCES=constvars.cpp main.cpp random.cpp input.cpp initializers.cpp energy.cpp mc.cpp tests.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=SPCE
 

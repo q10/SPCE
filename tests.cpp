@@ -20,3 +20,9 @@ void test_RANDGAUSS() {
 
     return;
 }
+
+void test_read_flags(int argc, char** argv) {
+    read_program_flags(argc, argv);
+    cout << TEMPERATURE << endl;
+    return;
+}

@@ -8,11 +8,13 @@
 #include "common.h"
 
 int main(int argc, char** argv) {
+    test_read_flags(argc, argv);
+    /*
     initialize();
     cout<<LJEnergy<<endl;
     run_mc();
     cout<<LJEnergy<<endl;
     cout<<SIGMA<<endl;
-    
+    */
     return 0;
 }
