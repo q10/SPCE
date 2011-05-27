@@ -17,10 +17,17 @@ typedef struct option program_flags_t;
 
 extern const program_flags_t PROGRAM_FLAGS[];
 extern double TEMPERATURE;
-extern const double SIGMA; // particle diameter
-extern const double WATER_EPSILON;
 extern const double DISPLACEMENT; // max random displacement distance 
 extern const int NUM_MC_CYCLES; // number of MC cycles to run
+
+// water properties
+extern const double WATER_SIGMA; // diameter
+extern const double WATER_EPSILON;
+extern const double WATER_DENSITY;
+
+// sampling
+extern const int DATA_SAMPLING_RATE;
+extern double * radial_dist_data;
 
 extern double water_positions[NUM_WATERS][3];
 extern double LJEnergy;

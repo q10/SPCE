@@ -11,6 +11,7 @@
 double RAN3 ();
 int RANDINT (int low, int high);
 double MIN(double a, double b);
+double ROUND(double d);
 double RANDGAUSS(double mean, double stdev);
 double RANDGAUSS();
 

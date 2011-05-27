@@ -15,6 +15,6 @@ int main(int argc, char** argv) {
     run_mc();
     cout<<LJEnergy<<endl;
     cout<<SIGMA<<endl;
-    */
+     */
     return 0;
 }

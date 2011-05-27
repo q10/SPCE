@@ -3,6 +3,7 @@
 void initialize() {
     LJEnergy = 0.0;
     initialize_water_positions_and_energies();
+    initialize_radial_dist_sampler();
     return;
 }
 

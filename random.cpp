@@ -57,6 +57,10 @@ double MIN(double a, double b) {
     return (a < b ? a : b);
 }
 
+double ROUND(double d) {
+    return floor(d + 0.5);
+}
+
 /* The following two functions draw random numbers from a 
  * Gaussian distribution with a set mean and standard deviation.
  * Uses the Box-Mueller algorithm.

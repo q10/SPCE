@@ -16,6 +16,10 @@ void run_mc() {
             for (int j = 0; j < 3; j++)
                 water_positions[rand_i][j] = tmp_old_position[j];
         }
+        
+        // data sampling
+        if (i % DATA_SAMPLING_RATE == 0)
+            radial_dist_sample();
     }
     return;
 }

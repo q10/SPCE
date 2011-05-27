@@ -23,10 +23,10 @@ void read_program_flags(int argc, char** argv) {
                     printf(" with arg %s", optarg);
                 printf("\n");
                 break;
-            case 't':
-                TEMPERATURE = atof(optarg);
-                break;
             case '?':
+                break;
+            case 'T':
+                TEMPERATURE = atof(optarg);
                 break;
             default:
                 break;

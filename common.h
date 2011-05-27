@@ -16,8 +16,8 @@
 #include <time.h>
 #include <math.h>
 #include <cmath>
-#include <string.h>
 #include <pthread.h>
+//#include <string.h>
 #include <string>
 #include <sstream>
 #include <limits.h>
@@ -34,11 +34,12 @@
 
 #include "constvars.h"
 #include "input.h"
-#include "tests.h"
 #include "random.h"
 #include "initializers.h"
 #include "energy.h"
 #include "mc.h"
+#include "radial_dist.h"
+#include "tests.h"
 
 using namespace std;
 
