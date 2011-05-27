@@ -16,6 +16,12 @@ void read_program_flags(int argc, char** argv) {
 
         switch (option) {
             case 0:
+                if (PROGRAM_FLAGS[options_i].flag != 0)
+                    break;
+                printf("option %s", PROGRAM_FLAGS[options_i].name);
+                if (optarg)
+                    printf(" with arg %s", optarg);
+                printf("\n");
                 break;
             case 't':
                 TEMPERATURE = atof(optarg);
@@ -23,7 +29,7 @@ void read_program_flags(int argc, char** argv) {
             case '?':
                 break;
             default:
-                abort();
+                break;
         }
     }
     return;
