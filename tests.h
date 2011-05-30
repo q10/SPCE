@@ -10,6 +10,6 @@
 #define	TESTS_H
 
 void test_RANDGAUSS();
-void test_read_flags(int argc, char** argv);
+void test_read_program_flags(int argc, char** argv);
 
 #endif	/* TESTS_H */

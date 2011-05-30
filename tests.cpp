@@ -17,12 +17,14 @@ void test_RANDGAUSS() {
     }
     for (int i = 0; i < 20; i++)
         cout << bins[i] << endl;
-
+    
     return;
 }
 
-void test_read_flags(int argc, char** argv) {
+void test_read_program_flags(int argc, char** argv) {
     read_program_flags(argc, argv);
-    cout << TEMPERATURE << endl;
+    cout << "System temperature: " << TEMPERATURE << endl;
+    cout << "Number of water particles: " << NUM_WATERS << endl;
+    cout << "Box length: " << BOX_LENGTH << endl;
     return;
 }

@@ -37,7 +37,7 @@ void compute_radial_dist_results() {
     double r, vb, nid;
     for (int i = 0; i < num_his_bars; i++) {
         r = delg * (i + 0.5);
-        vb = (pow(i + 1, 3) - pow(i, 3)) * pow(delg, 3);
+        vb = (pow(i + 1, 3.0) - pow(i, 3.0)) * pow(delg, 3.0);
         nid = (4 / 3) * M_PI * vb * WATER_DENSITY;
         radial_dist_data[i] /= num_gr * NUM_WATERS * nid;
     }

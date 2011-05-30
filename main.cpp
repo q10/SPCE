@@ -8,7 +8,9 @@
 #include "common.h"
 
 int main(int argc, char** argv) {
-    test_read_flags(argc, argv);
+    test_read_program_flags(argc, argv);
+    initialize();
+    test_RANDGAUSS();
     /*
     initialize();
     cout<<LJEnergy<<endl;
