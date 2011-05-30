@@ -28,6 +28,9 @@ void read_program_flags(int argc, char** argv) {
             case 'T':
                 TEMPERATURE = atof(optarg);
                 break;
+            case 'n':
+                NUM_WATERS = abs(atoi(optarg));
+                break;
             default:
                 break;
         }

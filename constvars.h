@@ -9,16 +9,17 @@
 #define	CONSTVARS_H
 
 #define BUF_SIZE 256
-#define BOX_LENGTH 5.0
 #define HALF_BOX_LENGTH BOX_LENGTH/2.0
-#define NUM_WATERS 108
 
 typedef struct option program_flags_t;
 
 extern const program_flags_t PROGRAM_FLAGS[];
-extern double TEMPERATURE;
 extern const double DISPLACEMENT; // max random displacement distance 
 extern const int NUM_MC_CYCLES; // number of MC cycles to run
+extern double TEMPERATURE;
+extern double BOX_LENGTH;
+extern int NUM_WATERS;
+
 
 // water properties
 extern const double WATER_SIGMA; // diameter
@@ -29,7 +30,7 @@ extern const double WATER_DENSITY;
 extern const int DATA_SAMPLING_RATE;
 extern double * radial_dist_data;
 
-extern double water_positions[NUM_WATERS][3];
+extern double ** water_positions;
 extern double LJEnergy;
 
 #endif	/* CONSTVARS_H */
