@@ -43,8 +43,8 @@ Example Usage:
 
 = Development:
 
-* Source hosted at {GitHub}[http://github.com/q10/SPCE].
-* Report issues on {GitHub Issues}[http://github.com/q10/SPCE/issues]
+* Source hosted at {GitHub}[https://github.com/q10/SPCE].
+* Report issues on {GitHub Issues}[https://github.com/q10/SPCE/issues]
 
 Pull requests are very welcome! Make sure your patches are well tested. Please 
 create a topic branch for every separate change you make.
@@ -52,4 +52,4 @@ create a topic branch for every separate change you make.
 = License:
 
 SPCE is licensed under the the New BSD License and may be freely redistributed 
-under the terms specified in the LICENSE file.
+under the terms specified in the {LICENSE}[https://github.com/q10/SPCE/blob/master/LICENSE] file.

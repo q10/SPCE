@@ -1,5 +1,11 @@
 #include "common.h"
 
+const program_flags_t PROGRAM_FLAGS[] = {
+    { "temp", required_argument, NULL, 'T'},
+    { "num_waters", required_argument, NULL, 'n'},
+    { NULL, no_argument, NULL, 0}
+};
+
 void read_program_flags(int argc, char** argv) {
     int option;
 

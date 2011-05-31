@@ -12,9 +12,6 @@
 #define BUF_SIZE 256
 #define HALF_BOX_LENGTH BOX_LENGTH/2.0
 
-typedef struct option program_flags_t;
-
-extern const program_flags_t PROGRAM_FLAGS[];
 extern const double DISPLACEMENT; // max random displacement distance 
 extern const int NUM_MC_CYCLES; // number of MC cycles to run
 extern const double BOLTZMANN_K;
@@ -31,8 +28,6 @@ extern const double WATER_DENSITY;
 // sampling
 extern const int EQUILIBRATION_TIME;
 extern const int DATA_SAMPLING_RATE;
-extern int radial_dist_num_his_bars;
-extern double * radial_dist_data;
 
 extern double ** water_positions;
 extern double LJEnergy;

@@ -9,6 +9,9 @@
 #ifndef INPUT_H
 #define	INPUT_H
 
+typedef struct option program_flags_t;
+extern const program_flags_t PROGRAM_FLAGS[];
+
 void read_program_flags(int argc, char** argv);
 
 #endif	/* INPUT_H */

@@ -1,11 +1,5 @@
 #include "common.h"
 
-const program_flags_t PROGRAM_FLAGS[] = {
-    { "temp", required_argument, NULL, 'T'},
-    { "num_waters", required_argument, NULL, 'n'},
-    { NULL, no_argument, NULL, 0}
-};
-
 const double DISPLACEMENT = 0.0034; // max random displacement distance in a direction
 const int NUM_MC_CYCLES = 200; // number of MC steps
 double TEMPERATURE = 300.0;
@@ -18,7 +12,7 @@ const double BOLTZMANN_K = 8.31447122; // units of J/(K*mol)
 
 double BOX_LENGTH; // in Angstroms
 
-extern const int EQUILIBRATION_TIME = 0;
+const int EQUILIBRATION_TIME = 0;
 const int DATA_SAMPLING_RATE = 10;
 
 double ** water_positions;
