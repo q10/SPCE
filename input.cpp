@@ -6,9 +6,10 @@ void read_program_flags(int argc, char** argv) {
     while (1) {
         /* getopt_long stores the option index here. */
         int options_i = 0;
+        char * argstr = "t:n:";
 
         // "abc:d:f:" means that a and b dont have args, while c, d, f do
-        option = getopt_long_only(argc, argv, "t:", PROGRAM_FLAGS, &options_i);
+        option = getopt_long_only(argc, argv, argstr, PROGRAM_FLAGS, &options_i);
 
         /* Detect the end of the options. */
         if (option == -1)
@@ -26,10 +27,12 @@ void read_program_flags(int argc, char** argv) {
             case '?':
                 break;
             case 'T':
-                TEMPERATURE = atof(optarg);
+                if (abs(atof(optarg)) > 0.0)
+                    TEMPERATURE = abs(atof(optarg));
                 break;
             case 'n':
-                NUM_WATERS = abs(atoi(optarg));
+                if (abs(atoi(optarg)) > 0)
+                    NUM_WATERS = abs(atoi(optarg));
                 break;
             default:
                 break;

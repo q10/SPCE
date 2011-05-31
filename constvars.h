@@ -16,6 +16,7 @@ typedef struct option program_flags_t;
 extern const program_flags_t PROGRAM_FLAGS[];
 extern const double DISPLACEMENT; // max random displacement distance 
 extern const int NUM_MC_CYCLES; // number of MC cycles to run
+extern const double BOLTZMANN_K;
 extern double TEMPERATURE;
 extern double BOX_LENGTH;
 extern int NUM_WATERS;

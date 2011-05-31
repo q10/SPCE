@@ -9,7 +9,12 @@
 #ifndef TESTS_H
 #define	TESTS_H
 
+void run_tests(int argc, char** argv);
 void test_RANDGAUSS();
 void test_read_program_flags(int argc, char** argv);
+void test_energy_of_water_with_index();
+void test_calculate_energy();
+void test_run_mc();
+void print_system_vars();
 
 #endif	/* TESTS_H */

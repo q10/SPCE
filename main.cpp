@@ -8,15 +8,11 @@
 #include "common.h"
 
 int main(int argc, char** argv) {
-    test_read_program_flags(argc, argv);
-    initialize();
-    test_RANDGAUSS();
+    run_tests(argc, argv);
     /*
-    initialize();
-    cout<<LJEnergy<<endl;
+    read_program_flags(argc, argv);
+    initialize();    
     run_mc();
-    cout<<LJEnergy<<endl;
-    cout<<SIGMA<<endl;
-     */
+    */
     return 0;
 }

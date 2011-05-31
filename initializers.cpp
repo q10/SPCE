@@ -23,5 +23,6 @@ void initialize_water_positions_and_energies() {
             water_positions[i][j] = RAN3() * BOX_LENGTH;
         }
     }
+    calculate_energy();
     return;
 }

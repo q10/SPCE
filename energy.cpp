@@ -3,16 +3,16 @@
 double energy_of_water_with_index(int index) {
     double dx, dy, dz, r, energy = 0.0;
     for (int i = 0; i < NUM_WATERS; i++) {
-        if (i == index)
-            continue;
-        dx = abs(water_positions[index][0] - water_positions[i][0]);
-        dy = abs(water_positions[index][1] - water_positions[i][1]);
-        dz = abs(water_positions[index][2] - water_positions[i][2]);
-        dx -= BOX_LENGTH * ROUND(dx / BOX_LENGTH);
-        dy -= BOX_LENGTH * ROUND(dy / BOX_LENGTH);
-        dz -= BOX_LENGTH * ROUND(dz / BOX_LENGTH);
-        r = WATER_SIGMA / sqrt(dx * dx + dy * dy + dz * dz);
-        energy += 4.0 * WATER_EPSILON * (pow(r, 12) - pow(r, 6));
+        if (i != index) {
+            dx = abs(water_positions[index][0] - water_positions[i][0]);
+            dy = abs(water_positions[index][1] - water_positions[i][1]);
+            dz = abs(water_positions[index][2] - water_positions[i][2]);
+            dx -= BOX_LENGTH * ROUND(dx / BOX_LENGTH);
+            dy -= BOX_LENGTH * ROUND(dy / BOX_LENGTH);
+            dz -= BOX_LENGTH * ROUND(dz / BOX_LENGTH);
+            r = WATER_SIGMA / sqrt(dx * dx + dy * dy + dz * dz);
+            energy += 4.0 * WATER_EPSILON * (pow(r, 12) - pow(r, 6));
+        }
     }
     return energy;
 }

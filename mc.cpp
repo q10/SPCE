@@ -1,6 +1,7 @@
 #include "common.h"
 
 void run_mc() {
+    double BETA = BOLTZMANN_K * TEMPERATURE;
     for (int i = 0; i < NUM_MC_CYCLES; i++) {
         int rand_i = RANDINT(0, NUM_WATERS);
         double old_energy_diff = energy_of_water_with_index(rand_i);
@@ -10,9 +11,10 @@ void run_mc() {
 
         // calculate difference from new energy and attempt to move particle with acceptance probability
         double new_energy_diff = energy_of_water_with_index(rand_i);
-        if (RAN3() < exp(-((new_energy_diff - old_energy_diff) / TEMPERATURE)))
+        if (RAN3() < exp(-((new_energy_diff - old_energy_diff) / BETA)))
             update_energy(old_energy_diff, new_energy_diff);
         else {
+            // undo move if move not accepted
             for (int j = 0; j < 3; j++)
                 water_positions[rand_i][j] = tmp_old_position[j];
         }
