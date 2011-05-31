@@ -5,6 +5,7 @@
  * Created on May 25, 2011, 4:50 PM
  */
 
+#pragma once
 #ifndef CONSTVARS_H
 #define	CONSTVARS_H
 
@@ -28,7 +29,9 @@ extern const double WATER_EPSILON;
 extern const double WATER_DENSITY;
 
 // sampling
+extern const int EQUILIBRATION_TIME;
 extern const int DATA_SAMPLING_RATE;
+extern int radial_dist_num_his_bars;
 extern double * radial_dist_data;
 
 extern double ** water_positions;

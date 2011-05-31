@@ -5,6 +5,7 @@
  * Created on May 27, 2011, 2:07 AM
  */
 
+#pragma once
 #ifndef RADIAL_DIST_H
 #define	RADIAL_DIST_H
 

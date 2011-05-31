@@ -20,7 +20,7 @@ void run_mc() {
         }
         
         // data sampling
-        if (i % DATA_SAMPLING_RATE == 0)
+        if (i > EQUILIBRATION_TIME && i % DATA_SAMPLING_RATE == 0)
             radial_dist_sample();
     }
     return;

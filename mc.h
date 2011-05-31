@@ -5,6 +5,7 @@
  * Created on May 26, 2011, 12:03 AM
  */
 
+#pragma once
 #ifndef MC_H
 #define	MC_H
 

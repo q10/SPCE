@@ -4,6 +4,7 @@
  *
  * Created on May 25, 2011, 1:53 PM
  */
+
 #pragma once
 #ifndef RANDOM_H
 #define	RANDOM_H

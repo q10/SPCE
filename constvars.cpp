@@ -18,6 +18,7 @@ const double BOLTZMANN_K = 8.31447122; // units of J/(K*mol)
 
 double BOX_LENGTH; // in Angstroms
 
+extern const int EQUILIBRATION_TIME = 0;
 const int DATA_SAMPLING_RATE = 10;
 
 double ** water_positions;

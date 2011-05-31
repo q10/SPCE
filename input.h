@@ -5,6 +5,7 @@
  * Created on May 26, 2011, 5:19 PM
  */
 
+#pragma once
 #ifndef INPUT_H
 #define	INPUT_H
 

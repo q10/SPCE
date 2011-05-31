@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=-c -Wall
+CFLAGS=-c -Wall -O3
 LDFLAGS=
 SOURCES=constvars.cpp main.cpp random.cpp input.cpp initializers.cpp energy.cpp mc.cpp radial_dist.cpp tests.cpp
 OBJECTS=$(SOURCES:.cpp=.o)

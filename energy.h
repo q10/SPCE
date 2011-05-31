@@ -5,6 +5,7 @@
  * Created on May 25, 2011, 5:46 PM
  */
 
+#pragma once
 #ifndef ENERGY_H
 #define	ENERGY_H
 

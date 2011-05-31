@@ -2,26 +2,44 @@
 
 * http://github.com/q10/SPCE
 
-SPCE is a library that.
+SPCE is a program that simulates the behavior of water ions in water according 
+to the SPC/E model of water and ion solvation.  This is a Monte Carlo 
+simulation program.
 
 = Install:
 
 == Requirements:
 
+* git
 * g++
 * make
 
-Compile everything from inside the SPCE folder into a binary:
+== Instructions:
 
-    make
+Pull code from GitHub:
+
+    $ git pull git@github.com:q10/SPCE.git
+
+Then compile everything from inside the SPCE program folder into a binary:
+
+    $ make
 
 = Usage:
 
-    ./SPCE
+Simply run the following command on terminal:
+
+    $ ./SPCE
 
 == Flags:
 
--t:: System temperature 
+The following program flags are allowed for a customized simulation.
+
+-t:: System temperature
+-n:: Number of waters in system
+
+Example Usage:
+
+    $ ./SPCE -t=295.3 -n=500
 
 = Development:
 
@@ -33,29 +51,5 @@ create a topic branch for every separate change you make.
 
 = License:
 
-(The New BSD License)
-
-Copyright (c) 2011, Benson Ma
-All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
-    * Redistributions of source code must retain the above copyright
-      notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright
-      notice, this list of conditions and the following disclaimer in the
-      documentation and/or other materials provided with the distribution.
-    * Neither the name of the Geissler Group nor the
-      names of its contributors may be used to endorse or promote products
-      derived from this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY
-DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
-ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+SPCE is licensed under the the New BSD License and may be freely redistributed 
+under the terms specified in the LICENSE file.

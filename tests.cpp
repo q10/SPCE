@@ -2,11 +2,12 @@
 
 void run_tests(int argc, char** argv) {
     cout << "---- BEGIN TEST SUITE ----" << endl;
-    test_RANDGAUSS();
-    test_read_program_flags(argc, argv);
-    test_energy_of_water_with_index();
-    test_calculate_energy();
-    test_run_mc();
+    //test_RANDGAUSS();
+    //test_read_program_flags(argc, argv);
+    //test_energy_of_water_with_index();
+    //test_calculate_energy();
+    //test_run_mc();
+    test_radial_dist_sampler();
     cout << "---- END TEST SUITE ----" << endl;
     return;
 }
@@ -122,11 +123,25 @@ void test_run_mc() {
     water_positions[3][2] = 5.0;
 
     calculate_energy();
-    for (int k = 0; k < 100; k++) {
+    for (int k = 0; k < 10000; k++) {
         run_mc();
         cout << "Current system energy: " << setprecision(10) << LJEnergy << endl;
     }
     cout << "---- END TEST - MC STEPPING ----\n" << endl;
+    return;
+}
+
+void test_radial_dist_sampler() {
+    cout << "---- BEGIN TEST - RADIAL DISTRIBUTION SAMPLER ----" << endl;
+    initialize();
+    for (int k = 0; k < 1000; k++) {
+        run_mc();
+        cout << "MC round " << k + 1 << "complete." << endl;
+    }
+    compute_radial_dist_results();
+    for (int k = 0; k < radial_dist_num_his_bars; k++)
+        cout << setprecision(10) << radial_dist_data[k] << endl;
+    cout << "---- END TEST - RADIAL DISTRIBUTION SAMPLER ----\n" << endl;
     return;
 }
 
