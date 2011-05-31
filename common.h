@@ -17,7 +17,6 @@
 #include <math.h>
 #include <cmath>
 #include <pthread.h>
-//#include <string.h>
 #include <string>
 #include <sstream>
 #include <limits.h>
@@ -31,6 +30,7 @@
 #include <getopt.h>
 //#include <vector>
 //#include <iterator>
+//#include <string.h>
 
 #include "constvars.h"
 #include "input.h"

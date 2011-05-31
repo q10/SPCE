@@ -133,10 +133,17 @@ void test_run_mc() {
 
 void test_radial_dist_sampler() {
     cout << "---- BEGIN TEST - RADIAL DISTRIBUTION SAMPLER ----" << endl;
-    initialize();
+    initialize_constants();
+    BOX_LENGTH = 20.0;
+    initialize_water_positions_and_energies();
     for (int k = 0; k < 1000; k++) {
         run_mc();
-        cout << "MC round " << k + 1 << "complete." << endl;
+        cout << "MC pre-round " << k + 1 << " complete." << endl;
+    }
+    initialize_radial_dist_sampler();
+    for (int k = 0; k < 1000; k++) {
+        run_mc();
+        cout << "MC round " << k + 1 << " complete." << endl;
     }
     compute_radial_dist_results();
     for (int k = 0; k < radial_dist_num_his_bars; k++)
