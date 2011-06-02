@@ -1,7 +1,8 @@
 #include "common.h"
 
-int num_gr, radial_dist_num_his_bars = 25;
+int num_gr, radial_dist_num_his_bars = 50;
 static double delg;
+double * radial_dist_distance = new double [radial_dist_num_his_bars];
 double * radial_dist_data = new double [radial_dist_num_his_bars];
 
 void initialize_radial_dist_sampler() {
@@ -37,6 +38,7 @@ void compute_radial_dist_results() {
     double r, vb, nid;
     for (int i = 0; i < radial_dist_num_his_bars; i++) {
         r = delg * (i + 0.5);
+        radial_dist_distance[i] = r;
         vb = (pow(i + 1, 3.0) - pow(i, 3.0)) * pow(delg, 3.0);
         nid = (4 / 3) * M_PI * vb * WATER_DENSITY;
         radial_dist_data[i] /= num_gr * NUM_WATERS * nid;

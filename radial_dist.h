@@ -10,6 +10,7 @@
 #define	RADIAL_DIST_H
 
 extern int radial_dist_num_his_bars;
+extern double * radial_dist_distance;
 extern double * radial_dist_data;
 
 void initialize_radial_dist_sampler();
