@@ -1,7 +1,7 @@
 #include "common.h"
 
 void run_tests(int argc, char** argv) {
-    cout << "---- BEGIN TEST SUITE ----" << endl;
+    cout << "---- BEGIN TEST SUITE ----\n" << endl;
     //test_RANDGAUSS();
     //test_read_program_flags(argc, argv);
     //test_energy_of_water_with_index();
@@ -40,8 +40,8 @@ void test_read_program_flags(int argc, char** argv) {
     read_program_flags(argc, argv);
     initialize();
     print_system_vars();
-    return;
     cout << "---- END TEST - READ PROGRAM FLAGS ----\n" << endl;
+    return;
 }
 
 void test_energy_of_water_with_index() {

@@ -34,7 +34,7 @@ Simply run the following command on terminal:
 
 The following program flags are allowed for a customized simulation.
 
--t:: System temperature
+-t:: System temperature (Kelvin)
 -n:: Number of waters in system
 
 Example Usage:
