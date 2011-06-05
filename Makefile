@@ -5,7 +5,7 @@ SOURCES=constvars.cpp main.cpp random.cpp input.cpp output.cpp initializers.cpp 
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=SPCE
 
-all: $(SOURCES) $(EXECUTABLE)
+verbose: $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
@@ -14,5 +14,6 @@ $(EXECUTABLE): $(OBJECTS)
 .cpp.o:
 	$(CC) $(CFLAGS) $< -o $@
 
-new:
-	$(CC) $(CFLAGS) *.cpp -o $(EXECUTABLE)
+all:
+	$(CC) -Wall -O3 *.cpp -o $(EXECUTABLE)
+	rm -rf *.o *~

@@ -40,6 +40,7 @@
 #include "energy.h"
 #include "mc.h"
 #include "radial_dist.h"
+#include "sampling.h"
 #include "tests.h"
 
 using namespace std;

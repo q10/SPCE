@@ -14,7 +14,7 @@ double RAN3() {
     int i, ii, k;
     if (idum < 0 || iff == 0) {
         iff = 1;
-        mj = MSEED - (long)(idum < 0 ? -idum : idum);
+        mj = MSEED - (long) (idum < 0 ? -idum : idum);
         mj = mj % MBIG;
         ma[55] = mj;
         mk = 1;
@@ -25,7 +25,7 @@ double RAN3() {
             if (mk < MZ) {
                 mk += MBIG;
             }
-            mj = (long)ma[ii];
+            mj = (long) ma[ii];
         }
         for (k = 1; k <= 4; k++)
             for (i = 1; i <= 55; i++) {
@@ -40,7 +40,7 @@ double RAN3() {
     }
     if (++inext == 56) inext = 1;
     if (++inextp == 56) inextp = 1;
-    mj = (long)(ma[inext] - ma[inextp]);
+    mj = (long) (ma[inext] - ma[inextp]);
     if (mj < MZ) {
         mj += MBIG;
     }
@@ -88,4 +88,16 @@ double RANDGAUSS(double mean, double stdev) {
         turn = 1;
         return mean + x1 * r*stdev;
     }
+}
+
+std::string TIMESTAMP() {
+    char the_date[BUF_SIZE];
+    the_date[0] = '\0';
+    time_t now = time(NULL);
+    
+    if (now != -1) {
+        strftime(the_date, BUF_SIZE, "%Y%m%d_%H%M", localtime(&now));
+    }
+
+    return std::string(the_date);
 }

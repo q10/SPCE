@@ -15,5 +15,6 @@ double MIN(double a, double b);
 double ROUND(double d);
 double RANDGAUSS(double mean, double stdev);
 double RANDGAUSS();
+std::string TIMESTAMP();
 
 #endif	/* RANDOM_H */

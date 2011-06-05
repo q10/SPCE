@@ -1,12 +1,13 @@
 #include "common.h"
 
-ofstream VMD_FILE;
 int vmd_timestep;
+ofstream VMD_FILE;
+string vmd_filename = "SPCE_" + TIMESTAMP() + ".vmd";
 
-void open_vmd_file(char * filename) {
+void open_vmd_file() {
     vmd_timestep = 0;
-    VMD_FILE.open(filename);
-    if(!VMD_FILE)
+    VMD_FILE.open(vmd_filename.c_str());
+    if (!VMD_FILE)
         cerr << "FATAL: Could not open VMD output file.\n";
     return;
 }
