@@ -12,24 +12,28 @@
 #define BUF_SIZE 256
 #define HALF_BOX_LENGTH BOX_LENGTH/2.0
 
-extern const double DISPLACEMENT; // max random displacement distance 
-extern const int NUM_MC_CYCLES; // number of MC cycles to run
-extern const double BOLTZMANN_K;
-extern double TEMPERATURE;
-extern double BOX_LENGTH;
-extern int NUM_WATERS;
+// physical constants
+extern const double BOLTZMANN_K;        // units of kJ/(mol*K)
 
+// system properties
+extern double TEMPERATURE;
+extern double BETA;
+extern int NUM_WATERS;
+extern double BOX_LENGTH;               // box side length (Angstroms)
+extern const double DISPLACEMENT;       // max random displacement distance per attempted move (Angstroms)
 
 // water properties
-extern const double WATER_SIGMA; // diameter
-extern const double WATER_EPSILON;
-extern const double WATER_DENSITY;
+extern const double WATER_SIGMA;        // diameter (Angstroms)
+extern const double WATER_EPSILON;      // energy unit (kJ/mol)
+extern const double WATER_DENSITY;      // particles per Angstroms^3
+extern const double WATER_Q_H;          // charge of hydrogen (elementary charge unit)
+extern const double WATER_Q_O;          // charge of oxygen (elementary charge unit)
 
-// sampling
+// other system variables
 extern const int EQUILIBRATION_TIME;
-extern const int DATA_SAMPLING_RATE;
 
-extern double ** water_positions;
-extern double LJEnergy;
+// state variables
+extern double ** water_O_positions;     // table of oxygen positions
+extern double LJEnergy;                 // Lennard-Jones Potential (kJ/mol)
 
 #endif	/* CONSTVARS_H */

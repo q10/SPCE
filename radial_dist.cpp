@@ -18,9 +18,9 @@ void radial_dist_sample() {
     double dx, dy, dz, dr;
     for (int i = 0; i < NUM_WATERS - 1; i++) {
         for (int j = i + 1; j < NUM_WATERS; j++) {
-            dx = abs(water_positions[i][0] - water_positions[j][0]);
-            dy = abs(water_positions[i][1] - water_positions[j][1]);
-            dz = abs(water_positions[i][2] - water_positions[j][2]);
+            dx = abs(water_O_positions[i][0] - water_O_positions[j][0]);
+            dy = abs(water_O_positions[i][1] - water_O_positions[j][1]);
+            dz = abs(water_O_positions[i][2] - water_O_positions[j][2]);
             dx -= BOX_LENGTH * ROUND(dx / BOX_LENGTH);
             dy -= BOX_LENGTH * ROUND(dy / BOX_LENGTH);
             dz -= BOX_LENGTH * ROUND(dz / BOX_LENGTH);

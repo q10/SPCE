@@ -1,13 +1,24 @@
 #include "common.h"
 
+int NUM_MC_ATTEMPTS = 2000;
+int NUM_MC_SWEEPS = 100000;
+
 void run_mc() {
-    double BETA = 1.0 / (BOLTZMANN_K * TEMPERATURE);
-    for (int i = 0; i < NUM_MC_CYCLES; i++) {
+    for (int h = 0; h < NUM_MC_SWEEPS; h++) {
+        mc_sweep();
+        if (h % DATA_SAMPLING_RATE == 0)
+            radial_dist_sample();
+    }
+    return;
+}
+
+void mc_sweep() {
+    for (int i = 0; i < NUM_MC_ATTEMPTS; i++) {
         int rand_i = RANDINT(0, NUM_WATERS);
         double old_energy_diff = energy_of_water_with_index(rand_i);
-        double tmp_old_position[3] = {water_positions[rand_i][0], water_positions[rand_i][1], water_positions[rand_i][2]};
+        double tmp_old_position[3] = {water_O_positions[rand_i][0], water_O_positions[rand_i][1], water_O_positions[rand_i][2]};
         for (int j = 0; j < 3; j++)
-            water_positions[rand_i][j] = fmod(water_positions[rand_i][j] + (DISPLACEMENT * (RAN3() - 0.5)), BOX_LENGTH);
+            water_O_positions[rand_i][j] = fmod(water_O_positions[rand_i][j] + (DISPLACEMENT * (RAN3() - 0.5)), BOX_LENGTH);
 
         // calculate difference from new energy and attempt to move particle with acceptance probability
         double new_energy_diff = energy_of_water_with_index(rand_i);
@@ -16,12 +27,8 @@ void run_mc() {
         else {
             // undo move if move not accepted
             for (int j = 0; j < 3; j++)
-                water_positions[rand_i][j] = tmp_old_position[j];
+                water_O_positions[rand_i][j] = tmp_old_position[j];
         }
-        
-        // data sampling
-        if (i > EQUILIBRATION_TIME && i % DATA_SAMPLING_RATE == 0)
-            radial_dist_sample();
     }
     return;
 }

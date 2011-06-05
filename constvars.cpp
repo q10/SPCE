@@ -1,19 +1,20 @@
 #include "common.h"
 
-const double DISPLACEMENT = 0.0034; // max random displacement distance in a direction
-const int NUM_MC_CYCLES = 2000; // number of MC steps
+const double BOLTZMANN_K = 0.00831447122;
+
 double TEMPERATURE = 300.0;
+double BETA = 1.0 / (BOLTZMANN_K * TEMPERATURE);
 int NUM_WATERS = 200;
+double BOX_LENGTH; 
+const double DISPLACEMENT = 0.0034;
 
-const double WATER_SIGMA = 3.166; // particle diameter
-const double WATER_EPSILON = 0.650; // epsilon value for water, kJ/mol
+const double WATER_SIGMA = 3.166;
+const double WATER_EPSILON = 0.650;
 const double WATER_DENSITY = 0.0334225755;
-const double BOLTZMANN_K = 0.00831447122; // units of kJ/(K*mol)
-
-double BOX_LENGTH; // in Angstroms
+const double WATER_Q_H = 0.4238;
+const double WATER_Q_O = -0.8476;
 
 const int EQUILIBRATION_TIME = 0;
-const int DATA_SAMPLING_RATE = 200;
 
-double ** water_positions;
+double ** water_O_positions;
 double LJEnergy;

@@ -34,6 +34,7 @@
 
 #include "constvars.h"
 #include "input.h"
+#include "output.h"
 #include "random.h"
 #include "initializers.h"
 #include "energy.h"
