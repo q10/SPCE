@@ -2,12 +2,21 @@
 
 int NUM_MC_ATTEMPTS = 2000;
 int NUM_MC_SWEEPS = 100000;
+int NUM_EQUILIBRATION_SWEEPS = 5000;
 
 void run_mc() {
     for (int h = 0; h < NUM_MC_SWEEPS; h++) {
         mc_sweep();
         if (h % DATA_SAMPLING_RATE == 0)
             radial_dist_sample();
+    }
+    return;
+}
+
+void mc_equilibrate() {
+    for (int h = 0; h < NUM_EQUILIBRATION_SWEEPS; h++) {
+        mc_sweep();
+        cerr << "MC equilibration sweep " << h + 1 << " of " << NUM_EQUILIBRATION_SWEEPS << " complete." << endl;
     }
     return;
 }

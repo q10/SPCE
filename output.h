@@ -15,7 +15,7 @@ extern int vmd_timestep;
 extern ofstream VMD_FILE;
 extern string vmd_filename;
 
-void open_vmd_file(char * filename);
+void open_vmd_file();
 void write_config_to_vmd_file();
 void close_vmd_file();
 

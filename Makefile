@@ -1,5 +1,6 @@
 CC=g++
-CFLAGS=-c -Wall -O3
+CFLAGS=-Wall -O3
+CFLAGS2=-c
 LDFLAGS=
 SOURCES=constvars.cpp main.cpp random.cpp input.cpp output.cpp initializers.cpp energy.cpp mc.cpp radial_dist.cpp sampling.cpp tests.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
@@ -12,8 +13,8 @@ $(EXECUTABLE): $(OBJECTS)
 	rm -rf *.o *~
 
 .cpp.o:
-	$(CC) $(CFLAGS) $< -o $@
+	$(CC) $(CFLAGS2) $(CFLAGS) $< -o $@
 
 all:
-	$(CC) -Wall -O3 *.cpp -o $(EXECUTABLE)
+	$(CC) $(CFLAGS) *.cpp -o $(EXECUTABLE)
 	rm -rf *.o *~

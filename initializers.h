@@ -11,6 +11,6 @@
 
 void initialize();
 void initialize_constants();
-void initialize_water_positions_and_energies();
+void initialize_waters();
 
 #endif	/* INITIALIZERS_H */

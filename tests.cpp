@@ -7,7 +7,8 @@ void run_tests(int argc, char** argv) {
     //test_energy_of_water_with_index();
     //test_calculate_energy();
     //test_run_mc();
-    test_radial_dist_sampler();
+    //test_radial_dist_sampler();
+    //test_write_to_vmd_file();
     cout << "---- END TEST SUITE ----" << endl;
     return;
 }
@@ -133,27 +134,32 @@ void test_run_mc() {
 
 void test_radial_dist_sampler() {
     cout << "---- BEGIN TEST - RADIAL DISTRIBUTION SAMPLER ----" << endl;
-    initialize_constants();
-    initialize_water_positions_and_energies();
-    print_system_vars();
-    
-    for (int k = 0; k < 5000; k++) {
-        run_mc();
-        cout << "MC pre-round " << k + 1 << " complete." << endl;
-    }
-    
-    initialize_radial_dist_sampler();
-    for (int k = 0; k < 5000; k++) {
-        run_mc();
-        cout << "MC round " << k + 1 << " complete." << endl;
-    }
-    
+
+    initialize();
+    run_mc();
     compute_radial_dist_results();
+
     cout << "\nr(Angstroms)\tg(r)" << endl;
     for (int k = 0; k < radial_dist_num_his_bars; k++)
         cout << setprecision(10) << radial_dist_distance[k] << "\t" << radial_dist_data[k] << endl;
-    
+
     cout << "\n---- END TEST - RADIAL DISTRIBUTION SAMPLER ----\n" << endl;
+    return;
+}
+
+void test_write_to_vmd_file() {
+    cout << "---- BEGIN TEST - WRITE TO VMD FILE ----" << endl;
+
+    open_vmd_file();
+    initialize_constants();
+    initialize_waters();
+    write_config_to_vmd_file();
+    for (int h = 0; h < 10; h++)
+        mc_sweep();
+    write_config_to_vmd_file();
+    close_vmd_file();
+
+    cout << "---- END TEST - WRITE TO VMD FILE ----" << endl;
     return;
 }
 

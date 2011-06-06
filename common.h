@@ -28,8 +28,9 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <getopt.h>
-//#include <vector>
-//#include <iterator>
+#include <vector>
+#include <iterator>
+#include <assert.h>
 //#include <string.h>
 
 #include "constvars.h"

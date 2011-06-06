@@ -7,8 +7,10 @@ string vmd_filename = "SPCE_" + TIMESTAMP() + ".vmd";
 void open_vmd_file() {
     vmd_timestep = 0;
     VMD_FILE.open(vmd_filename.c_str());
-    if (!VMD_FILE)
+    if (!VMD_FILE) {
         cerr << "FATAL: Could not open VMD output file.\n";
+        abort();
+    }
     return;
 }
 

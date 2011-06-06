@@ -9,10 +9,13 @@
 #ifndef INPUT_H
 #define	INPUT_H
 
+extern bool using_input_config_file;
+extern char * input_config_filename;
+
 typedef struct option program_flags_t;
 extern const program_flags_t PROGRAM_FLAGS[];
 
 void read_program_flags(int argc, char** argv);
+void load_configuration_file();
 
 #endif	/* INPUT_H */
-
