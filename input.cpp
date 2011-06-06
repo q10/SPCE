@@ -58,20 +58,17 @@ void read_program_flags(int argc, char** argv) {
 void load_configuration_file() {
     vector< vector< double > > particles;
     ifstream input_filestream(input_config_filename);
-    if (input_filestream.is_open()) {
-        std::string line;
-        while (std::getline(input_filestream, line)) {
-            std::vector< double > coords;
-            std::istringstream iss(line);
-            double val;
-            while (iss >> val)
-                coords.push_back(val);
-            assert((int) coords.size() == 3);
-            particles.push_back(coords);
-        }
-    } else {
-        cerr << "FATAL: Could not open input configuration file.\n";
-        abort();
+    ASSERT(input_filestream.is_open(), "Could not open input configuration file.");
+    
+    std::string line;
+    while (std::getline(input_filestream, line)) {
+        std::vector< double > coords;
+        std::istringstream iss(line);
+        double val;
+        while (iss >> val)
+            coords.push_back(val);
+        ASSERT((int) coords.size() == 3, "Not enough coordinates.");
+        particles.push_back(coords);
     }
 
     // initialize constants

@@ -13,7 +13,7 @@ using namespace std;
 
 extern int vmd_timestep;
 extern ofstream VMD_FILE;
-extern string vmd_filename;
+extern string output_vmd_filename;
 
 void open_vmd_file();
 void write_config_to_vmd_file();

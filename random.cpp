@@ -94,10 +94,19 @@ std::string TIMESTAMP() {
     char the_date[BUF_SIZE];
     the_date[0] = '\0';
     time_t now = time(NULL);
-    
+
     if (now != -1) {
         strftime(the_date, BUF_SIZE, "%Y%m%d_%H%M", localtime(&now));
     }
 
     return std::string(the_date);
+}
+
+void ASSERT(bool expression, std::string error_msg) {
+    if (!expression) {
+        cerr << "FATAL: " << error_msg << endl
+                << "\nPREMATURELY TERMINATING PROGRAM." << endl;
+        abort();
+    }
+    return;
 }

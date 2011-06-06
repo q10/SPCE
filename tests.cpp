@@ -8,7 +8,8 @@ void run_tests(int argc, char** argv) {
     //test_calculate_energy();
     //test_run_mc();
     //test_radial_dist_sampler();
-    //test_write_to_vmd_file();
+    test_write_to_vmd_file();
+    test_read_config_file();
     cout << "---- END TEST SUITE ----" << endl;
     return;
 }
@@ -163,11 +164,29 @@ void test_write_to_vmd_file() {
     return;
 }
 
+void test_read_config_file() {
+    input_config_filename = "sample.config";
+    load_configuration_file();
+    print_system_vars();
+    print_system_config();
+    return;
+}
+
 void print_system_vars() {
     cout << "System temperature (K): " << setprecision(10) << TEMPERATURE << endl
             << "Number of water particles: " << NUM_WATERS << endl
             << "Box length (Angstroms): " << BOX_LENGTH << endl
             << "Water sigma (Angstroms): " << WATER_SIGMA << endl
             << "System energy (kJ): " << LJEnergy << endl;
+    return;
+}
+
+void print_system_config() {
+    cout << "Atom configuration:" << endl;
+    for (int i = 0; i < NUM_WATERS; i++)
+        cout << "Water " << i + 1 << " of " << NUM_WATERS << ": " << setprecision(10)
+            << water_O_positions[i][0] << "\t"
+            << water_O_positions[i][1] << "\t"
+            << water_O_positions[i][2] << endl;
     return;
 }

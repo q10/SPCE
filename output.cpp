@@ -1,20 +1,16 @@
 #include "common.h"
 
-int vmd_timestep;
 ofstream VMD_FILE;
-string vmd_filename = "SPCE_" + TIMESTAMP() + ".vmd";
+string output_vmd_filename = "SPCE_" + TIMESTAMP() + ".vmd";
 
 void open_vmd_file() {
-    vmd_timestep = 0;
-    VMD_FILE.open(vmd_filename.c_str());
-    if (!VMD_FILE) {
-        cerr << "FATAL: Could not open VMD output file.\n";
-        abort();
-    }
+    VMD_FILE.open(output_vmd_filename.c_str());
+    ASSERT(VMD_FILE, "Could not open VMD output file.");
     return;
 }
 
 void write_config_to_vmd_file() {
+    static int vmd_timestep = 0;
     VMD_FILE << "ITEM: TIMESTEP" << endl
             << vmd_timestep++ << endl
             << "ITEM: NUMBER OF ATOMS" << endl
@@ -26,7 +22,7 @@ void write_config_to_vmd_file() {
             << "ITEM: ATOMS" << endl;
     int atom_count = 0;
     for (int i = 0; i < NUM_WATERS; i++)
-        VMD_FILE << atom_count++ << " 1 "
+        VMD_FILE << ++atom_count << " 1 "
             << water_O_positions[i][0] << " "
             << water_O_positions[i][1] << " "
             << water_O_positions[i][2] << endl;
@@ -37,3 +33,6 @@ void close_vmd_file() {
     VMD_FILE.close();
     return;
 }
+
+
+void write_config_to_vmd_file() {}

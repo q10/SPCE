@@ -30,13 +30,13 @@
 #include <getopt.h>
 #include <vector>
 #include <iterator>
-#include <assert.h>
+//#include <assert.h>
 //#include <string.h>
 
+#include "random.h"
 #include "constvars.h"
 #include "input.h"
 #include "output.h"
-#include "random.h"
 #include "initializers.h"
 #include "energy.h"
 #include "mc.h"

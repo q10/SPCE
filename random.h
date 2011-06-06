@@ -9,12 +9,14 @@
 #ifndef RANDOM_H
 #define	RANDOM_H
 
-double RAN3 ();
-int RANDINT (int low, int high);
+double RAN3();
+int RANDINT(int low, int high);
 double MIN(double a, double b);
 double ROUND(double d);
 double RANDGAUSS(double mean, double stdev);
 double RANDGAUSS();
+
 std::string TIMESTAMP();
+void ASSERT(bool expression, std::string error_msg);
 
 #endif	/* RANDOM_H */

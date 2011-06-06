@@ -13,6 +13,8 @@ int main(int argc, char** argv) {
     read_program_flags(argc, argv);
     initialize();    
     run_mc();
+    print_system_vars();
+    print_system_config();
     */
     return 0;
 }
