@@ -148,9 +148,9 @@ void test_radial_dist_sampler() {
     return;
 }
 
-void test_write_to_vmd_file() {
+void test_write_to_vmd_file(int argc, char** argv) {
     cout << "---- BEGIN TEST - WRITE TO VMD FILE ----" << endl;
-
+    read_program_flags(argc, argv);
     open_vmd_file();
     initialize_constants();
     initialize_waters();
