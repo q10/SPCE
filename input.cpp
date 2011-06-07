@@ -7,7 +7,7 @@ const program_flags_t PROGRAM_FLAGS[] = {
     { "temp", required_argument, NULL, 'T'},
     { "num_waters", required_argument, NULL, 'n'},
     { "input_config", required_argument, NULL, 'r'},
-    { "output_config_name", required_argument, NULL, 'o'},
+    { "output_config_name", required_argument, NULL, 'w'},
     { "output_vmd_name", required_argument, NULL, 'v'},
     { NULL, no_argument, NULL, 0}
 };
@@ -18,7 +18,7 @@ void read_program_flags(int argc, char** argv) {
     while (1) {
         /* getopt_long stores the option index here. */
         int options_i = 0;
-        string argstr = "t:n:r:o:v:";
+        string argstr = "t:n:r:w:v:";
 
         // "abc:d:f:" means that a and b don't have args, while c, d, f do
         option = getopt_long_only(argc, argv, argstr.c_str(), PROGRAM_FLAGS, &options_i);

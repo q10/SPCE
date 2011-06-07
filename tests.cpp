@@ -171,9 +171,7 @@ void test_write_config_file(int argc, char** argv) {
     read_program_flags(argc, argv);
     initialize_constants();
     initialize_waters();
-    cout<<"before"<<endl;
     save_config_to_file();
-    cout<<"after"<<endl;
     cout << "---- END TEST - WRITE CONFIG FILE ----\n" << endl;
     return;
 
