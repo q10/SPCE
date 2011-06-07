@@ -46,8 +46,8 @@ void save_config_to_file() {
     if (!use_custom_output_config_filename)
         output_config_filename = "SPCE_" + TIMESTAMP() + ".config";
 
-    OUTPUT_CONFIG_FILE.open(output_vmd_filename.c_str());
-    ASSERT(OUTPUT_CONFIG_FILE, "Could not open VMD output file.");
+    OUTPUT_CONFIG_FILE.open(output_config_filename.c_str());
+    ASSERT(OUTPUT_CONFIG_FILE, "Could not open config output file.");
 
     OUTPUT_CONFIG_FILE << "TEMPERATURE\t" << TEMPERATURE << endl;
     for (int i = 1; i < NUM_WATERS; i++)
