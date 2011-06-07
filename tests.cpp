@@ -8,7 +8,7 @@ void run_tests(int argc, char** argv) {
     //test_calculate_energy();
     //test_run_mc();
     //test_radial_dist_sampler();
-    test_write_to_vmd_file();
+    test_write_to_vmd_file(argc, argv);
     test_read_config_file();
     cout << "---- END TEST SUITE ----" << endl;
     return;
@@ -165,11 +165,15 @@ void test_write_to_vmd_file(int argc, char** argv) {
 }
 
 void test_read_config_file() {
+    cout << "---- BEGIN TEST - READ CONFIG FILE ----" << endl;
+    
     input_config_filename = "sample.config";
     load_configuration_file();
     calculate_energy();
     print_system_vars();
     print_system_config();
+
+    cout << "---- END TEST - READ CONFIG FILE ----" << endl;
     return;
 }
 

@@ -18,8 +18,8 @@ void read_program_flags(int argc, char** argv) {
     while (1) {
         /* getopt_long stores the option index here. */
         int options_i = 0;
-        string argstr = "t:n:r:";
-        
+        string argstr = "t:n:r:o:v:";
+
         // "abc:d:f:" means that a and b don't have args, while c, d, f do
         option = getopt_long_only(argc, argv, argstr.c_str(), PROGRAM_FLAGS, &options_i);
 
@@ -43,12 +43,18 @@ void read_program_flags(int argc, char** argv) {
         else if (option == 'r') {
             using_input_config_file = true;
             input_config_filename = optarg;
+            if (input_config_filename[0] == '=')
+                input_config_filename = input_config_filename.substr(1);
         } else if (option == 'w') {
             use_custom_output_config_filename = true;
             output_config_filename = optarg;
+            if (output_config_filename[0] == '=')
+                output_config_filename = output_config_filename.substr(1);
         } else if (option == 'v') {
             use_custom_output_vmd_filename = true;
             output_vmd_filename = optarg;
+            if (output_vmd_filename[0] == '=')
+                output_vmd_filename = output_vmd_filename.substr(1);
         } else
             break;
     }
