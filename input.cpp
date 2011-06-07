@@ -1,12 +1,14 @@
 #include "common.h"
 
 bool using_input_config_file = false;
-char * input_config_filename;
+string input_config_filename;
 
 const program_flags_t PROGRAM_FLAGS[] = {
     { "temp", required_argument, NULL, 'T'},
     { "num_waters", required_argument, NULL, 'n'},
     { "input_config", required_argument, NULL, 'r'},
+    { "output_config_name", required_argument, NULL, 'o'},
+    { "output_vmd_name", required_argument, NULL, 'v'},
     { NULL, no_argument, NULL, 0}
 };
 
@@ -16,59 +18,74 @@ void read_program_flags(int argc, char** argv) {
     while (1) {
         /* getopt_long stores the option index here. */
         int options_i = 0;
-        char * argstr = "t:n:r:";
-
-        // "abc:d:f:" means that a and b dont have args, while c, d, f do
-        option = getopt_long_only(argc, argv, argstr, PROGRAM_FLAGS, &options_i);
+        string argstr = "t:n:r:";
+        
+        // "abc:d:f:" means that a and b don't have args, while c, d, f do
+        option = getopt_long_only(argc, argv, argstr.c_str(), PROGRAM_FLAGS, &options_i);
 
         /* Detect the end of the options. */
         if (option == -1)
             break;
-
-        switch (option) {
-            case 0:
-                if (PROGRAM_FLAGS[options_i].flag != 0)
-                    break;
-                printf("option %s", PROGRAM_FLAGS[options_i].name);
-                if (optarg)
-                    printf(" with arg %s", optarg);
-                printf("\n");
+        else if (option == 0) {
+            if (PROGRAM_FLAGS[options_i].flag != 0)
                 break;
-            case '?':
-                break;
-            case 'T':
-                if (abs(atof(optarg)) > 0.0)
-                    TEMPERATURE = abs(atof(optarg));
-                break;
-            case 'n':
-                if (abs(atoi(optarg)) > 0)
-                    NUM_WATERS = abs(atoi(optarg));
-                break;
-            case 'r':
-                using_input_config_file = true;
-                input_config_filename = optarg;
-                break;
-            default:
-                break;
-        }
+            printf("option %s", PROGRAM_FLAGS[options_i].name);
+            if (optarg)
+                printf(" with arg %s", optarg);
+            printf("\n");
+            break;
+        } else if (option == '?')
+            break;
+        else if ((option == 'T') && (abs(atof(optarg)) > 0.0))
+            TEMPERATURE = abs(atof(optarg));
+        else if ((option == 'n') && (abs(atoi(optarg)) > 0))
+            NUM_WATERS = abs(atoi(optarg));
+        else if (option == 'r') {
+            using_input_config_file = true;
+            input_config_filename = optarg;
+        } else if (option == 'w') {
+            use_custom_output_config_filename = true;
+            output_config_filename = optarg;
+        } else if (option == 'v') {
+            use_custom_output_vmd_filename = true;
+            output_vmd_filename = optarg;
+        } else
+            break;
     }
     return;
 }
 
 void load_configuration_file() {
+    ifstream input_filestream(input_config_filename.c_str());
+    ASSERT(input_filestream.is_open(), "Could not open input configuration file " + STRING(input_config_filename));
+
     vector< vector< double > > particles;
-    ifstream input_filestream(input_config_filename);
-    ASSERT(input_filestream.is_open(), "Could not open input configuration file.");
-    
-    std::string line;
+    int line_num = 0;
+    string line, line_key;
+
     while (std::getline(input_filestream, line)) {
-        std::vector< double > coords;
         std::istringstream iss(line);
-        double val;
-        while (iss >> val)
-            coords.push_back(val);
-        ASSERT((int) coords.size() == 3, "Not enough coordinates.");
-        particles.push_back(coords);
+        line_num++;
+        iss >> line_key;
+
+        if (line_key.compare("TEMPERATURE") == 0) {
+            double temp;
+            iss >> temp;
+            if (abs(temp) > 0.0)
+                TEMPERATURE = abs(temp);
+
+        } else if (line_key.compare("ION") == 0) {
+
+        } else if (line_key.compare("WATER") == 0) {
+            std::vector< double > coords;
+            double val;
+
+            while (iss >> val)
+                coords.push_back(val);
+            ASSERT((int) coords.size() == 3, "Not enough coordinates on line " + STRING(line_num) + " of config file.");
+            particles.push_back(coords);
+        } else
+            cerr << "WARNING: Malformed line " << line_num << " in config file - Ignoring this line." << endl;
     }
 
     // initialize constants

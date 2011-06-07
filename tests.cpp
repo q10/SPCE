@@ -167,6 +167,7 @@ void test_write_to_vmd_file() {
 void test_read_config_file() {
     input_config_filename = "sample.config";
     load_configuration_file();
+    calculate_energy();
     print_system_vars();
     print_system_config();
     return;

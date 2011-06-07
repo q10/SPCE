@@ -1,9 +1,15 @@
 #include "common.h"
 
+bool use_custom_output_vmd_filename = false;
+bool use_custom_output_config_filename = false;
 ofstream VMD_FILE;
-string output_vmd_filename = "SPCE_" + TIMESTAMP() + ".vmd";
+ofstream OUTPUT_CONFIG_FILE;
+string output_vmd_filename;
+string output_config_filename;
 
 void open_vmd_file() {
+    if (!use_custom_output_vmd_filename)
+        output_vmd_filename = "SPCE_" + TIMESTAMP() + ".vmd";
     VMD_FILE.open(output_vmd_filename.c_str());
     ASSERT(VMD_FILE, "Could not open VMD output file.");
     return;
@@ -34,5 +40,19 @@ void close_vmd_file() {
     return;
 }
 
+void save_config_to_file() {
+    if (!use_custom_output_config_filename)
+        output_config_filename = "SPCE_" + TIMESTAMP() + ".config";
 
-void write_config_to_vmd_file() {}
+    OUTPUT_CONFIG_FILE.open(output_vmd_filename.c_str());
+    ASSERT(OUTPUT_CONFIG_FILE, "Could not open VMD output file.");
+
+    OUTPUT_CONFIG_FILE << "TEMPERATURE\t" << TEMPERATURE << endl;
+    for (int i = 1; i < NUM_WATERS; i++)
+        OUTPUT_CONFIG_FILE << "WATER\t" << water_O_positions[i][0]
+            << "\t" << water_O_positions[i][1]
+            << "\t" << water_O_positions[i][2] << endl;
+
+    OUTPUT_CONFIG_FILE.close();
+    return;
+}

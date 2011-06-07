@@ -11,12 +11,17 @@
 
 using namespace std;
 
-extern int vmd_timestep;
+//extern int vmd_timestep;
+extern bool use_custom_output_vmd_filename;
+extern bool use_custom_output_config_filename;
 extern ofstream VMD_FILE;
+extern ofstream OUTPUT_CONFIG_FILE;
 extern string output_vmd_filename;
+extern string output_config_filename;
 
 void open_vmd_file();
 void write_config_to_vmd_file();
 void close_vmd_file();
+void save_config_to_file();
 
 #endif	/* OUTPUT_H */

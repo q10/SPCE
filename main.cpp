@@ -15,6 +15,7 @@ int main(int argc, char** argv) {
     run_mc();
     print_system_vars();
     print_system_config();
+    save_config_to_file();
     */
     return 0;
 }
