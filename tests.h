@@ -17,7 +17,8 @@ void test_calculate_energy();
 void test_run_mc();
 void test_radial_dist_sampler();
 void test_write_to_vmd_file(int argc, char** argv);
-void test_read_config_file();
+void test_write_config_file(int argc, char** argv);
+void test_read_config_file(int argc, char** argv);
 void print_system_vars();
 void print_system_config();
 

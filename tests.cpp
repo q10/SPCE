@@ -9,7 +9,8 @@ void run_tests(int argc, char** argv) {
     //test_run_mc();
     //test_radial_dist_sampler();
     test_write_to_vmd_file(argc, argv);
-    test_read_config_file();
+    test_write_config_file(argc, argv);
+    test_read_config_file(argc, argv);
     cout << "---- END TEST SUITE ----" << endl;
     return;
 }
@@ -164,7 +165,20 @@ void test_write_to_vmd_file(int argc, char** argv) {
     return;
 }
 
-void test_read_config_file() {
+void test_write_config_file(int argc, char** argv) {
+    cout << "---- BEGIN TEST - WRITE CONFIG FILE ----" << endl;
+
+    read_program_flags(argc, argv);
+    initialize_constants();
+    initialize_waters();
+    save_config_to_file();
+    
+    cout << "---- END TEST - WRITE CONFIG FILE ----" << endl;
+    return;
+
+}
+
+void test_read_config_file(int argc, char** argv) {
     cout << "---- BEGIN TEST - READ CONFIG FILE ----" << endl;
     
     input_config_filename = "sample.config";

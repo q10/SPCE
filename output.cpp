@@ -17,6 +17,8 @@ void open_vmd_file() {
 
 void write_config_to_vmd_file() {
     static int vmd_timestep = 0;
+    cerr << "Writing timestep " << vmd_timestep << " to VMD file." << endl;
+            
     VMD_FILE << "ITEM: TIMESTEP" << endl
             << vmd_timestep++ << endl
             << "ITEM: NUMBER OF ATOMS" << endl
