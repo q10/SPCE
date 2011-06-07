@@ -161,7 +161,7 @@ void test_write_to_vmd_file(int argc, char** argv) {
     write_config_to_vmd_file();
     close_vmd_file();
 
-    cout << "---- END TEST - WRITE TO VMD FILE ----" << endl;
+    cout << "---- END TEST - WRITE TO VMD FILE ----\n" << endl;
     return;
 }
 
@@ -171,9 +171,10 @@ void test_write_config_file(int argc, char** argv) {
     read_program_flags(argc, argv);
     initialize_constants();
     initialize_waters();
+    cout<<"before"<<endl;
     save_config_to_file();
-    
-    cout << "---- END TEST - WRITE CONFIG FILE ----" << endl;
+    cout<<"after"<<endl;
+    cout << "---- END TEST - WRITE CONFIG FILE ----\n" << endl;
     return;
 
 }
@@ -187,7 +188,7 @@ void test_read_config_file(int argc, char** argv) {
     print_system_vars();
     print_system_config();
 
-    cout << "---- END TEST - READ CONFIG FILE ----" << endl;
+    cout << "---- END TEST - READ CONFIG FILE ----\n" << endl;
     return;
 }
 
