@@ -4,4 +4,4 @@
 .dep.inc
 Makefile2
 *.o
-
+*~
