@@ -3,7 +3,7 @@
 void run_tests(int argc, char** argv) {
     cout << "---- BEGIN TEST SUITE ----\n" << endl;
     //test_RANDGAUSS();
-    //test_read_program_flags(argc, argv);
+    test_read_program_flags(argc, argv);
     //test_energy_of_water_with_index();
     //test_calculate_energy();
     //test_run_mc();
@@ -199,7 +199,15 @@ void print_system_vars() {
             << "System energy (kJ): " << LJEnergy << endl << endl
             << "Number of single particle move attempts per MC sweep: " << NUM_MC_ATTEMPTS_PER_SWEEP << endl
             << "Number of MC sweeps: " << NUM_MC_SWEEPS << endl
-            << "Number of equilibration sweeps: " << NUM_EQUILIBRATION_SWEEPS << endl << endl;
+            << "Number of equilibration sweeps: " << NUM_EQUILIBRATION_SWEEPS << endl;
+
+    if (using_input_config_file)
+        cout << "--input (-r) flag raised; using file \'" << input_config_filename << "\'" << endl;
+    if (use_custom_output_vmd_filename)
+        cout << "--output_vmd (-v) flag raised; will write VMD to \'" << output_vmd_filename << "\'" << endl;
+    if (use_custom_output_config_filename)
+        cout << "--output_config (-w) flag raised; will save config to \'" << output_config_filename << "\'" << endl;
+    cout << endl;
     return;
 }
 
