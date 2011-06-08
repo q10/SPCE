@@ -4,7 +4,7 @@ bool using_input_config_file = false;
 string input_config_filename;
 
 const program_flags_t PROGRAM_FLAGS[] = {
-    { "temp", required_argument, NULL, 'T'},
+    { "temp", required_argument, NULL, 't'},
     { "num_waters", required_argument, NULL, 'n'},
     { "input", required_argument, NULL, 'r'},
     { "output_config", required_argument, NULL, 'w'},
@@ -18,7 +18,7 @@ void read_program_flags(int argc, char** argv) {
     while (1) {
         /* getopt_long stores the option index here. */
         int options_i = 0;
-        string argstr = "t:n:r:w:v:";
+        string argstr = "t:n:r:w:v:ABCDEFGHIJKLMNNOPQRSTUVWXYZabcdefghijklmopqsuxyz";
 
         // "abc:d:f:" means that a and b don't have args, while c, d, f do
         option = getopt_long_only(argc, argv, argstr.c_str(), PROGRAM_FLAGS, &options_i);
@@ -34,7 +34,7 @@ void read_program_flags(int argc, char** argv) {
                 printf(" with arg %s", optarg);
             printf("\n");
             break;
-        } else if ((option == 'T') && (abs(atof(optarg)) > 0.0))
+        } else if ((option == 't') && (abs(atof(optarg)) > 0.0))
             TEMPERATURE = abs(atof(optarg));
         else if ((option == 'n') && (abs(atoi(optarg)) > 0))
             NUM_WATERS = abs(atoi(optarg));
@@ -54,7 +54,7 @@ void read_program_flags(int argc, char** argv) {
             if (output_vmd_filename[0] == '=')
                 output_vmd_filename = output_vmd_filename.substr(1);
         } else
-            break;
+            ASSERT(false, "Invalid program flag or missing a flag parameter.");
     }
     return;
 }

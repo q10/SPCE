@@ -105,7 +105,7 @@ std::string TIMESTAMP() {
 void ASSERT(bool expression, std::string error_msg) {
     if (!expression) {
         cerr << "FATAL: " << error_msg << endl
-                << "\nPREMATURELY TERMINATING PROGRAM." << endl;
+                << "\nPREMATURELY TERMINATING PROGRAM...\n" << endl;
         abort();
     }
     return;

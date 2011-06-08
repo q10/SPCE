@@ -18,6 +18,7 @@ void mc_equilibrate() {
         mc_sweep();
         cerr << "MC equilibration sweep " << h + 1 << " of " << NUM_EQUILIBRATION_SWEEPS << " complete." << endl;
     }
+    cerr << endl;
     return;
 }
 

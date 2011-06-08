@@ -1,17 +1,17 @@
 #include "common.h"
 
 void run_tests(int argc, char** argv) {
-    cout << "---- BEGIN TEST SUITE ----\n" << endl;
+    cout << "\n---- BEGIN TEST SUITE ----\n" << endl;
     //test_RANDGAUSS();
-    test_read_program_flags(argc, argv);
+    //test_read_program_flags(argc, argv);
     //test_energy_of_water_with_index();
     //test_calculate_energy();
     //test_run_mc();
-    test_radial_dist_sampler();
+    //test_radial_dist_sampler();
     //test_write_to_vmd_file(argc, argv);
     //test_write_config_file(argc, argv);
     //test_read_config_file(argc, argv);
-    cout << "---- END TEST SUITE ----" << endl;
+    cout << "---- END TEST SUITE ----\n" << endl;
     return;
 }
 
@@ -41,8 +41,8 @@ void test_RANDGAUSS() {
 void test_read_program_flags(int argc, char** argv) {
     cout << "---- BEGIN TEST - READ PROGRAM FLAGS ----" << endl;
     read_program_flags(argc, argv);
+    NUM_EQUILIBRATION_SWEEPS = 50;
     initialize();
-    print_system_vars();
     cout << "---- END TEST - READ PROGRAM FLAGS ----\n" << endl;
     return;
 }
@@ -199,7 +199,7 @@ void print_system_vars() {
             << "System energy (kJ): " << LJEnergy << endl << endl
             << "Number of single particle move attempts per MC sweep: " << NUM_MC_ATTEMPTS_PER_SWEEP << endl
             << "Number of MC sweeps: " << NUM_MC_SWEEPS << endl
-            << "Number of equilibration sweeps: " << NUM_EQUILIBRATION_SWEEPS << endl;
+            << "Number of equilibration sweeps: " << NUM_EQUILIBRATION_SWEEPS << endl << endl;
 
     if (using_input_config_file)
         cout << "--input (-r) flag raised; using file \'" << input_config_filename << "\'" << endl;
