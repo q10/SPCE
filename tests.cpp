@@ -41,7 +41,7 @@ void test_RANDGAUSS() {
 void test_read_program_flags(int argc, char** argv) {
     cout << "---- BEGIN TEST - READ PROGRAM FLAGS ----" << endl;
     read_program_flags(argc, argv);
-    NUM_EQUILIBRATION_SWEEPS = 50;
+    NUM_EQUILIBRATION_SWEEPS = 5;
     initialize();
     cout << "---- END TEST - READ PROGRAM FLAGS ----\n" << endl;
     return;

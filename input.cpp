@@ -54,7 +54,7 @@ void read_program_flags(int argc, char** argv) {
             if (output_vmd_filename[0] == '=')
                 output_vmd_filename = output_vmd_filename.substr(1);
         } else
-            ASSERT(false, "Invalid program flag or missing a flag parameter.");
+            ASSERT(false, "Invalid program flag, invalid flag parameter, or missing a flag parameter.");
     }
     return;
 }

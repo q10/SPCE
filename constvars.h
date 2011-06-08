@@ -14,6 +14,7 @@
 
 // physical constants
 extern const double BOLTZMANN_K;        // units of kJ/(mol*K)
+extern double ELECTROSTATIC_K;   // units of (kJ*mol*Angstrom)/(elementary_charge^2) (see below for notes on obtaining this constant)
 
 // system properties
 extern double TEMPERATURE;
@@ -37,3 +38,16 @@ extern double ** water_O_positions;     // table of oxygen positions
 extern double LJEnergy;                 // Lennard-Jones Potential (kJ/mol)
 
 #endif	/* CONSTVARS_H */
+
+/*
+ Obtaining the electrostatic constant ELECTROSTATIC_K:
+ 
+ Since charge is in partial elementary charges and distance is in Angstroms, it 
+ is easier to convert elementary charges into cgs units (statcoulombs).  From 
+ there, convert statcoulombs^2 into ergs*cm.  Convert ergs into Joules, then to 
+ kiloJoules, and convert the cm into meters.  Convert the Angstroms on the 
+ bottom to meters to cancel out, and multiply this amount by 6.0221407818E23 to 
+ obtain kJ/mol instead of kJ.  The resulting calculations should simplify to:
+ 
+((4.8032042712E-10)**2)*(6.0221407818E23)*(1E-2) 
+ */

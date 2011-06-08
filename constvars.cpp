@@ -1,6 +1,7 @@
 #include "common.h"
 
 const double BOLTZMANN_K = 0.00831447122;
+const double ELECTROSTATIC_K = 1389.354325379097;
 
 double TEMPERATURE = 300.0;
 double BETA = 1.0 / (BOLTZMANN_K * TEMPERATURE);
