@@ -1,6 +1,6 @@
 #include "common.h"
 
-int NUM_MC_ATTEMPTS = 2000;
+int NUM_MC_ATTEMPTS_PER_SWEEP = 2000;
 int NUM_MC_SWEEPS = 100000;
 int NUM_EQUILIBRATION_SWEEPS = 5000;
 
@@ -21,8 +21,9 @@ void mc_equilibrate() {
     return;
 }
 
-void mc_sweep() {
-    for (int i = 0; i < NUM_MC_ATTEMPTS; i++) {
+// define function in .h file if using the inline function somewhere else other than this cpp file
+inline void mc_sweep() {
+    for (int i = 0; i < NUM_MC_ATTEMPTS_PER_SWEEP; i++) {
         int rand_i = RANDINT(0, NUM_WATERS);
         double old_energy_diff = energy_of_water_with_index(rand_i);
         double tmp_old_position[3] = {water_O_positions[rand_i][0], water_O_positions[rand_i][1], water_O_positions[rand_i][2]};

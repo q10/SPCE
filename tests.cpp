@@ -151,7 +151,7 @@ void test_radial_dist_sampler() {
 
 void test_write_to_vmd_file(int argc, char** argv) {
     cout << "---- BEGIN TEST - WRITE TO VMD FILE ----" << endl;
-    
+
     read_program_flags(argc, argv);
     open_vmd_file();
     initialize_constants();
@@ -180,7 +180,7 @@ void test_write_config_file(int argc, char** argv) {
 
 void test_read_config_file(int argc, char** argv) {
     cout << "---- BEGIN TEST - READ CONFIG FILE ----" << endl;
-    
+
     input_config_filename = "sample.config";
     load_configuration_file();
     calculate_energy();
@@ -196,7 +196,10 @@ void print_system_vars() {
             << "Number of water particles: " << NUM_WATERS << endl
             << "Box length (Angstroms): " << BOX_LENGTH << endl
             << "Water sigma (Angstroms): " << WATER_SIGMA << endl
-            << "System energy (kJ): " << LJEnergy << endl;
+            << "System energy (kJ): " << LJEnergy << endl << endl
+            << "Number of single particle move attempts per MC sweep: " << NUM_MC_ATTEMPTS_PER_SWEEP << endl
+            << "Number of MC sweeps: " << NUM_MC_SWEEPS << endl
+            << "Number of equilibration sweeps: " << NUM_EQUILIBRATION_SWEEPS << endl << endl;
     return;
 }
 
@@ -204,7 +207,7 @@ void print_system_config() {
     cout << "Atom configuration:" << endl;
     for (int i = 0; i < NUM_WATERS; i++)
         cout << "Water " << i + 1 << " of " << NUM_WATERS << ": " << setprecision(10)
-            << water_O_positions[i][0] << "\t"
+        << water_O_positions[i][0] << "\t"
             << water_O_positions[i][1] << "\t"
             << water_O_positions[i][2] << endl;
     return;

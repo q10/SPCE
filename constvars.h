@@ -9,7 +9,7 @@
 #ifndef CONSTVARS_H
 #define	CONSTVARS_H
 
-#define BUF_SIZE 256
+#define BUF_SIZE 1024
 #define HALF_BOX_LENGTH BOX_LENGTH/2.0
 
 // physical constants

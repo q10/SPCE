@@ -1,6 +1,6 @@
 #include "common.h"
 
-int num_gr, radial_dist_num_his_bars = 50;
+int num_gr, radial_dist_num_his_bars = 100;
 static double delg;
 double * radial_dist_distance = new double [radial_dist_num_his_bars];
 double * radial_dist_data = new double [radial_dist_num_his_bars];

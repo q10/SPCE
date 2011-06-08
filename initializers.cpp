@@ -20,6 +20,7 @@ void initialize() {
 }
 
 void initialize_constants() {
+    BETA = 1.0 / (BOLTZMANN_K * TEMPERATURE);
     BOX_LENGTH = pow(NUM_WATERS / WATER_DENSITY, 1.0 / 3.0);
     LJEnergy = 0.0;
     return;

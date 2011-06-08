@@ -6,9 +6,9 @@ string input_config_filename;
 const program_flags_t PROGRAM_FLAGS[] = {
     { "temp", required_argument, NULL, 'T'},
     { "num_waters", required_argument, NULL, 'n'},
-    { "input_config", required_argument, NULL, 'r'},
-    { "output_config_name", required_argument, NULL, 'w'},
-    { "output_vmd_name", required_argument, NULL, 'v'},
+    { "input", required_argument, NULL, 'r'},
+    { "output_config", required_argument, NULL, 'w'},
+    { "output_vmd", required_argument, NULL, 'v'},
     { NULL, no_argument, NULL, 0}
 };
 
@@ -24,7 +24,7 @@ void read_program_flags(int argc, char** argv) {
         option = getopt_long_only(argc, argv, argstr.c_str(), PROGRAM_FLAGS, &options_i);
 
         /* Detect the end of the options. */
-        if (option == -1)
+        if (option == -1 or option == '?')
             break;
         else if (option == 0) {
             if (PROGRAM_FLAGS[options_i].flag != 0)
@@ -34,9 +34,7 @@ void read_program_flags(int argc, char** argv) {
                 printf(" with arg %s", optarg);
             printf("\n");
             break;
-        } else if (option == '?')
-            break;
-        else if ((option == 'T') && (abs(atof(optarg)) > 0.0))
+        } else if ((option == 'T') && (abs(atof(optarg)) > 0.0))
             TEMPERATURE = abs(atof(optarg));
         else if ((option == 'n') && (abs(atoi(optarg)) > 0))
             NUM_WATERS = abs(atoi(optarg));
