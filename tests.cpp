@@ -157,8 +157,8 @@ void test_write_to_vmd_file(int argc, char** argv) {
     initialize_constants();
     initialize_waters();
     write_config_to_vmd_file();
-    for (int h = 0; h < 10; h++)
-        mc_sweep();
+    NUM_EQUILIBRATION_SWEEPS = 50;
+    mc_equilibrate();
     write_config_to_vmd_file();
     close_vmd_file();
 
