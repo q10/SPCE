@@ -7,10 +7,10 @@ void run_tests(int argc, char** argv) {
     //test_energy_of_water_with_index();
     //test_calculate_energy();
     //test_run_mc();
-    //test_radial_dist_sampler();
-    test_write_to_vmd_file(argc, argv);
-    test_write_config_file(argc, argv);
-    test_read_config_file(argc, argv);
+    test_radial_dist_sampler();
+    //test_write_to_vmd_file(argc, argv);
+    //test_write_config_file(argc, argv);
+    //test_read_config_file(argc, argv);
     cout << "---- END TEST SUITE ----" << endl;
     return;
 }
