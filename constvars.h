@@ -29,12 +29,16 @@ extern const double WATER_EPSILON;      // energy unit (kJ/mol)
 extern const double WATER_DENSITY;      // particles per Angstroms^3
 extern const double WATER_Q_H;          // charge of hydrogen (elementary charge unit)
 extern const double WATER_Q_O;          // charge of oxygen (elementary charge unit)
+extern const double OH_LENGTH;          // oxygen-hydrogen bond length (Angstroms)
+extern const double HOH_ANGLE_DEG;      // HOH bond angle (degrees)
 
 // other system variables
-extern const int EQUILIBRATION_TIME;    // number of MC sweeps
+
 
 // state variables
 extern double ** water_O_positions;     // table of oxygen positions
+extern double ** water_H1_positions;
+extern double ** water_H2_positions;
 extern double LJEnergy;                 // Lennard-Jones Potential (kJ/mol)
 
 #endif	/* CONSTVARS_H */

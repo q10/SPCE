@@ -19,15 +19,26 @@ double energy_of_water_with_index(int index) {
 }
 
 void calculate_energy() {
-    double dx, dy, dz, r, tmp_energy = 0.0;
+    double dx, dy, dz, old_dx, old_dy, old_dz, r, tmp_energy = 0.0;
+    bool same_x=false, same_y=false, same_z=false;
+    
     for (int i = 0; i < NUM_WATERS - 1; i++) {
         for (int j = i + 1; j < NUM_WATERS; j++) {
-            dx = abs(water_O_positions[i][0] - water_O_positions[j][0]);
-            dy = abs(water_O_positions[i][1] - water_O_positions[j][1]);
-            dz = abs(water_O_positions[i][2] - water_O_positions[j][2]);
-            dx -= BOX_LENGTH * ROUND(dx / BOX_LENGTH);
-            dy -= BOX_LENGTH * ROUND(dy / BOX_LENGTH);
-            dz -= BOX_LENGTH * ROUND(dz / BOX_LENGTH);
+            old_dx = abs(water_O_positions[i][0] - water_O_positions[j][0]);
+            old_dy = abs(water_O_positions[i][1] - water_O_positions[j][1]);
+            old_dz = abs(water_O_positions[i][2] - water_O_positions[j][2]);
+            dx -= BOX_LENGTH * ROUND(old_dx / BOX_LENGTH);
+            dy -= BOX_LENGTH * ROUND(old_dy / BOX_LENGTH);
+            dz -= BOX_LENGTH * ROUND(old_dz / BOX_LENGTH);
+            
+            if (dx == old_dx)
+                same_x = true;
+            if (dy == old_dy)
+                same_y = true;
+            if (dz == old_dz)
+                same_z = true;            
+            
+            // O-O LJ and Coulomb
             r = WATER_SIGMA / sqrt(dx * dx + dy * dy + dz * dz);
             tmp_energy += 4.0 * WATER_EPSILON * (pow(r, 12) - pow(r, 6));
             tmp_energy += ELECTROSTATIC_K * WATER_Q_O * WATER_Q_O / r;
