@@ -9,7 +9,7 @@ void run_tests(int argc, char** argv) {
     //test_run_mc();
     //test_radial_dist_sampler();
     //test_write_to_vmd_file(argc, argv);
-    //test_write_config_file(argc, argv);
+    //test_write_to_config_file(argc, argv);
     //test_read_config_file(argc, argv);
     cout << "---- END TEST SUITE ----\n" << endl;
     return;
@@ -168,7 +168,7 @@ void test_write_to_vmd_file(int argc, char** argv) {
     return;
 }
 
-void test_write_config_file(int argc, char** argv) {
+void test_write_to_config_file(int argc, char** argv) {
     cout << "---- BEGIN TEST - WRITE CONFIG FILE ----" << endl;
 
     read_program_flags(argc, argv);
@@ -208,8 +208,7 @@ void print_system_vars() {
     if (use_custom_output_vmd_filename)
         cout << "--output_vmd (-v) flag raised; will write VMD to \'" << output_vmd_filename << "\'" << endl;
     if (use_custom_output_config_filename)
-        cout << "--output_config (-w) flag raised; will save config to \'" << output_config_filename << "\'" << endl;
-    cout << endl;
+        cout << "--output_config (-w) flag raised; will save config to \'" << output_config_filename << "\'" << endl << endl;
     return;
 }
 

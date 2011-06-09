@@ -12,6 +12,7 @@ double energy_of_water_with_index(int index) {
             dz -= BOX_LENGTH * ROUND(dz / BOX_LENGTH);
             r = WATER_SIGMA / sqrt(dx * dx + dy * dy + dz * dz);
             energy += 4.0 * WATER_EPSILON * (pow(r, 12) - pow(r, 6));
+            energy += ELECTROSTATIC_K * WATER_Q_O * WATER_Q_O / r;
         }
     }
     return energy;
@@ -29,6 +30,7 @@ void calculate_energy() {
             dz -= BOX_LENGTH * ROUND(dz / BOX_LENGTH);
             r = WATER_SIGMA / sqrt(dx * dx + dy * dy + dz * dz);
             tmp_energy += 4.0 * WATER_EPSILON * (pow(r, 12) - pow(r, 6));
+            tmp_energy += ELECTROSTATIC_K * WATER_Q_O * WATER_Q_O / r;
         }
     }
     LJEnergy = tmp_energy;

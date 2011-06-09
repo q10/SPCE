@@ -14,11 +14,11 @@
 
 // physical constants
 extern const double BOLTZMANN_K;        // units of kJ/(mol*K)
-extern const double ELECTROSTATIC_K;   // units of (kJ*mol*Angstrom)/(elementary_charge^2) (see below for notes on obtaining this constant)
+extern const double ELECTROSTATIC_K;    // units of (kJ*mol*Angstrom)/(elementary_charge^2) (see below for notes on obtaining this constant)
 
 // system properties
-extern double TEMPERATURE;
-extern double BETA;
+extern double TEMPERATURE;              // Kelvins
+extern double BETA;                     // mol/kJ
 extern int NUM_WATERS;
 extern double BOX_LENGTH;               // box side length (Angstroms)
 extern const double DISPLACEMENT;       // max random displacement distance per attempted move (Angstroms)
@@ -31,7 +31,7 @@ extern const double WATER_Q_H;          // charge of hydrogen (elementary charge
 extern const double WATER_Q_O;          // charge of oxygen (elementary charge unit)
 
 // other system variables
-extern const int EQUILIBRATION_TIME;
+extern const int EQUILIBRATION_TIME;    // number of MC sweeps
 
 // state variables
 extern double ** water_O_positions;     // table of oxygen positions
@@ -49,5 +49,5 @@ extern double LJEnergy;                 // Lennard-Jones Potential (kJ/mol)
  bottom to meters to cancel out, and multiply this amount by 6.0221407818E23 to 
  obtain kJ/mol instead of kJ.  The resulting calculations should simplify to:
  
-((4.8032042712E-10)**2)*(6.0221407818E23)*(1E-2) 
+((4.8032042712E-10)**2)*(6.0221407818E23)*(1E-2)
  */
