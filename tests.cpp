@@ -158,8 +158,10 @@ void test_write_to_vmd_file(int argc, char** argv) {
     initialize_waters();
     write_config_to_vmd_file();
     NUM_EQUILIBRATION_SWEEPS = 50;
-    mc_equilibrate();
-    write_config_to_vmd_file();
+    for (int g = 0; g < 10; g++) {
+        mc_equilibrate();
+        write_config_to_vmd_file();
+    }
     close_vmd_file();
 
     cout << "---- END TEST - WRITE TO VMD FILE ----\n" << endl;
