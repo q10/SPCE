@@ -14,7 +14,7 @@
 
 // physical constants
 extern const double BOLTZMANN_K;        // units of kJ/(mol*K)
-extern double ELECTROSTATIC_K;   // units of (kJ*mol*Angstrom)/(elementary_charge^2) (see below for notes on obtaining this constant)
+extern const double ELECTROSTATIC_K;   // units of (kJ*mol*Angstrom)/(elementary_charge^2) (see below for notes on obtaining this constant)
 
 // system properties
 extern double TEMPERATURE;
