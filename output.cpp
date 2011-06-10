@@ -31,17 +31,17 @@ void write_config_to_vmd_file() {
     int atom_count = 0;
     for (int i = 0; i < NUM_WATERS; i++)
         VMD_FILE << ++atom_count << " 1 "
-            << water_O_positions[i][0] / BOX_LENGTH << " "
-            << water_O_positions[i][1] / BOX_LENGTH << " "
-            << water_O_positions[i][2] / BOX_LENGTH << endl
+            << water_positions[i][0] / BOX_LENGTH << " "
+            << water_positions[i][1] / BOX_LENGTH << " "
+            << water_positions[i][2] / BOX_LENGTH << endl
             << ++atom_count << " 2 "
-            << water_H1_positions[i][0] / BOX_LENGTH << " "
-            << water_H1_positions[i][1] / BOX_LENGTH << " "
-            << water_H1_positions[i][2] / BOX_LENGTH << endl
+            << water_positions[i][3] / BOX_LENGTH << " "
+            << water_positions[i][4] / BOX_LENGTH << " "
+            << water_positions[i][5] / BOX_LENGTH << endl
             << ++atom_count << " 2 "
-            << water_H2_positions[i][0] / BOX_LENGTH << " "
-            << water_H2_positions[i][1] / BOX_LENGTH << " "
-            << water_H2_positions[i][2] / BOX_LENGTH << endl;
+            << water_positions[i][6] / BOX_LENGTH << " "
+            << water_positions[i][7] / BOX_LENGTH << " "
+            << water_positions[i][8] / BOX_LENGTH << endl;
     return;
 }
 
@@ -58,17 +58,14 @@ void save_config_to_file() {
     ASSERT(OUTPUT_CONFIG_FILE, "Could not open config output file.");
 
     OUTPUT_CONFIG_FILE << "TEMPERATURE\t" << TEMPERATURE << endl;
-    for (int i = 1; i < NUM_WATERS; i++)
-        OUTPUT_CONFIG_FILE << "WATER\t" << water_O_positions[i][0]
-            << "\t" << water_O_positions[i][1]
-            << "\t" << water_O_positions[i][2]
-            << "\t" << water_H1_positions[i][0]
-            << "\t" << water_H1_positions[i][1]
-            << "\t" << water_H1_positions[i][2]
-            << "\t" << water_H2_positions[i][0]
-            << "\t" << water_H2_positions[i][1]
-            << "\t" << water_H2_positions[i][2] << endl;
-
+    
+    for (int i = 0; i < NUM_WATERS; i++) {
+        OUTPUT_CONFIG_FILE << "WATER";
+        for (int j = 0; j < 9; j++)
+                OUTPUT_CONFIG_FILE << "\t" << water_positions[i][j];
+        cout << endl;
+    }
+    
     OUTPUT_CONFIG_FILE.close();
     return;
 }

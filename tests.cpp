@@ -51,10 +51,12 @@ void test_energy_of_water_with_index() {
     cout << "---- BEGIN TEST - ENERGY AT SINGLE PARTICLE ----" << endl;
     NUM_WATERS = 2;
     BOX_LENGTH = 10.0;
-    water_O_positions = new double*[NUM_WATERS];
-    for (int i = 0; i < NUM_WATERS; i++)
-        water_O_positions[i] = new double[3];
+    water_positions = new double*[NUM_WATERS];
+    for (int i = 0; i < NUM_WATERS; i++) {
+        water_positions[i] = new double[3];
+    }
 
+    for (int i = 0; i < 3; i++)
     water_O_positions[0][0] = 0.0;
     water_O_positions[0][1] = 0.0;
     water_O_positions[0][2] = 0.0;

@@ -63,7 +63,7 @@ void load_configuration_file() {
     ifstream input_filestream(input_config_filename.c_str());
     ASSERT(input_filestream.is_open(), "Could not open input configuration file " + STRING(input_config_filename));
 
-    vector< vector< double > > particles;
+    vector< vector< double > > waters;
     int line_num = 0;
     string line, line_key;
 
@@ -89,30 +89,23 @@ void load_configuration_file() {
             while (iss >> val)
                 coords.push_back(val);
             ASSERT((int) coords.size() == 9, "Not enough coordinates on line " + STRING(line_num) + " of config file.");
-            particles.push_back(coords);
+            waters.push_back(coords);
         } else
             cerr << "WARNING: Malformed line " << line_num << " in config file - Ignoring this line." << endl;
     }
 
     // initialize constants
-    NUM_WATERS = (int) particles.size();
+    NUM_WATERS = (int) waters.size();
     initialize_constants();
 
     // convert data structure back to primitive arrays for performance optimization
-    water_O_positions = new double*[NUM_WATERS];
-    water_H1_positions = new double*[NUM_WATERS];
-    water_H2_positions = new double*[NUM_WATERS];
+    water_positions = new double*[NUM_WATERS];
 
     for (int i = 0; i < NUM_WATERS; i++) {
-        water_O_positions[i] = new double[3];
-        water_H1_positions[i] = new double[3];
-        water_H2_positions[i] = new double[3];
+        water_positions[i] = new double[9];
 
-        for (int j = 0; j < 3; j++) {
-            water_O_positions[i][j] = particles[i][j];
-            water_H1_positions[i][j] = particles[i][j + 3];
-            water_H2_positions[i][j] = particles[i][j + 6];
-        }
+        for (int j = 0; j < 9; j++)
+            water_positions[i][j] = waters[i][j];
     }
     return;
 }

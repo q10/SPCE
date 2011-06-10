@@ -36,9 +36,7 @@ extern const double HOH_ANGLE_DEG;      // HOH bond angle (degrees)
 
 
 // state variables
-extern double ** water_O_positions;     // table of oxygen positions
-extern double ** water_H1_positions;
-extern double ** water_H2_positions;
+extern double ** water_positions;     // table of oxygen positions
 extern double LJEnergy;                 // Lennard-Jones Potential (kJ/mol)
 
 #endif	/* CONSTVARS_H */

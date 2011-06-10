@@ -27,27 +27,27 @@ void initialize_constants() {
 }
 
 void initialize_waters() {
-    water_O_positions = new double*[NUM_WATERS];
-    water_H1_positions = new double*[NUM_WATERS];
-    water_H2_positions = new double*[NUM_WATERS];
-    double HOH_ANGLE_RAD = DEG2RAD(HOH_ANGLE_DEG), tmp_r = OH_LENGTH * sin(HOH_ANGLE_RAD), rand_angle_rad;
+    water_positions = new double*[NUM_WATERS];
+    double HOH_ANGLE_RAD = DEG2RAD(HOH_ANGLE_DEG);
+    double tmp_r = OH_LENGTH * sin(HOH_ANGLE_RAD), rand_angle_rad;
 
     for (int i = 0; i < NUM_WATERS; i++) {
-        water_O_positions[i] = new double[3];
-        water_H1_positions[i] = new double[3];
-        water_H2_positions[i] = new double[3];
-
+        water_positions[i] = new double[9];
+        
+        // Oxygen
         for (int j = 0; j < 3; j++)
-            water_O_positions[i][j] = RAN3() * BOX_LENGTH;
+            water_positions[i][j] = RAN3() * BOX_LENGTH;
 
-        water_H1_positions[i][0] = water_O_positions[i][0];
-        water_H1_positions[i][1] = water_O_positions[i][1];
-        water_H1_positions[i][2] = water_O_positions[i][2] + OH_LENGTH;
+        // First Hydrogen
+        water_positions[i][3] = water_positions[i][0];
+        water_positions[i][4] = water_positions[i][1];
+        water_positions[i][5] = water_positions[i][2] + OH_LENGTH;
 
+        // Second Hydrogen
         rand_angle_rad = 2.0 * M_PI * RAN3();
-        water_H2_positions[i][0] = water_H2_positions[i][0] + tmp_r * cos(rand_angle_rad);
-        water_H2_positions[i][1] = water_H2_positions[i][1] + tmp_r * sin(rand_angle_rad);
-        water_H2_positions[i][2] = water_H2_positions[i][2] + OH_LENGTH * cos(HOH_ANGLE_RAD);
+        water_positions[i][6] = water_positions[i][0] + tmp_r * cos(rand_angle_rad);
+        water_positions[i][7] = water_positions[i][1] + tmp_r * sin(rand_angle_rad);
+        water_positions[i][8] = water_positions[i][2] + OH_LENGTH * cos(HOH_ANGLE_RAD);
     }
     return;
 }

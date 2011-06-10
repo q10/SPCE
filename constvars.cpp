@@ -17,5 +17,5 @@ const double WATER_Q_O = -0.8476;
 const double OH_LENGTH = 1.0000;
 const double HOH_ANGLE_DEG = 109.47;
 
-double ** water_O_positions;
+double ** water_positions;
 double LJEnergy;

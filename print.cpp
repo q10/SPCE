@@ -21,16 +21,10 @@ void print_system_vars() {
 
 void print_system_config() {
     cout << "Atom configuration:" << endl;
-    for (int i = 0; i < NUM_WATERS; i++)
-        cout << "Water " << i + 1 << " of " << NUM_WATERS << ": " << setprecision(10)
-        << water_O_positions[i][0] << "\t"
-            << water_O_positions[i][1] << "\t"
-            << water_O_positions[i][2] << "\t"
-            << water_H1_positions[i][0] << "\t"
-            << water_H1_positions[i][1] << "\t"
-            << water_H1_positions[i][2] << "\t"
-            << water_H2_positions[i][0] << "\t"
-            << water_H2_positions[i][1] << "\t"
-            << water_H2_positions[i][2] << endl;
+    for (int i = 0; i < NUM_WATERS; i++) {
+        cout << "Water " << i + 1 << " of " << NUM_WATERS << ": ";
+        for (int j = 0; j < 9; j++)
+            cout << setprecision(10) << water_positions[i][j] << j == 8 ? endl : "\t";
+    }
     return;
 }
