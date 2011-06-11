@@ -2,9 +2,9 @@
 
 void run_tests(int argc, char** argv) {
     cout << "\n---- BEGIN TEST SUITE ----\n" << endl;
-    //test_RANDGAUSS();
-    //test_read_program_flags(argc, argv);
-    //test_energy_of_water_with_index();
+    //test_RANDGAUSS();                         // PASS
+    //test_read_program_flags(argc, argv);      // PASS
+    test_energy_of_water_with_index();
     //test_calculate_energy();
     //test_run_mc();
     //test_radial_dist_sampler();
@@ -52,27 +52,35 @@ void test_energy_of_water_with_index() {
     NUM_WATERS = 2;
     BOX_LENGTH = 10.0;
     water_positions = new double*[NUM_WATERS];
-    for (int i = 0; i < NUM_WATERS; i++) {
-        water_positions[i] = new double[3];
-    }
-
-    for (int i = 0; i < 3; i++)
-    water_O_positions[0][0] = 0.0;
-    water_O_positions[0][1] = 0.0;
-    water_O_positions[0][2] = 0.0;
-
-    water_O_positions[1][0] = 9.0;
-    water_O_positions[1][1] = 9.0;
-    water_O_positions[1][2] = 9.0;
 
     for (int i = 0; i < NUM_WATERS; i++)
-        cout << "Energy of particle " << setprecision(10) << i << " (kJ):"
+        water_positions[i] = new double[3];
+
+    // First water - Non-realistic coords are given for easy calculation check
+    for (int i = 0; i < 3; i++)
+        water_positions[0][i] = 1.0;
+    for (int i = 3; i < 6; i++)
+        water_positions[0][i] = 0.0;
+    for (int i = 6; i < 9; i++)
+        water_positions[0][i] = 2.0;
+
+    // Second water
+    for (int i = 0; i < 3; i++)
+        water_positions[1][i] = 5.0;
+    for (int i = 3; i < 6; i++)
+        water_positions[1][i] = 9.0;
+    for (int i = 6; i < 9; i++)
+        water_positions[1][i] = 9.0;
+    water_positions[1][8] = 8.0;
+    
+    for (int i = 0; i < NUM_WATERS; i++)
+        cout << "Energy of water #" << setprecision(10) << i << " (kJ):"
             << energy_of_water_with_index(i) << endl;
 
     cout << "---- END TEST - ENERGY AT SINGLE PARTICLE ----\n" << endl;
     return;
 }
-
+/*
 void test_calculate_energy() {
     cout << "---- BEGIN TEST - CALCULATE SYSTEM ENERGY ----" << endl;
     NUM_WATERS = 4;
@@ -194,3 +202,4 @@ void test_read_config_file(int argc, char** argv) {
     cout << "---- END TEST - READ CONFIG FILE ----\n" << endl;
     return;
 }
+*/

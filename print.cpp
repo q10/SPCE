@@ -23,8 +23,13 @@ void print_system_config() {
     cout << "Atom configuration:" << endl;
     for (int i = 0; i < NUM_WATERS; i++) {
         cout << "Water " << i + 1 << " of " << NUM_WATERS << ": ";
-        for (int j = 0; j < 9; j++)
-            cout << setprecision(10) << water_positions[i][j] << j == 8 ? endl : "\t";
+        for (int j = 0; j < 9; j++) {
+            cout << setprecision(10) << water_positions[i][j];
+            if (j == 8)
+                cout << endl;
+            else
+                cout << "\t";
+        }
     }
     return;
 }

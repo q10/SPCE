@@ -31,7 +31,7 @@ inline void mc_sweep() {
         // save old position
         double tmp_old_position[9];
         for (int j = 0; j < 9; j++) {
-            tmp_old_position = water_positions[rand_i][j];
+            tmp_old_position[j] = water_positions[rand_i][j];
             water_positions[rand_i][j] = fmod(water_positions[rand_i][j] + (DISPLACEMENT * (RAN3() - 0.5)), BOX_LENGTH);
         }
         

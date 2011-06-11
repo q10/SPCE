@@ -7,13 +7,14 @@ double energy_of_water_with_index(int index) {
             bool use_same_x = false, use_same_y = false, use_same_z = false;
             
             // Loop over atoms within the two waters
-            for (int skip = 0; skip < 9; skip += 3) {
-                for (int skip2 = 0; skip2 < 9; skip += 3) {
-                    dx = old_dx = abs(water_positions[index][skip] - water_positions[i][skip2]);
-                    dy = old_dy = abs(water_positions[index][skip + 1] - water_positions[i][skip2 + 1]);
-                    dz = old_dz = abs(water_positions[index][skip + 2] - water_positions[i][skip2 + 2]);
+            for (int atom = 0; atom < 9; atom += 3) {
+                for (int atom2 = 0; atom2 < 9; atom += 3) {
+                    dx = old_dx = abs(water_positions[index][atom] - water_positions[i][atom2]);
+                    dy = old_dy = abs(water_positions[index][atom + 1] - water_positions[i][atom2 + 1]);
+                    dz = old_dz = abs(water_positions[index][atom + 2] - water_positions[i][atom2 + 2]);
 
-                    if (skip == 0 and skip2 == 0) {
+                    // Fix the distances to use the same nearest mirror image for each molecule based on O-O distance
+                    if (atom == 0 and atom2 == 0) {
                         dx -= BOX_LENGTH * ROUND(dx / BOX_LENGTH);
                         dy -= BOX_LENGTH * ROUND(dy / BOX_LENGTH);
                         dz -= BOX_LENGTH * ROUND(dz / BOX_LENGTH);
@@ -35,11 +36,11 @@ double energy_of_water_with_index(int index) {
                     r = sqrt(dx * dx + dy * dy + dz * dz);                    
                     
                     // Covers the O-O case, the H-O/O-H case, and the H-H case
-                    if (skip == 0 and skip2 == 0) {                        
+                    if (atom == 0 and atom2 == 0) {                        
                         r2 = WATER_SIGMA / r;
                         energy += 4.0 * WATER_EPSILON * (pow(r2, 12) - pow(r2, 6));
                         energy += ELECTROSTATIC_K * WATER_Q_O * WATER_Q_O / r;
-                    } else if (skip == 0 or skip2 == 0)
+                    } else if (atom == 0 or atom2 == 0)
                         energy += ELECTROSTATIC_K * WATER_Q_O * WATER_Q_H / r;
                     else
                         energy += ELECTROSTATIC_K * WATER_Q_H * WATER_Q_H / r;                    
@@ -59,14 +60,14 @@ void calculate_energy() {
             bool use_same_x = false, use_same_y = false, use_same_z = false;
 
             // Loop over atoms within the two waters
-            for (int skip = 0; skip < 9; skip += 3) {
-                for (int skip2 = 0; skip2 < 9; skip += 3) {
-                    dx = old_dx = abs(water_positions[i][skip] - water_positions[j][skip2]);
-                    dy = old_dy = abs(water_positions[i][skip + 1] - water_positions[j][skip2 + 1]);
-                    dz = old_dz = abs(water_positions[i][skip + 2] - water_positions[j][skip2 + 2]);
+            for (int atom = 0; atom < 9; atom += 3) {
+                for (int atom2 = 0; atom2 < 9; atom += 3) {
+                    dx = old_dx = abs(water_positions[i][atom] - water_positions[j][atom2]);
+                    dy = old_dy = abs(water_positions[i][atom + 1] - water_positions[j][atom2 + 1]);
+                    dz = old_dz = abs(water_positions[i][atom + 2] - water_positions[j][atom2 + 2]);
 
                     // Fix the distances to use the same nearest mirror image for each molecule based on O-O distance
-                    if (skip == 0 and skip2 == 0) {
+                    if (atom == 0 and atom2 == 0) {
                         dx -= BOX_LENGTH * ROUND(dx / BOX_LENGTH);
                         dy -= BOX_LENGTH * ROUND(dy / BOX_LENGTH);
                         dz -= BOX_LENGTH * ROUND(dz / BOX_LENGTH);
@@ -88,11 +89,11 @@ void calculate_energy() {
                     r = sqrt(dx * dx + dy * dy + dz * dz);
                     
                     // Covers the O-O case, the H-O/O-H case, and the H-H case (LJ is only counted in O-O case
-                    if (skip == 0 and skip2 == 0) {                        
+                    if (atom == 0 and atom2 == 0) {
                         r2 = WATER_SIGMA / r;
                         tmp_energy += 4.0 * WATER_EPSILON * (pow(r2, 12) - pow(r2, 6));
                         tmp_energy += ELECTROSTATIC_K * WATER_Q_O * WATER_Q_O / r;
-                    } else if (skip == 0 or skip2 == 0)
+                    } else if (atom == 0 or atom2 == 0)
                         tmp_energy += ELECTROSTATIC_K * WATER_Q_O * WATER_Q_H / r;
                     else
                         tmp_energy += ELECTROSTATIC_K * WATER_Q_H * WATER_Q_H / r;                    
@@ -103,6 +104,11 @@ void calculate_energy() {
     LJEnergy = tmp_energy;
     return;
 }
+
+//inline double energy_between_two_waters(int i, int j) {
+
+//}
+
 
 void update_energy(double old_energy_diff, double new_energy_diff) {
     LJEnergy += (-old_energy_diff) + new_energy_diff;
