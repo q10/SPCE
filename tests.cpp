@@ -54,7 +54,7 @@ void test_energy_of_water_with_index() {
     water_positions = new double*[NUM_WATERS];
 
     for (int i = 0; i < NUM_WATERS; i++)
-        water_positions[i] = new double[3];
+        water_positions[i] = new double[9];
 
     // First water - Non-realistic coords are given for easy calculation check
     for (int i = 0; i < 3; i++)

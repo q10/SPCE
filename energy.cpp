@@ -8,7 +8,7 @@ double energy_of_water_with_index(int index) {
             
             // Loop over atoms within the two waters
             for (int atom = 0; atom < 9; atom += 3) {
-                for (int atom2 = 0; atom2 < 9; atom += 3) {
+                for (int atom2 = 0; atom2 < 9; atom2 += 3) {
                     dx = old_dx = abs(water_positions[index][atom] - water_positions[i][atom2]);
                     dy = old_dy = abs(water_positions[index][atom + 1] - water_positions[i][atom2 + 1]);
                     dz = old_dz = abs(water_positions[index][atom + 2] - water_positions[i][atom2 + 2]);
