@@ -56,7 +56,7 @@ void test_energy_of_water_with_index() {
     for (int i = 0; i < NUM_WATERS; i++)
         water_positions[i] = new double[9];
 
-    // First water - Non-realistic coords are given for easy calculation check
+    // First water - Non-realistic coordinates are given for easy calculation check
     for (int i = 0; i < 3; i++)
         water_positions[0][i] = 1.0;
     for (int i = 3; i < 6; i++)
@@ -72,7 +72,15 @@ void test_energy_of_water_with_index() {
     for (int i = 6; i < 9; i++)
         water_positions[1][i] = 9.0;
     water_positions[1][8] = 8.0;
-    
+
+    cout << "Case 1 (O-O distance < BOX_LENGTH/2):" << endl;
+    for (int i = 0; i < NUM_WATERS; i++)
+        cout << "Energy of water #" << setprecision(10) << i << " (kJ):"
+            << energy_of_water_with_index(i) << endl;
+
+    for (int i = 0; i < 3; i++)
+        water_positions[1][i] = 8.0;
+    cout << "\nCase 2 (O-O distance > BOX_LENGTH/2):" << endl;
     for (int i = 0; i < NUM_WATERS; i++)
         cout << "Energy of water #" << setprecision(10) << i << " (kJ):"
             << energy_of_water_with_index(i) << endl;
@@ -202,4 +210,4 @@ void test_read_config_file(int argc, char** argv) {
     cout << "---- END TEST - READ CONFIG FILE ----\n" << endl;
     return;
 }
-*/
+ */
