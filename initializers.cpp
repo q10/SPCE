@@ -7,7 +7,7 @@ void initialize() {
         initialize_constants();
         initialize_waters();
     }
-    calculate_energy();
+    calculate_and_init_energy();
 
     initialize_radial_dist_sampler();
 
@@ -22,7 +22,6 @@ void initialize() {
 void initialize_constants() {
     BETA = 1.0 / (BOLTZMANN_K * TEMPERATURE);
     BOX_LENGTH = pow(NUM_WATERS / WATER_DENSITY, 1.0 / 3.0);
-    LJEnergy = 0.0;
     return;
 }
 

@@ -11,7 +11,8 @@
 
 double energy_of_water_with_index(int index);
 double energy_between_two_waters(int i, int j);
-void calculate_energy();
+void calculate_and_init_energy();
+double energy_between_two_waters(int i, int j);
 void update_energy(double old_energy_diff, double new_energy_diff);
 
 #endif	/* ENERGY_H */

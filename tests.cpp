@@ -4,13 +4,12 @@ void run_tests(int argc, char** argv) {
     cout << "\n---- BEGIN TEST SUITE ----\n" << endl;
     //test_RANDGAUSS();                         // PASS
     //test_read_program_flags(argc, argv);      // PASS
-    test_energy_of_water_with_index();
-    //test_calculate_energy();
+    //test_energy_of_water_with_index();        // PASS
     //test_run_mc();
     //test_radial_dist_sampler();
-    //test_write_to_vmd_file(argc, argv);
-    //test_write_to_config_file(argc, argv);
-    //test_read_config_file(argc, argv);
+    //test_write_to_vmd_file(argc, argv);       // PASS
+    //test_write_to_config_file(argc, argv);    // PASS
+    //test_read_config_file(argc, argv);        // PASS
     cout << "---- END TEST SUITE ----\n" << endl;
     return;
 }
@@ -88,66 +87,20 @@ void test_energy_of_water_with_index() {
     cout << "---- END TEST - ENERGY AT SINGLE PARTICLE ----\n" << endl;
     return;
 }
-/*
-void test_calculate_energy() {
-    cout << "---- BEGIN TEST - CALCULATE SYSTEM ENERGY ----" << endl;
-    NUM_WATERS = 4;
-    BOX_LENGTH = 10.0;
-    water_O_positions = new double*[NUM_WATERS];
-    for (int i = 0; i < NUM_WATERS; i++)
-        water_O_positions[i] = new double[3];
-
-    water_O_positions[0][0] = 0.0;
-    water_O_positions[0][1] = 0.0;
-    water_O_positions[0][2] = 0.0;
-
-    water_O_positions[1][0] = 9.0;
-    water_O_positions[1][1] = 9.0;
-    water_O_positions[1][2] = 9.0;
-
-    water_O_positions[2][0] = 1.0;
-    water_O_positions[2][1] = 2.0;
-    water_O_positions[2][2] = 3.0;
-
-    water_O_positions[3][0] = 3.0;
-    water_O_positions[3][1] = 1.0;
-    water_O_positions[3][2] = 5.0;
-
-    calculate_energy();
-    cout << "System Energy: " << setprecision(10) << LJEnergy << endl;
-    cout << "---- END TEST - CALCULATE SYSTEM ENERGY ----\n" << endl;
-    return;
-}
 
 void test_run_mc() {
     cout << "---- BEGIN TEST - MC STEP ----" << endl;
-    NUM_WATERS = 4;
+
+    NUM_WATERS = 200;
+    initialize_waters();
     BOX_LENGTH = 10.0;
-    water_O_positions = new double*[NUM_WATERS];
-    for (int i = 0; i < NUM_WATERS; i++)
-        water_O_positions[i] = new double[3];
-
-    water_O_positions[0][0] = 0.0;
-    water_O_positions[0][1] = 0.0;
-    water_O_positions[0][2] = 0.0;
-
-    water_O_positions[1][0] = 9.0;
-    water_O_positions[1][1] = 9.0;
-    water_O_positions[1][2] = 9.0;
-
-    water_O_positions[2][0] = 1.0;
-    water_O_positions[2][1] = 2.0;
-    water_O_positions[2][2] = 3.0;
-
-    water_O_positions[3][0] = 3.0;
-    water_O_positions[3][1] = 1.0;
-    water_O_positions[3][2] = 5.0;
-
-    calculate_energy();
+    NUM_MC_SWEEPS = 1;
+    calculate_and_init_energy();    
     for (int k = 0; k < 10000; k++) {
         run_mc();
         cout << "Current system energy: " << setprecision(10) << LJEnergy << endl;
     }
+    
     cout << "---- END TEST - MC STEPPING ----\n" << endl;
     return;
 }
@@ -203,11 +156,10 @@ void test_read_config_file(int argc, char** argv) {
 
     input_config_filename = "sample.config";
     load_configuration_file();
-    calculate_energy();
+    calculate_and_init_energy();
     print_system_vars();
     print_system_config();
 
     cout << "---- END TEST - READ CONFIG FILE ----\n" << endl;
     return;
 }
- */

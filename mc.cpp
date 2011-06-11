@@ -28,11 +28,14 @@ inline void mc_sweep() {
         int rand_i = RANDINT(0, NUM_WATERS);
         double old_energy_diff = energy_of_water_with_index(rand_i);
         
-        // save old position
-        double tmp_old_position[9];
+        // save old position and random displacement
+        double tmp_old_position[9], rand_displacement[3];
+        for (int j = 0; j < 3; j++)
+            rand_displacement[j] = DISPLACEMENT * (RAN3() - 0.5);
+        
         for (int j = 0; j < 9; j++) {
             tmp_old_position[j] = water_positions[rand_i][j];
-            water_positions[rand_i][j] = fmod(water_positions[rand_i][j] + (DISPLACEMENT * (RAN3() - 0.5)), BOX_LENGTH);
+            water_positions[rand_i][j] = fmod(water_positions[rand_i][j] + rand_displacement[j%3], BOX_LENGTH);
         }
         
         // calculate difference from new energy and attempt to move particle with acceptance probability
