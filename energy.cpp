@@ -21,35 +21,20 @@ void calculate_and_init_energy() {
 }
 
 inline double energy_between_two_waters(int i, int j) {
-    double dx, dy, dz, old_dx, old_dy, old_dz, r, r2, tmp_energy = 0.0;
-    bool use_same_x = false, use_same_y = false, use_same_z = false;
+    static double dx, dy, dz, r, r2, tmp_energy, **coords = new double*[2];
+    for (int k = 0; k < 2; k++)
+        coords[k] = new double[9];
+    tmp_energy = 0.0;
+
+    // Set the coordinates in nearest mirror image convention in real non-modular space
+    get_corrected_coords(coords, i, j);
 
     // Loop over atoms within the two waters
     for (int atom = 0; atom < 9; atom += 3) {
         for (int atom2 = 0; atom2 < 9; atom2 += 3) {
-            dx = old_dx = abs(water_positions[i][atom] - water_positions[j][atom2]);
-            dy = old_dy = abs(water_positions[i][atom + 1] - water_positions[j][atom2 + 1]);
-            dz = old_dz = abs(water_positions[i][atom + 2] - water_positions[j][atom2 + 2]);
-
-            // Fix the distances to use the same nearest mirror image for each molecule based on O-O distance
-            if (atom == 0 and atom2 == 0) {
-                dx -= BOX_LENGTH * ROUND(dx / BOX_LENGTH);
-                dy -= BOX_LENGTH * ROUND(dy / BOX_LENGTH);
-                dz -= BOX_LENGTH * ROUND(dz / BOX_LENGTH);
-                if (dx == old_dx)
-                    use_same_x = true;
-                if (dy == old_dy)
-                    use_same_y = true;
-                if (dz == old_dz)
-                    use_same_z = true;
-            } else {
-                if (!use_same_x)
-                    dx = BOX_LENGTH - old_dx;
-                if (!use_same_y)
-                    dy = BOX_LENGTH - old_dy;
-                if (!use_same_z)
-                    dz = BOX_LENGTH - old_dz;
-            }
+            dx = abs(coords[0][atom] - coords[1][atom2]);
+            dy = abs(coords[0][atom + 1] - coords[1][atom2 + 1]);
+            dz = abs(coords[0][atom + 2] - coords[1][atom2 + 2]);
 
             r = sqrt(dx * dx + dy * dy + dz * dz);
 
@@ -65,6 +50,39 @@ inline double energy_between_two_waters(int i, int j) {
         }
     }
     return tmp_energy;
+}
+
+inline void get_corrected_coords(double ** coords, int i, int j) {
+    static double dOOr;
+
+    // Copy coordinates over for work
+    for (int h = 0; h < 9; h++)
+        coords[0][h] = water_positions[i][h];
+    for (int h = 0; h < 9; h++)
+        coords[1][h] = water_positions[j][h];
+
+    // Fix the O-O distance in non-mod space such that nearest mirror image convention is obeyed
+    for (int m = 0; m < 3; m++) {
+        dOOr = coords[i][m] - coords[j][m];
+        if (dOOr > HALF_BOX_LENGTH)
+            coords[i][m] -= BOX_LENGTH;
+        if (dOOr < -HALF_BOX_LENGTH)
+            coords[i][m] += BOX_LENGTH;
+    }
+
+    // Fix the H's accordingly, so they don't appear to be disconnected from their oxygens
+    for (int m = 3; m < 9; m++) {
+        while (coords[i][m] - coords[i][m % 3] > OH_LENGTH)
+            coords[i][m] -= BOX_LENGTH;
+        while (coords[i][m] - coords[i][m % 3] < -OH_LENGTH)
+            coords[i][m] += BOX_LENGTH;
+        
+        while (coords[j][m] - coords[j][m % 3] > OH_LENGTH)
+            coords[j][m] -= BOX_LENGTH;
+        while (coords[j][m] - coords[j][m % 3] < -OH_LENGTH)
+            coords[j][m] += BOX_LENGTH;
+    }
+    return;
 }
 
 void update_energy(double old_energy_diff, double new_energy_diff) {

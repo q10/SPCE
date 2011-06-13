@@ -9,11 +9,6 @@
 
 int main(int argc, char** argv) {
     run_tests(argc, argv);
-    string s;
-    if (s.compare("") == 0)
-        cout<<"true\n";
-    else
-        cout<<"false\n";
     /*
     read_program_flags(argc, argv);
     initialize();    

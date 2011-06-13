@@ -90,7 +90,7 @@ double RANDGAUSS(double mean, double stdev) {
     }
 }
 
-std::string TIMESTAMP() {
+string TIMESTAMP() {
     char the_date[BUF_SIZE];
     the_date[0] = '\0';
     time_t now = time(NULL);
@@ -99,10 +99,10 @@ std::string TIMESTAMP() {
         strftime(the_date, BUF_SIZE, "%Y%m%d_%H%M", localtime(&now));
     }
 
-    return std::string(the_date);
+    return string(the_date);
 }
 
-void ASSERT(bool expression, std::string error_msg) {
+void ASSERT(bool expression, string error_msg) {
     if (!expression) {
         cerr << "\nFATAL: " << error_msg << endl
                 << "\nPREMATURELY TERMINATING PROGRAM...\n" << endl;

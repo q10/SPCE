@@ -157,8 +157,7 @@ void test_read_config_file(int argc, char** argv) {
     input_config_filename = "sample.config";
     load_configuration_file();
     calculate_and_init_energy();
-    print_system_vars();
-    print_system_config();
+    print_all();
 
     cout << "---- END TEST - READ CONFIG FILE ----\n" << endl;
     return;

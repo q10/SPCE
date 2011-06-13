@@ -36,6 +36,9 @@ The following program flags are allowed for a customized simulation.
 
 -t:: System temperature (Kelvin)
 -n:: Number of waters in system
+-r:: Specify the system configuration file to import
+-w:: Specify the name of the file to export the system configuration
+-v:: Specify the name of the VMD file to export the system configuration
 
 Example Usage:
 

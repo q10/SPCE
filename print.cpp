@@ -1,5 +1,11 @@
 #include "common.h"
 
+void print_all() {
+    print_system_vars();
+    print_program_flags();
+    return;
+}
+
 void print_system_vars() {
     cout << "System temperature (K): " << setprecision(10) << TEMPERATURE << endl
             << "Number of water particles: " << NUM_WATERS << endl
@@ -9,7 +15,10 @@ void print_system_vars() {
             << "Number of single particle move attempts per MC sweep: " << NUM_MC_ATTEMPTS_PER_SWEEP << endl
             << "Number of MC sweeps: " << NUM_MC_SWEEPS << endl
             << "Number of equilibration sweeps: " << NUM_EQUILIBRATION_SWEEPS << endl << endl;
+    return;
+}
 
+void print_program_flags() {
     if (using_input_config_file)
         cout << "--input (-r) flag raised; using file \'" << input_config_filename << "\'" << endl;
     if (use_custom_output_vmd_filename)

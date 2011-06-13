@@ -12,6 +12,7 @@ void initialize() {
     initialize_radial_dist_sampler();
 
     print_system_vars();
+    print_program_flags();
 
     if (!using_input_config_file)
         mc_equilibrate();

@@ -9,8 +9,9 @@
 #ifndef PRINT_H
 #define	PRINT_H
 
+void print_all();
 void print_system_vars();
+void print_program_flags();
 void print_system_config();
-
 
 #endif	/* PRINT_H */
