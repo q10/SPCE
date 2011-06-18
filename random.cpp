@@ -90,6 +90,27 @@ double RANDGAUSS(double mean, double stdev) {
     }
 }
 
+double * RANDUNITVECT() {
+    double * vector = new double[3];
+    double rx, ry, r0, rz, r2 = 2.0;
+    while (r2 >= 1.0) {
+        rx = 1 - 2 * RAN3();
+        ry = 1 - 2 * RAN3();
+        r2 = rx * rx + ry*ry;
+    }
+
+    r0 = 2 * sqrt(1 - r2);
+    rx *= r0;
+    ry *= r0;
+    rz = 1 - 2 * r2;
+
+    vector[0] = rx;
+    vector[1] = ry;
+    vector[2] = rz;
+
+    return vector;
+}
+
 string TIMESTAMP() {
     char the_date[BUF_SIZE];
     the_date[0] = '\0';

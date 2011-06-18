@@ -16,5 +16,7 @@ extern int NUM_EQUILIBRATION_SWEEPS;    // number of MC sweeps to run to equilib
 void run_mc();
 void mc_equilibrate();
 void mc_sweep();
+void mc_move();
+void mc_rotate();
 
 #endif	/* MC_H */
