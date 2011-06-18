@@ -18,5 +18,7 @@ void mc_equilibrate();
 void mc_sweep();
 void mc_move();
 void mc_rotate();
+void keep_water_inside_box(int index);
+void mc_accept(int index, double old_energy_diff, double * old_position);
 
 #endif	/* MC_H */

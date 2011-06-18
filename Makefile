@@ -2,7 +2,7 @@ CC=g++
 CFLAGS=-Wall -O3
 CFLAGS2=-c
 LDFLAGS=
-SOURCES=constvars.cpp main.cpp random.cpp input.cpp output.cpp initializers.cpp energy.cpp mc.cpp radial_dist.cpp sampling.cpp tests.cpp print.cpp
+SOURCES=constvars.cpp main.cpp random.cpp input.cpp output.cpp initializers.cpp energy.cpp rotation.cpp mc.cpp radial_dist.cpp sampling.cpp tests.cpp print.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=SPCE
 

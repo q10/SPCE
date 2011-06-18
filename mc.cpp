@@ -22,8 +22,6 @@ void mc_equilibrate() {
     return;
 }
 
-// define function in .h file if using the inline function somewhere else other than this cpp file
-
 inline void mc_sweep() {
     for (int i = 0; i < NUM_MC_ATTEMPTS_PER_SWEEP; i++) {
         if (RAN3() < 0.5)
@@ -34,13 +32,13 @@ inline void mc_sweep() {
     return;
 }
 
-inline void mc_move() {
+void mc_move() {
     int rand_i = RANDINT(0, NUM_WATERS);
-    double tmp_old_position[9], rand_displacement, old_energy_diff = energy_of_water_with_index(rand_i);
+    double old_position[9], rand_displacement, old_energy_diff = energy_of_water_with_index(rand_i);
 
     // save old position 
     for (int g = 0; g < 9; g++)
-        tmp_old_position[g] = water_positions[rand_i][g];
+        old_position[g] = water_positions[rand_i][g];
 
     // move to new position - the coords of H can be outside box limits provided that O is inside the box
     for (int j = 0; j < 3; j++) {
@@ -48,33 +46,17 @@ inline void mc_move() {
         water_positions[rand_i][j] += rand_displacement;
         water_positions[rand_i][j + 3] += rand_displacement;
         water_positions[rand_i][j + 6] += rand_displacement;
-
-        if (water_positions[rand_i][j] > BOX_LENGTH) {
-            water_positions[rand_i][j] -= BOX_LENGTH;
-            water_positions[rand_i][j + 3] -= BOX_LENGTH;
-            water_positions[rand_i][j + 6] -= BOX_LENGTH;
-        }
-
-        if (water_positions[rand_i][j] < 0) {
-            water_positions[rand_i][j] += BOX_LENGTH;
-            water_positions[rand_i][j + 3] += BOX_LENGTH;
-            water_positions[rand_i][j + 6] += BOX_LENGTH;
-        }
     }
+
+    // make sure the oxygen stays inside boundaries; otherwise shift appropriately
+    keep_water_inside_box(rand_i);
 
     // calculate difference from new energy and attempt to move particle with acceptance probability
-    double new_energy_diff = energy_of_water_with_index(rand_i);
-    if (RAN3() < exp(-BETA * (new_energy_diff - old_energy_diff)))
-        update_energy(old_energy_diff, new_energy_diff);
-    else {
-        // undo move if move not accepted
-        for (int j = 0; j < 9; j++)
-            water_positions[rand_i][j] = tmp_old_position[j];
-    }
+    mc_accept(rand_i, old_energy_diff, old_position);
     return;
 }
 
-inline void mc_rotate() {
+void mc_rotate() {
     int rand_i = RANDINT(0, NUM_WATERS);
     double old_position[9], old_energy_diff = energy_of_water_with_index(rand_i);
 
@@ -101,14 +83,41 @@ inline void mc_rotate() {
     for (int g = 0; g < 9; g++)
         water_positions[rand_i][g] += center_of_mass[g % 3];
 
+    // make sure the oxygen stays inside boundaries; otherwise shift appropriately
+    keep_water_inside_box(rand_i);
+
     // calculate difference from new energy and attempt to rotate particle with acceptance probability
-    double new_energy_diff = energy_of_water_with_index(rand_i);
+    mc_accept(rand_i, old_energy_diff, old_position);
+
+    return;
+}
+
+inline void keep_water_inside_box(int index) {
+    for (int j = 0; j < 3; j++) {
+        if (water_positions[index][j] > BOX_LENGTH) {
+            water_positions[index][j] -= BOX_LENGTH;
+            water_positions[index][j + 3] -= BOX_LENGTH;
+            water_positions[index][j + 6] -= BOX_LENGTH;
+        }
+
+        if (water_positions[index][j] < 0) {
+            water_positions[index][j] += BOX_LENGTH;
+            water_positions[index][j + 3] += BOX_LENGTH;
+            water_positions[index][j + 6] += BOX_LENGTH;
+        }
+    }
+    return;
+}
+
+inline void mc_accept(int index, double old_energy_diff, double * old_position) {
+    double new_energy_diff = energy_of_water_with_index(index);
+
     if (RAN3() < exp(-BETA * (new_energy_diff - old_energy_diff)))
         update_energy(old_energy_diff, new_energy_diff);
     else {
-        // undo rotation if rotation not accepted
+        // undo the move if move not accepted
         for (int j = 0; j < 9; j++)
-            water_positions[rand_i][j] = old_position[j];
+            water_positions[index][j] = old_position[j];
     }
 
     return;
