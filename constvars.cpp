@@ -14,6 +14,9 @@ const double WATER_EPSILON = 0.650;
 const double WATER_DENSITY = 0.0334225755;
 const double WATER_Q_H = 0.4238;
 const double WATER_Q_O = -0.8476;
+const double H_MASS = 1.0;
+const double O_MASS = 16.0;
+const double WATER_MASS = 18.0;
 const double OH_LENGTH = 1.0000;
 const double HOH_ANGLE_DEG = 109.47;
 

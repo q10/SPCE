@@ -4,7 +4,7 @@ void run_tests(int argc, char** argv) {
     cout << "\n---- BEGIN TEST SUITE ----\n" << endl;
     //test_RANDGAUSS();                         // PASS
     //test_read_program_flags(argc, argv);      // PASS
-    test_energy_of_water_with_index();        // PASS
+    //test_energy_of_water_with_index();        // PASS
     //test_run_mc();
     //test_radial_dist_sampler();
     //test_write_to_vmd_file(argc, argv);       // PASS

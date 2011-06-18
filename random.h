@@ -17,6 +17,7 @@ double MIN(double a, double b);
 double ROUND(double d);
 double RANDGAUSS(double mean, double stdev);
 double RANDGAUSS();
+double * RANDUNITVECTOR();
 
 string TIMESTAMP();
 void ASSERT(bool expression, string error_msg);

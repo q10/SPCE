@@ -90,7 +90,7 @@ double RANDGAUSS(double mean, double stdev) {
     }
 }
 
-double * RANDUNITVECT() {
+double * RANDUNITVECTOR() {
     double * vector = new double[3];
     double rx, ry, r0, rz, r2 = 2.0;
     while (r2 >= 1.0) {

@@ -44,7 +44,7 @@ inline void mc_move() {
 
     // move to new position - the coords of H can be outside box limits provided that O is inside the box
     for (int j = 0; j < 3; j++) {
-        rand_displacement = DISPLACEMENT * (2 * RAN3() - 1.0);
+        rand_displacement = DISPLACEMENT * (2.0 * RAN3() - 1.0);
         water_positions[rand_i][j] += rand_displacement;
         water_positions[rand_i][j + 3] += rand_displacement;
         water_positions[rand_i][j + 6] += rand_displacement;
@@ -75,5 +75,41 @@ inline void mc_move() {
 }
 
 inline void mc_rotate() {
+    int rand_i = RANDINT(0, NUM_WATERS);
+    double old_position[9], old_energy_diff = energy_of_water_with_index(rand_i);
+
+    double rand_theta_rad = 0.3 * M_PI * (2.0 * RAN3() - 1.0);
+    double * center_of_mass = center_of_mass_of_water_with_index(rand_i);
+    double ** rot_matrix = rotation_matrix(RANDUNITVECTOR(), rand_theta_rad);
+
+    // save old position 
+    for (int g = 0; g < 9; g++)
+        old_position[g] = water_positions[rand_i][g];
+
+    // shift water such that its center of mass is now the origin
+    for (int g = 0; g < 9; g++)
+        water_positions[rand_i][g] -= center_of_mass[g % 3];
+
+    // apply rotation matrix to all 9 coordinates of water
+    for (int g = 0; g < 9; g += 3) {
+        water_positions[rand_i][g] = rot_matrix[0][0] * old_position[g] + rot_matrix[0][1] * old_position[g + 1] + rot_matrix[0][2] * old_position[g + 2];
+        water_positions[rand_i][g + 1] = rot_matrix[1][0] * old_position[g] + rot_matrix[1][1] * old_position[g + 1] + rot_matrix[1][2] * old_position[g + 2];
+        water_positions[rand_i][g + 2] = rot_matrix[2][0] * old_position[g] + rot_matrix[2][1] * old_position[g + 1] + rot_matrix[2][2] * old_position[g + 2];
+    }
+
+    // un-shift water
+    for (int g = 0; g < 9; g++)
+        water_positions[rand_i][g] += center_of_mass[g % 3];
+
+    // calculate difference from new energy and attempt to rotate particle with acceptance probability
+    double new_energy_diff = energy_of_water_with_index(rand_i);
+    if (RAN3() < exp(-BETA * (new_energy_diff - old_energy_diff)))
+        update_energy(old_energy_diff, new_energy_diff);
+    else {
+        // undo rotation if rotation not accepted
+        for (int j = 0; j < 9; j++)
+            water_positions[rand_i][j] = old_position[j];
+    }
+
     return;
 }

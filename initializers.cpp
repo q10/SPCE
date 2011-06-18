@@ -27,13 +27,13 @@ void initialize_constants() {
 }
 
 void initialize_waters() {
-    water_positions = new double*[NUM_WATERS];
+    water_positions = new double * [NUM_WATERS];
     double HOH_ANGLE_RAD = DEG2RAD(HOH_ANGLE_DEG);
     double tmp_r = OH_LENGTH * sin(HOH_ANGLE_RAD), rand_angle_rad;
 
     for (int i = 0; i < NUM_WATERS; i++) {
         water_positions[i] = new double[9];
-        
+
         // Oxygen
         for (int j = 0; j < 3; j++)
             water_positions[i][j] = RAN3() * BOX_LENGTH;

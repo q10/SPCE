@@ -39,12 +39,12 @@
 #include "output.h"
 #include "initializers.h"
 #include "energy.h"
+#include "rotation.h"
 #include "mc.h"
 #include "radial_dist.h"
 #include "sampling.h"
 #include "print.h"
 #include "tests.h"
-
 
 using namespace std;
 
