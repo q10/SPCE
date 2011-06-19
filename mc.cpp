@@ -58,7 +58,7 @@ void mc_move() {
 
 void mc_rotate() {
     int rand_i = RANDINT(0, NUM_WATERS);
-    double old_position[9], old_energy_diff = energy_of_water_with_index(rand_i);
+    double old_position[9], tmp_position[9], old_energy_diff = energy_of_water_with_index(rand_i);
 
     double rand_theta_rad = 0.3 * M_PI * (2.0 * RAN3() - 1.0);
     double * center_of_mass = center_of_mass_of_water_with_index(rand_i);
@@ -66,17 +66,17 @@ void mc_rotate() {
 
     // save old position 
     for (int g = 0; g < 9; g++)
-        old_position[g] = water_positions[rand_i][g];
+        old_position[g] = tmp_position[g] = water_positions[rand_i][g];
 
-    // shift water such that its center of mass is now the origin (use the old_position set of coords)
+    // shift water such that its center of mass is now the origin (use the tmp_position set of coords)
     for (int g = 0; g < 9; g++)
-        old_position[g] -= center_of_mass[g % 3];
+        tmp_position[g] -= center_of_mass[g % 3];
 
     // apply rotation matrix to all 9 coordinates of water
     for (int g = 0; g < 9; g += 3) {
-        water_positions[rand_i][g] = rot_matrix[0][0] * old_position[g] + rot_matrix[0][1] * old_position[g + 1] + rot_matrix[0][2] * old_position[g + 2];
-        water_positions[rand_i][g + 1] = rot_matrix[1][0] * old_position[g] + rot_matrix[1][1] * old_position[g + 1] + rot_matrix[1][2] * old_position[g + 2];
-        water_positions[rand_i][g + 2] = rot_matrix[2][0] * old_position[g] + rot_matrix[2][1] * old_position[g + 1] + rot_matrix[2][2] * old_position[g + 2];
+        water_positions[rand_i][g] = rot_matrix[0][0] * tmp_position[g] + rot_matrix[0][1] * tmp_position[g + 1] + rot_matrix[0][2] * tmp_position[g + 2];
+        water_positions[rand_i][g + 1] = rot_matrix[1][0] * tmp_position[g] + rot_matrix[1][1] * tmp_position[g + 1] + rot_matrix[1][2] * tmp_position[g + 2];
+        water_positions[rand_i][g + 2] = rot_matrix[2][0] * tmp_position[g] + rot_matrix[2][1] * tmp_position[g + 1] + rot_matrix[2][2] * tmp_position[g + 2];
     }
 
     // un-shift water (use the water_positions[rand_i] set of coords)
@@ -86,7 +86,7 @@ void mc_rotate() {
     // make sure the oxygen stays inside boundaries; otherwise shift appropriately
     keep_water_inside_box(rand_i);
 
-    // calculate difference from new energy and attempt to rotate particle with acceptance probability
+    // calculate difference from new energy and attempt to rotate particle with acceptance probability (use old_position set of coords)
     mc_accept(rand_i, old_energy_diff, old_position);
 
     return;
