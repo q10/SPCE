@@ -18,5 +18,6 @@ void test_radial_dist_sampler();
 void test_write_to_vmd_file(int argc, char** argv);
 void test_write_to_config_file(int argc, char** argv);
 void test_read_config_file(int argc, char** argv);
+void test_rotation();
 
 #endif	/* TESTS_H */
