@@ -166,15 +166,15 @@ void test_read_config_file(int argc, char** argv) {
 
 void test_rotation() {
     cout << "---- BEGIN TEST - ROTATION ----" << endl;
-    
+
     NUM_WATERS = 2;
     BOX_LENGTH = 10.0;
     initialize_waters();
     for (int k = 0; k < 10000; k++) {
         mc_rotate();
-        cout << water_positions[0][0] << ", " << water_positions[0][1] << ", " << water_positions[0][2] << endl;
+        cout << setprecision(10) << water_positions[0][0] << ", " << water_positions[0][1] << ", " << water_positions[0][2] << endl;
     }
-    
+
     cout << "---- END TEST - ROTATION ----\n" << endl;
 
 }
