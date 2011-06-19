@@ -4,7 +4,7 @@ void run_tests(int argc, char** argv) {
     cout << "\n---- BEGIN TEST SUITE ----\n" << endl;
     //test_RANDGAUSS();                         // PASS
     //test_read_program_flags(argc, argv);      // PASS
-    test_energy_of_water_with_index(); // PASS
+    //test_energy_of_water_with_index(); // PASS
     //test_run_mc();
     //test_radial_dist_sampler();
     //test_write_to_vmd_file(argc, argv);       // PASS
@@ -168,13 +168,13 @@ void test_rotation() {
     cout << "---- BEGIN TEST - ROTATION ----" << endl;
     
     NUM_WATERS = 2;
-    initialize_waters();
     BOX_LENGTH = 10.0;
+    initialize_waters();
     for (int k = 0; k < 10000; k++) {
         mc_rotate();
         cout << water_positions[0][0] << ", " << water_positions[0][1] << ", " << water_positions[0][2] << endl;
     }
     
-    cout << "---- BEGIN TEST - ROTATION ----\n" << endl;
+    cout << "---- END TEST - ROTATION ----\n" << endl;
 
 }
