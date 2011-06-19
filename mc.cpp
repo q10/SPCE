@@ -79,7 +79,7 @@ void mc_rotate() {
         water_positions[rand_i][g + 2] = rot_matrix[2][0] * old_position[g] + rot_matrix[2][1] * old_position[g + 1] + rot_matrix[2][2] * old_position[g + 2];
     }
 
-    // un-shift water (use the water_positions[rand_i] and old_position set of coords)
+    // un-shift water (use the water_positions[rand_i]), and restore old_position to proper original coords)
     for (int g = 0; g < 9; g++) {
         water_positions[rand_i][g] += center_of_mass[g % 3];
         old_position[g] += center_of_mass[g % 3];
