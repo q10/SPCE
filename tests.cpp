@@ -167,7 +167,7 @@ void test_read_config_file(int argc, char** argv) {
 void test_rotation() {
     cout << "---- BEGIN TEST - ROTATION ----" << endl;
 
-    NUM_WATERS = 2;
+    NUM_WATERS = 1;
     BOX_LENGTH = 10.0;
     initialize_waters();
     for (int k = 0; k < 10000; k++) {
