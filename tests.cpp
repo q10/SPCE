@@ -10,7 +10,8 @@ void run_tests(int argc, char** argv) {
     //test_write_to_vmd_file(argc, argv);       // PASS
     //test_write_to_config_file(argc, argv);    // PASS
     //test_read_config_file(argc, argv);        // PASS
-    test_rotation();
+    //test_rotation();                          // PASS
+    test_mc_acceptances();
     cout << "---- END TEST SUITE ----\n" << endl;
     return;
 }
@@ -184,8 +185,8 @@ void test_mc_acceptances() {
     initialize_constants();
     initialize_waters();
     NUM_EQUILIBRATION_SWEEPS = 100;
-    double displacement_distances[] = {0.01, 0.02, 0.04, 0.08, 1.2, 1.6};
-    double displacement_rotations[] = {0.2 * M_PI, 0.25 * M_PI, 0.3 * M_PI, 0.35 * M_PI, 0.4 * M_PI, 0.5 * M_PI};
+    double displacement_distances[] = {0.2, 0.22, 0.24, 0.26, 0.28, 0.3};
+    double displacement_rotations[] = {0.15 * M_PI, 0.16 * M_PI, 0.17 * M_PI, 0.175 * M_PI, 0.18 * M_PI, 0.19 * M_PI};
     
     for (int g = 0; g < 6; g++) {
         DISPLACEMENT_DISTANCE = displacement_distances[g];
