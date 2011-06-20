@@ -111,6 +111,10 @@ void mc_rotate() {
     // make sure the oxygen stays inside boundaries; otherwise shift appropriately
     keep_water_inside_box(rand_i);
 
+    // deallocate memory
+    delete center_of_mass;
+    delete rot_matrix;
+    
     // calculate difference from new energy and attempt to rotate particle with acceptance probability (use old_position set of coords)
     if (mc_accept(rand_i, old_energy_diff, old_position))
         num_successful_mc_rotations++;

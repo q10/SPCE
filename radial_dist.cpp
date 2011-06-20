@@ -45,3 +45,10 @@ void compute_radial_dist_results() {
     }
     return;
 }
+
+void print_radial_dist_results() {
+    cout << "\nr(Angstroms)\tg(r)" << endl;
+    for (int k = 0; k < radial_dist_num_his_bars; k++)
+        cout << setprecision(10) << radial_dist_distance[k] << "\t" << radial_dist_data[k] << endl;
+    return;
+}

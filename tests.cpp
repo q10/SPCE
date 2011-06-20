@@ -113,10 +113,7 @@ void test_radial_dist_sampler() {
     initialize();
     run_mc();
     compute_radial_dist_results();
-
-    cout << "\nr(Angstroms)\tg(r)" << endl;
-    for (int k = 0; k < radial_dist_num_his_bars; k++)
-        cout << setprecision(10) << radial_dist_distance[k] << "\t" << radial_dist_data[k] << endl;
+    print_radial_dist_results();
 
     cout << "\n---- END TEST - RADIAL DISTRIBUTION SAMPLER ----\n" << endl;
     return;
@@ -187,10 +184,10 @@ void test_mc_acceptances() {
     NUM_EQUILIBRATION_SWEEPS = 100;
     double displacement_distances[] = {0.2, 0.22, 0.24, 0.26, 0.28, 0.3};
     double displacement_rotations[] = {0.15 * M_PI, 0.16 * M_PI, 0.17 * M_PI, 0.175 * M_PI, 0.18 * M_PI, 0.19 * M_PI};
-    
+
     for (int g = 0; g < 6; g++) {
         DISPLACEMENT_DISTANCE = displacement_distances[g];
-        DISPLACEMENT_ROTATION = displacement_rotations[g];        
+        DISPLACEMENT_ROTATION = displacement_rotations[g];
         reset_mc_acceptance_records();
         mc_equilibrate();
         print_mc_acceptance_records();

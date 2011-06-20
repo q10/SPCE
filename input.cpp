@@ -99,7 +99,7 @@ void load_configuration_file() {
     initialize_constants();
 
     // convert data structure back to primitive arrays for performance optimization
-    water_positions = new double*[NUM_WATERS];
+    water_positions = new double * [NUM_WATERS];
 
     for (int i = 0; i < NUM_WATERS; i++) {
         water_positions[i] = new double[9];
@@ -107,5 +107,6 @@ void load_configuration_file() {
         for (int j = 0; j < 9; j++)
             water_positions[i][j] = waters[i][j];
     }
+    
     return;
 }

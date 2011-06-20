@@ -30,5 +30,7 @@ double ** rotation_matrix(double * rand_unit_vector, double theta_rad) {
     rot_matrix[2][1] = ryrz * l_cos_t + rx * sin_t;
     rot_matrix[2][2] = cos_t + rz2 * l_cos_t;
 
+    delete rand_unit_vector;
+    
     return rot_matrix;
 }

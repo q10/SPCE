@@ -16,5 +16,6 @@ extern double * radial_dist_data;
 void initialize_radial_dist_sampler();
 void radial_dist_sample();
 void compute_radial_dist_results();
+void print_radial_dist_results();
 
 #endif	/* RADIAL_DIST_H */
