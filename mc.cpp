@@ -18,9 +18,9 @@ void print_mc_acceptance_records() {
     cout << "Displacement distance (Angstroms): " << DISPLACEMENT_DISTANCE << endl
             << "Displacement rotation (radians): " << DISPLACEMENT_ROTATION << endl
             << "Move Acceptance Rate: " << setprecision(10)
-            << (double) num_successful_mc_moves / (double) total_attempted_mc_moves << "%" << endl
+            << 100.0 * (double) num_successful_mc_moves / (double) total_attempted_mc_moves << "%" << endl
             << "Rotation Acceptance Rate: "
-            << (double) num_successful_mc_rotations / (double) total_attempted_mc_rotations << "%\n" << endl;
+            << 100.0 * (double) num_successful_mc_rotations / (double) total_attempted_mc_rotations << "%\n" << endl;
     return;
 }
 

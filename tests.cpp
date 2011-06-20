@@ -11,7 +11,7 @@ void run_tests(int argc, char** argv) {
     //test_write_to_config_file(argc, argv);    // PASS
     //test_read_config_file(argc, argv);        // PASS
     //test_rotation();                          // PASS
-    test_mc_acceptances();
+    //test_mc_acceptances();                    // PASS
     cout << "---- END TEST SUITE ----\n" << endl;
     return;
 }
