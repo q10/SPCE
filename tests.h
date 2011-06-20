@@ -19,5 +19,6 @@ void test_write_to_vmd_file(int argc, char** argv);
 void test_write_to_config_file(int argc, char** argv);
 void test_read_config_file(int argc, char** argv);
 void test_rotation();
+void test_mc_acceptances();
 
 #endif	/* TESTS_H */
