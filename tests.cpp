@@ -149,7 +149,6 @@ void test_write_to_config_file(int argc, char** argv) {
     save_config_to_file();
     cout << "---- END TEST - WRITE CONFIG FILE ----\n" << endl;
     return;
-
 }
 
 void test_read_config_file(int argc, char** argv) {
@@ -176,5 +175,26 @@ void test_rotation() {
     }
 
     cout << "---- END TEST - ROTATION ----\n" << endl;
+    return;
+}
 
+void test_mc_acceptances() {
+    cout << "---- BEGIN TEST - MC ACCEPTANCES ----" << endl;
+
+    initialize_constants();
+    initialize_waters();
+    NUM_EQUILIBRATION_SWEEPS = 100;
+    double displacement_distances[] = {0.01, 0.02, 0.04, 0.08, 1.2, 1.6};
+    double displacement_rotations[] = {0.2 * M_PI, 0.25 * M_PI, 0.3 * M_PI, 0.35 * M_PI, 0.4 * M_PI, 0.5 * M_PI};
+    
+    for (int g = 0; g < 6; g++) {
+        DISPLACEMENT_DISTANCE = displacement_distances[g];
+        DISPLACEMENT_ROTATION = displacement_rotations[g];        
+        reset_mc_acceptance_records();
+        mc_equilibrate();
+        print_mc_acceptance_records();
+    }
+
+    cout << "---- END TEST - MC ACCEPTANCES ----\n" << endl;
+    return;
 }

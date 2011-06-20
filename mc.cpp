@@ -4,6 +4,26 @@ int NUM_MC_ATTEMPTS_PER_SWEEP = 2000;
 int NUM_MC_SWEEPS = 100000;
 int NUM_EQUILIBRATION_SWEEPS = 5000;
 
+int num_successful_mc_moves = 0;
+int num_successful_mc_rotations = 0;
+int total_attempted_mc_moves = 0;
+int total_attempted_mc_rotations = 0;
+
+void reset_mc_acceptance_records() {
+    num_successful_mc_moves = num_successful_mc_rotations = total_attempted_mc_moves = total_attempted_mc_rotations = 0;
+    return;
+}
+
+void print_mc_acceptance_records() {
+    cout << "Displacement distance (Angstroms): " << DISPLACEMENT_DISTANCE << endl
+            << "Displacement rotation (radians): " << DISPLACEMENT_ROTATION << endl
+            << "Move Acceptance Rate: " << setprecision(10)
+            << (double) num_successful_mc_moves / (double) total_attempted_mc_moves << "%" << endl
+            << "Rotation Acceptance Rate: "
+            << (double) num_successful_mc_rotations / (double) total_attempted_mc_rotations << "%\n" << endl;
+    return;
+}
+
 void run_mc() {
     for (int h = 0; h < NUM_MC_SWEEPS; h++) {
         mc_sweep();
@@ -24,10 +44,13 @@ void mc_equilibrate() {
 
 inline void mc_sweep() {
     for (int i = 0; i < NUM_MC_ATTEMPTS_PER_SWEEP; i++) {
-        if (RAN3() < 0.5)
+        if (RAN3() < 0.5) {
+            total_attempted_mc_moves++;
             mc_move();
-        else
+        } else {
+            total_attempted_mc_rotations++;
             mc_rotate();
+        }
     }
     return;
 }
@@ -42,7 +65,7 @@ void mc_move() {
 
     // move to new position - the coords of H can be outside box limits provided that O is inside the box
     for (int j = 0; j < 3; j++) {
-        rand_displacement = DISPLACEMENT * (2.0 * RAN3() - 1.0);
+        rand_displacement = DISPLACEMENT_DISTANCE * (2.0 * RAN3() - 1.0);
         water_positions[rand_i][j] += rand_displacement;
         water_positions[rand_i][j + 3] += rand_displacement;
         water_positions[rand_i][j + 6] += rand_displacement;
@@ -52,7 +75,8 @@ void mc_move() {
     keep_water_inside_box(rand_i);
 
     // calculate difference from new energy and attempt to move particle with acceptance probability
-    mc_accept(rand_i, old_energy_diff, old_position);
+    if (mc_accept(rand_i, old_energy_diff, old_position))
+        num_successful_mc_moves++;
     return;
 }
 
@@ -60,7 +84,7 @@ void mc_rotate() {
     int rand_i = RANDINT(0, NUM_WATERS);
     double old_position[9], old_energy_diff = energy_of_water_with_index(rand_i);
 
-    double rand_theta_rad = 0.3 * M_PI * (2.0 * RAN3() - 1.0);
+    double rand_theta_rad = DISPLACEMENT_ROTATION * (2.0 * RAN3() - 1.0);
     double * center_of_mass = center_of_mass_of_water_with_index(rand_i);
     double ** rot_matrix = rotation_matrix(RANDUNITVECTOR(), rand_theta_rad);
 
@@ -79,7 +103,7 @@ void mc_rotate() {
         water_positions[rand_i][g + 2] = rot_matrix[2][0] * old_position[g] + rot_matrix[2][1] * old_position[g + 1] + rot_matrix[2][2] * old_position[g + 2];
     }
 
-    // un-shift water (use the water_positions[rand_i]), and restore old_position to proper original coords)
+    // un-shift water (use the water_positions[rand_i]), and restore old_position to proper original coords
     for (int g = 0; g < 9; g++) {
         water_positions[rand_i][g] += center_of_mass[g % 3];
         old_position[g] += center_of_mass[g % 3];
@@ -88,7 +112,8 @@ void mc_rotate() {
     keep_water_inside_box(rand_i);
 
     // calculate difference from new energy and attempt to rotate particle with acceptance probability (use old_position set of coords)
-    mc_accept(rand_i, old_energy_diff, old_position);
+    if (mc_accept(rand_i, old_energy_diff, old_position))
+        num_successful_mc_rotations++;
 
     return;
 }
@@ -110,7 +135,7 @@ inline void keep_water_inside_box(int index) {
     return;
 }
 
-inline void mc_accept(int index, double old_energy_diff, double * old_position) {
+inline bool mc_accept(int index, double old_energy_diff, double * old_position) {
     double new_energy_diff = energy_of_water_with_index(index);
 
     if (RAN3() < exp(-BETA * (new_energy_diff - old_energy_diff)))
@@ -119,7 +144,8 @@ inline void mc_accept(int index, double old_energy_diff, double * old_position) 
         // undo the move if move not accepted
         for (int j = 0; j < 9; j++)
             water_positions[index][j] = old_position[j];
+        return false;
     }
 
-    return;
+    return true;
 }

@@ -7,7 +7,8 @@ double TEMPERATURE = 300.0;
 double BETA = 1.0 / (BOLTZMANN_K * TEMPERATURE);
 int NUM_WATERS = 200;
 double BOX_LENGTH; 
-const double DISPLACEMENT = 0.0068;
+double DISPLACEMENT_DISTANCE = 0.0068;
+double DISPLACEMENT_ROTATION = 0.3 * M_PI;
 
 const double WATER_SIGMA = 3.166;
 const double WATER_EPSILON = 0.650;

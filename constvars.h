@@ -21,7 +21,8 @@ extern double TEMPERATURE;              // Kelvins
 extern double BETA;                     // mol/kJ
 extern int NUM_WATERS;
 extern double BOX_LENGTH;               // box side length (Angstroms)
-extern const double DISPLACEMENT;       // max random displacement distance per attempted move (Angstroms)
+extern double DISPLACEMENT_DISTANCE;    // max random displacement distance per attempted move (Angstroms)
+extern double DISPLACEMENT_ROTATION;    // max random displacement angle per attempted molecule rotation (radians)
 
 // water properties
 extern const double WATER_SIGMA;        // diameter (Angstroms)

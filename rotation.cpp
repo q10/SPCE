@@ -18,17 +18,17 @@ double ** rotation_matrix(double * rand_unit_vector, double theta_rad) {
     double cos_t = cos(theta_rad), sin_t = sin(theta_rad);
     double l_cos_t = 1.0 - cos_t, rx2 = rx*rx, ry2 = ry*ry, rz2 = rz*rz, rxry = rx*ry, ryrz = ry*rz, rxrz = rx*rz;
 
-    rot_matrix[0][0] = rx2 + (1.0 - rx2) * cos_t;
+    rot_matrix[0][0] = cos_t + rx2 * l_cos_t;
     rot_matrix[0][1] = rxry * l_cos_t - rz * sin_t;
     rot_matrix[0][2] = rxrz * l_cos_t + ry * sin_t;
 
     rot_matrix[1][0] = rxry * l_cos_t + rz * sin_t;
-    rot_matrix[1][1] = ry2 + (1.0 - ry2) * cos_t;
+    rot_matrix[1][1] = cos_t + ry2 * l_cos_t;
     rot_matrix[1][2] = ryrz * l_cos_t - rx * sin_t;
 
     rot_matrix[2][0] = rxrz * l_cos_t - ry * sin_t;
     rot_matrix[2][1] = ryrz * l_cos_t + rx * sin_t;
-    rot_matrix[2][2] = rz2 + (1.0 - rz2) * cos_t;
+    rot_matrix[2][2] = cos_t + rz2 * l_cos_t;
 
     return rot_matrix;
 }
