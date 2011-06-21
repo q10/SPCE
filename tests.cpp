@@ -6,7 +6,7 @@ void run_tests(int argc, char** argv) {
     //test_read_program_flags(argc, argv);      // PASS
     //test_energy_of_water_with_index(); // PASS
     //test_run_mc();
-    //test_radial_dist_sampler();
+    test_radial_dist_sampler();
     //test_write_to_vmd_file(argc, argv);       // PASS
     //test_write_to_config_file(argc, argv);    // PASS
     //test_read_config_file(argc, argv);        // PASS
@@ -110,6 +110,8 @@ void test_run_mc() {
 void test_radial_dist_sampler() {
     cout << "---- BEGIN TEST - RADIAL DISTRIBUTION SAMPLER ----" << endl;
 
+    NUM_EQUILIBRATION_SWEEPS = 10;
+    NUM_MC_SWEEPS = 100;
     initialize();
     run_mc();
     compute_radial_dist_results();
