@@ -112,9 +112,11 @@ void mc_rotate() {
     keep_water_inside_box(rand_i);
 
     // deallocate memory
-    delete center_of_mass;
-    delete rot_matrix;
-    
+    for (int f = 0; f < 3; f++)
+        delete [] rot_matrix[f];
+    delete [] rot_matrix;
+    delete [] center_of_mass;
+
     // calculate difference from new energy and attempt to rotate particle with acceptance probability (use old_position set of coords)
     if (mc_accept(rand_i, old_energy_diff, old_position))
         num_successful_mc_rotations++;
