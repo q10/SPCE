@@ -10,6 +10,7 @@
 #define	COMMON_H
 
 #include <iostream>
+#include <ostream>
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -18,10 +19,12 @@
 #include <valarray>
 #include <vector>
 #include <iterator>
+#include <map>
 #include <cstdio>
 #include <cstdlib>
 #include <ctime>
 #include <cmath>
+#include <complex>
 #include <climits>
 #include <cfloat>
 #include <cstdarg>
@@ -36,6 +39,7 @@
 #include "input.h"
 #include "output.h"
 #include "initializers.h"
+#include "ewald.h"
 #include "energy.h"
 #include "rotation.h"
 #include "mc.h"

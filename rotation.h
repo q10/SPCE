@@ -12,5 +12,7 @@
 double * center_of_mass_of_water_with_index(int i);
 double ** rotation_matrix(double * rand_unit_vector, double theta_rad);
 
+void test_rotation();
+
 #endif	/* ROTATION_H */
 

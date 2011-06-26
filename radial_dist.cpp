@@ -52,3 +52,17 @@ void print_radial_dist_results() {
         cout << setprecision(10) << radial_dist_distance[k] << "\t" << radial_dist_data[k] << endl;
     return;
 }
+
+void test_radial_dist_sampler() {
+    cout << "---- BEGIN TEST - RADIAL DISTRIBUTION SAMPLER ----" << endl;
+
+    // NUM_EQUILIBRATION_SWEEPS = 10;
+    // NUM_MC_SWEEPS = 100;
+    initialize();
+    run_mc();
+    compute_radial_dist_results();
+    print_radial_dist_results();
+
+    cout << "\n---- END TEST - RADIAL DISTRIBUTION SAMPLER ----\n" << endl;
+    return;
+}

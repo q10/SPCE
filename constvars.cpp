@@ -9,6 +9,7 @@ int NUM_WATERS = 200;
 double BOX_LENGTH; 
 double DISPLACEMENT_DISTANCE = 0.2;
 double DISPLACEMENT_ROTATION = 0.17 * M_PI;
+double EWALD_ALPHA = 1.0;
 
 const double WATER_SIGMA = 3.166;
 const double WATER_EPSILON = 0.650;
@@ -20,6 +21,9 @@ const double O_MASS = 16.0;
 const double WATER_MASS = 18.0;
 const double OH_LENGTH = 1.0000;
 const double HOH_ANGLE_DEG = 109.47;
+
+map <double, double> * ERFC_TABLE = new map <double, double>;
+map <int, map <int, map <int, double *> *> *> * K_VALUES = new map <int, map <int, map <int, double *> *> *>;
 
 double ** water_positions;
 double LJEnergy;

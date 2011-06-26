@@ -24,4 +24,7 @@ void write_config_to_vmd_file();
 void close_vmd_file();
 void save_config_to_file();
 
+void test_write_to_vmd_file(int argc, char** argv);
+void test_write_to_config_file(int argc, char** argv);
+
 #endif	/* OUTPUT_H */

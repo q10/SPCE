@@ -31,6 +31,21 @@ double ** rotation_matrix(double * rand_unit_vector, double theta_rad) {
     rot_matrix[2][2] = cos_t + rz2 * l_cos_t;
 
     delete [] rand_unit_vector;
-    
+
     return rot_matrix;
+}
+
+void test_rotation() {
+    cout << "---- BEGIN TEST - ROTATION ----" << endl;
+
+    NUM_WATERS = 1;
+    BOX_LENGTH = 10.0;
+    initialize_waters();
+    for (int k = 0; k < 10000; k++) {
+        mc_rotate();
+        cout << setprecision(10) << water_positions[0][0] << ", " << water_positions[0][1] << ", " << water_positions[0][2] << endl;
+    }
+
+    cout << "---- END TEST - ROTATION ----\n" << endl;
+    return;
 }

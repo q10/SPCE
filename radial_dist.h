@@ -18,4 +18,6 @@ void radial_dist_sample();
 void compute_radial_dist_results();
 void print_radial_dist_results();
 
+void test_radial_dist_sampler();
+
 #endif	/* RADIAL_DIST_H */

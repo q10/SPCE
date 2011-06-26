@@ -4,14 +4,16 @@ void run_tests(int argc, char** argv) {
     cout << "\n---- BEGIN TEST SUITE ----\n" << endl;
     //test_RANDGAUSS();                         // PASS
     //test_read_program_flags(argc, argv);      // PASS
-    //test_energy_of_water_with_index(); // PASS
+    //test_energy_of_water_with_index();        // PASS
     //test_run_mc();
-    test_radial_dist_sampler();
+    //test_radial_dist_sampler();
     //test_write_to_vmd_file(argc, argv);       // PASS
     //test_write_to_config_file(argc, argv);    // PASS
     //test_read_config_file(argc, argv);        // PASS
     //test_rotation();                          // PASS
     //test_mc_acceptances();                    // PASS
+    //test_rho_function();                      // PASS
+    //test_k_table(); // PASS
     cout << "---- END TEST SUITE ----\n" << endl;
     return;
 }
@@ -94,9 +96,9 @@ void test_run_mc() {
     cout << "---- BEGIN TEST - MC STEP ----" << endl;
 
     NUM_WATERS = 200;
-    initialize_waters();
-    BOX_LENGTH = 10.0;
     NUM_MC_SWEEPS = 1;
+    initialize_erfc_table();
+    initialize_waters();
     calculate_and_init_energy();
     for (int k = 0; k < 10000; k++) {
         run_mc();
@@ -104,50 +106,6 @@ void test_run_mc() {
     }
 
     cout << "---- END TEST - MC STEPPING ----\n" << endl;
-    return;
-}
-
-void test_radial_dist_sampler() {
-    cout << "---- BEGIN TEST - RADIAL DISTRIBUTION SAMPLER ----" << endl;
-
-    // NUM_EQUILIBRATION_SWEEPS = 10;
-    // NUM_MC_SWEEPS = 100;
-    initialize();
-    run_mc();
-    compute_radial_dist_results();
-    print_radial_dist_results();
-
-    cout << "\n---- END TEST - RADIAL DISTRIBUTION SAMPLER ----\n" << endl;
-    return;
-}
-
-void test_write_to_vmd_file(int argc, char** argv) {
-    cout << "---- BEGIN TEST - WRITE TO VMD FILE ----" << endl;
-
-    read_program_flags(argc, argv);
-    open_vmd_file();
-    initialize_constants();
-    initialize_waters();
-    write_config_to_vmd_file();
-    NUM_EQUILIBRATION_SWEEPS = 50;
-    for (int g = 0; g < 10; g++) {
-        mc_equilibrate();
-        write_config_to_vmd_file();
-    }
-    close_vmd_file();
-
-    cout << "---- END TEST - WRITE TO VMD FILE ----\n" << endl;
-    return;
-}
-
-void test_write_to_config_file(int argc, char** argv) {
-    cout << "---- BEGIN TEST - WRITE CONFIG FILE ----" << endl;
-
-    read_program_flags(argc, argv);
-    initialize_constants();
-    initialize_waters();
-    save_config_to_file();
-    cout << "---- END TEST - WRITE CONFIG FILE ----\n" << endl;
     return;
 }
 
@@ -160,21 +118,6 @@ void test_read_config_file(int argc, char** argv) {
     print_all();
 
     cout << "---- END TEST - READ CONFIG FILE ----\n" << endl;
-    return;
-}
-
-void test_rotation() {
-    cout << "---- BEGIN TEST - ROTATION ----" << endl;
-
-    NUM_WATERS = 1;
-    BOX_LENGTH = 10.0;
-    initialize_waters();
-    for (int k = 0; k < 10000; k++) {
-        mc_rotate();
-        cout << setprecision(10) << water_positions[0][0] << ", " << water_positions[0][1] << ", " << water_positions[0][2] << endl;
-    }
-
-    cout << "---- END TEST - ROTATION ----\n" << endl;
     return;
 }
 

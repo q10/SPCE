@@ -67,8 +67,8 @@ void load_configuration_file() {
     int line_num = 0;
     string line, line_key;
 
-    while (std::getline(input_filestream, line)) {
-        std::istringstream iss(line);
+    while (getline(input_filestream, line)) {
+        istringstream iss(line);
         line_num++;
         iss >> line_key;
 
@@ -83,7 +83,7 @@ void load_configuration_file() {
         } else if (line_key.compare("ION") == 0) {
 
         } else if (line_key.compare("WATER") == 0) {
-            std::vector< double > coords;
+            vector< double > coords;
             double val;
 
             while (iss >> val)

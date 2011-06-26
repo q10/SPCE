@@ -60,11 +60,11 @@ inline double energy_between_two_waters(int i, int j) {
             if (atom == 0 and atom2 == 0) {
                 r2 = WATER_SIGMA / r;
                 tmp_energy += 4.0 * WATER_EPSILON * (pow(r2, 12) - pow(r2, 6));
-                tmp_energy += ELECTROSTATIC_K * WATER_Q_O * WATER_Q_O / r;
+                tmp_energy += ELECTROSTATIC_K * WATER_Q_O * WATER_Q_O * (*ERFC_TABLE)[floor(r * 1000.0)] / r;
             } else if (atom == 0 or atom2 == 0)
-                tmp_energy += ELECTROSTATIC_K * WATER_Q_O * WATER_Q_H / r;
+                tmp_energy += ELECTROSTATIC_K * WATER_Q_O * WATER_Q_H * (*ERFC_TABLE)[floor(r * 1000.0)] / r;
             else
-                tmp_energy += ELECTROSTATIC_K * WATER_Q_H * WATER_Q_H / r;
+                tmp_energy += ELECTROSTATIC_K * WATER_Q_H * WATER_Q_H * (*ERFC_TABLE)[floor(r * 1000.0)] / r;
         }
     }
     return tmp_energy;

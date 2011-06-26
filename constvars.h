@@ -12,6 +12,8 @@
 #define BUF_SIZE 1024
 #define HALF_BOX_LENGTH BOX_LENGTH/2.0
 
+typedef std::complex<double> dcomplex;
+
 // physical constants
 extern const double BOLTZMANN_K;        // units of kJ/(mol*K)
 extern const double ELECTROSTATIC_K;    // units of (kJ*mol*Angstrom)/(elementary_charge^2) (see below for notes on obtaining this constant)
@@ -23,6 +25,7 @@ extern int NUM_WATERS;
 extern double BOX_LENGTH;               // box side length (Angstroms)
 extern double DISPLACEMENT_DISTANCE;    // max random displacement distance per attempted move (Angstroms)
 extern double DISPLACEMENT_ROTATION;    // max random displacement angle per attempted molecule rotation (radians)
+extern double EWALD_ALPHA;              // Ewald screening parameter
 
 // water properties
 extern const double WATER_SIGMA;        // diameter (Angstroms)
@@ -37,11 +40,12 @@ extern const double OH_LENGTH;          // oxygen-hydrogen bond length (Angstrom
 extern const double HOH_ANGLE_DEG;      // HOH bond angle (degrees)
 
 // other system variables
-
+extern std::map <double, double> * ERFC_TABLE;
+extern std::map <int, std::map <int, std::map <int, double *> *> *> * K_VALUES;
 
 // state variables
 extern double ** water_positions;     // table of oxygen positions
-extern double LJEnergy;                 // Lennard-Jones Potential (kJ/mol)
+extern double LJEnergy;               // Lennard-Jones Potential (kJ/mol)
 
 #endif	/* CONSTVARS_H */
 

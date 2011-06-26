@@ -70,3 +70,33 @@ void save_config_to_file() {
     OUTPUT_CONFIG_FILE.close();
     return;
 }
+
+void test_write_to_vmd_file(int argc, char** argv) {
+    cout << "---- BEGIN TEST - WRITE TO VMD FILE ----" << endl;
+
+    read_program_flags(argc, argv);
+    open_vmd_file();
+    initialize_constants();
+    initialize_waters();
+    write_config_to_vmd_file();
+    NUM_EQUILIBRATION_SWEEPS = 50;
+    for (int g = 0; g < 10; g++) {
+        mc_equilibrate();
+        write_config_to_vmd_file();
+    }
+    close_vmd_file();
+
+    cout << "---- END TEST - WRITE TO VMD FILE ----\n" << endl;
+    return;
+}
+
+void test_write_to_config_file(int argc, char** argv) {
+    cout << "---- BEGIN TEST - WRITE CONFIG FILE ----" << endl;
+
+    read_program_flags(argc, argv);
+    initialize_constants();
+    initialize_waters();
+    save_config_to_file();
+    cout << "---- END TEST - WRITE CONFIG FILE ----\n" << endl;
+    return;
+}
