@@ -69,8 +69,3 @@ inline double energy_between_two_waters(int i, int j) {
     }
     return tmp_energy;
 }
-
-void update_energy(double old_energy_diff, double new_energy_diff) {
-    LJEnergy += (-old_energy_diff) + new_energy_diff;
-    return;
-}

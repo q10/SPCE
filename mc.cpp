@@ -57,7 +57,7 @@ inline void mc_sweep() {
 
 void mc_move() {
     int rand_i = RANDINT(0, NUM_WATERS);
-    double old_position[9], rand_displacement, old_energy_diff = energy_of_water_with_index(rand_i);
+    double old_position[9], rand_displacement, old_energy_particle_i = energy_of_water_with_index(rand_i);
 
     // save old position 
     for (int g = 0; g < 9; g++)
@@ -75,14 +75,14 @@ void mc_move() {
     keep_water_inside_box(rand_i);
 
     // calculate difference from new energy and attempt to move particle with acceptance probability
-    if (mc_accept(rand_i, old_energy_diff, old_position))
+    if (mc_accept(rand_i, old_energy_particle_i, old_position))
         num_successful_mc_moves++;
     return;
 }
 
 void mc_rotate() {
     int rand_i = RANDINT(0, NUM_WATERS);
-    double old_position[9], old_energy_diff = energy_of_water_with_index(rand_i);
+    double old_position[9], old_energy_particle_i = energy_of_water_with_index(rand_i);
 
     double rand_theta_rad = DISPLACEMENT_ROTATION * (2.0 * RAN3() - 1.0);
     double * center_of_mass = center_of_mass_of_water_with_index(rand_i);
@@ -118,7 +118,7 @@ void mc_rotate() {
     delete [] center_of_mass;
 
     // calculate difference from new energy and attempt to rotate particle with acceptance probability (use old_position set of coords)
-    if (mc_accept(rand_i, old_energy_diff, old_position))
+    if (mc_accept(rand_i, old_energy_particle_i, old_position))
         num_successful_mc_rotations++;
 
     return;
@@ -141,17 +141,27 @@ inline void keep_water_inside_box(int index) {
     return;
 }
 
-inline bool mc_accept(int index, double old_energy_diff, double * old_position) {
-    double new_energy_diff = energy_of_water_with_index(index);
+inline bool mc_accept(int index, double old_energy_particle_i, double * old_position) {
+    double new_energy_particle_i = energy_of_water_with_index(index);
 
-    if (RAN3() < exp(-BETA * (new_energy_diff - old_energy_diff)))
-        update_energy(old_energy_diff, new_energy_diff);
+    vector <dcomplex> * rho_k_diff_values = new vector <dcomplex>;
+    double ewald_energy_diff = ewald_diff(index, old_position, rho_k_diff_values);
+
+    if (RAN3() < exp(-BETA * (ewald_energy_diff + new_energy_particle_i - old_energy_particle_i)))
+        update_energy(ewald_energy_diff + new_energy_particle_i - old_energy_particle_i);
     else {
         // undo the move if move not accepted
         for (int j = 0; j < 9; j++)
             water_positions[index][j] = old_position[j];
+
+        // reset rho_k's
+        for (int k = 0; k < RHO_K_VALUES->size(); k++)
+            (*RHO_K_VALUES)[k] -= (*rho_k_diff_values)[k];
+        delete rho_k_diff_values;
+
         return false;
     }
+    delete rho_k_diff_values;
 
     return true;
 }

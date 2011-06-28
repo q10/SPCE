@@ -7,6 +7,7 @@ void initialize() {
         initialize_constants();
         initialize_waters();
     }
+    initialize_rho_k_values_table();
     calculate_and_init_energy();
 
     initialize_radial_dist_sampler();

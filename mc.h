@@ -26,6 +26,6 @@ void mc_sweep();
 void mc_move();
 void mc_rotate();
 void keep_water_inside_box(int index);
-bool mc_accept(int index, double old_energy_diff, double * old_position);
+bool mc_accept(int index, double old_energy_particle_i, double * old_position);
 
 #endif	/* MC_H */

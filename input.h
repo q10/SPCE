@@ -9,10 +9,8 @@
 #ifndef INPUT_H
 #define	INPUT_H
 
-using namespace std;
-
 extern bool using_input_config_file;
-extern string input_config_filename;
+extern std::string input_config_filename;
 
 typedef struct option program_flags_t;
 extern const program_flags_t PROGRAM_FLAGS[];

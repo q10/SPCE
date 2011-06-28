@@ -13,6 +13,10 @@ double energy_of_water_with_index(int index);
 double energy_between_two_waters(int i, int j);
 void calculate_and_init_energy();
 double energy_between_two_waters(int i, int j);
-void update_energy(double old_energy_diff, double new_energy_diff);
+
+inline void update_energy(double delta_energy) {
+    LJEnergy += delta_energy;
+    return;
+}
 
 #endif	/* ENERGY_H */
