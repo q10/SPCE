@@ -36,6 +36,7 @@ void initialize_k_values_table() {
 }
 
 void initialize_rho_k_values_table() {
+    RHO_K_VALUES->clear();
     for (int k = 0; k < K_VALUES->size(); k++)
         RHO_K_VALUES->push_back(rho((*K_VALUES)[k]));
     return;

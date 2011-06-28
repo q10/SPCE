@@ -1,7 +1,7 @@
 #include "common.h"
 
-int NUM_MC_ATTEMPTS_PER_SWEEP = 2000;
-int NUM_MC_SWEEPS = 100000;
+int NUM_MC_ATTEMPTS_PER_SWEEP = 1000;
+int NUM_MC_SWEEPS = 1000000;
 int NUM_EQUILIBRATION_SWEEPS = 5000;
 
 int num_successful_mc_moves = 0;
@@ -141,7 +141,7 @@ inline void keep_water_inside_box(int index) {
     return;
 }
 
-inline bool mc_accept(int index, double old_energy_particle_i, double * old_position) {
+bool mc_accept(int index, double old_energy_particle_i, double * old_position) {
     double new_energy_particle_i = energy_of_water_with_index(index);
 
     vector <dcomplex> * rho_k_diff_values = new vector <dcomplex>;

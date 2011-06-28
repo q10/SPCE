@@ -9,7 +9,7 @@ int NUM_WATERS = 200;
 double BOX_LENGTH;
 double DISPLACEMENT_DISTANCE = 0.2;
 double DISPLACEMENT_ROTATION = 0.17 * M_PI;
-double EWALD_ALPHA = 1.0;
+double EWALD_ALPHA = 0.25;
 
 const double WATER_SIGMA = 3.166;
 const double WATER_EPSILON = 0.650;
