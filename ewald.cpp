@@ -10,25 +10,39 @@ void initialize_erfc_table() {
     return;
 }
 
-void initialize_k_values_table() {
-    K_VALUES->clear();
+void initialize_k_vectors_table() {
+    // K vector order as follows (go through all ny and nzvalues descending, then ascending):    
+    //(00-1)...(00-5)(001)...(005)(0-1-1)...(0-1-5)(0-11)...(0-15)...
+    K_VECTORS->clear();
     double * k_entry, tmp_k2, alpha_inv_4 = -1.0 / (4.0 * EWALD_ALPHA);
+    int dny, dnz;
 
     for (int nx = 0; nx <= 5; nx++) {
-        for (int ny = -5; ny <= 5; ny++) {
-            for (int nz = -5; nz <= 5; nz++) {
-                if (nx != 0 || ny != 0 || nz != 0) { // removes the K=0 case
-                    k_entry = new double [4];
-                    k_entry[0] = 2.0 * M_PI * nx / BOX_LENGTH;
-                    k_entry[1] = 2.0 * M_PI * ny / BOX_LENGTH;
-                    k_entry[2] = 2.0 * M_PI * nz / BOX_LENGTH;
+        dny = -1;
+        for (int ny = 0; ny <= 5; ny += dny) {
+            dnz = -1;
+            for (int nz = 0; nz <= 5; nz += dnz) {
+                // does NOT remove the K=0 case, makes looping code easier
+                k_entry = new double [4];
+                k_entry[0] = 2.0 * M_PI * nx / BOX_LENGTH;
+                k_entry[1] = 2.0 * M_PI * ny / BOX_LENGTH;
+                k_entry[2] = 2.0 * M_PI * nz / BOX_LENGTH;
 
-                    // k_entry[3] will be exp(-K^2 / (4*alpha)), where K^2, or kx^2 + ky^2 + kz^2, to reduce redundant computation later on
-                    tmp_k2 = k_entry[0] * k_entry[0] + k_entry[1] * k_entry[1] + k_entry[2] * k_entry[2];
-                    k_entry[3] = exp(tmp_k2 * alpha_inv_4) / tmp_k2;
+                // k_entry[3] will be exp(-K^2 / (4*alpha)), where K^2, or kx^2 + ky^2 + kz^2, to reduce redundant computation later on
+                tmp_k2 = k_entry[0] * k_entry[0] + k_entry[1] * k_entry[1] + k_entry[2] * k_entry[2];
+                k_entry[3] = exp(tmp_k2 * alpha_inv_4) / tmp_k2;
+                K_VECTORS->push_back(k_entry);
 
-                    K_VALUES->push_back(k_entry);
+                cerr << "(" << nx << ", " << ny << ", " << nz << ")" << endl;
+
+                if (nz == -5) {
+                    dnz = 1;
+                    nz = 0;
                 }
+            }
+            if (ny == -5) {
+                dny = 1;
+                ny = 0;
             }
         }
     }
@@ -37,8 +51,21 @@ void initialize_k_values_table() {
 
 void initialize_rho_k_values_table() {
     RHO_K_VALUES->clear();
-    for (int k = 0; k < K_VALUES->size(); k++)
-        RHO_K_VALUES->push_back(rho((*K_VALUES)[k]));
+    dcomplex tmp_rho_neg_1(0.0, 0.0), tmp_rho_pos_1(0.0, 0.0);
+    cerr << K_VECTORS->size() << endl;
+    for (int k = 0; k < K_VECTORS->size(); k += 11) {
+        RHO_K_VALUES->push_back(rho((*K_VECTORS)[k]));
+
+        tmp_rho_neg_1 = rho((*K_VECTORS)[k + 1]);
+        for (int h = 1; h <= 5; h++)
+            RHO_K_VALUES->push_back(pow(tmp_rho_neg_1, h));
+
+        tmp_rho_pos_1 = rho((*K_VECTORS)[k + 6]);
+        for (int h = 1; h <= 5; h++)
+            RHO_K_VALUES->push_back(pow(tmp_rho_neg_1, h));
+
+    }
+    cerr << RHO_K_VALUES->size() << endl;
     return;
 }
 
@@ -74,8 +101,8 @@ dcomplex rho(double * k_coords) {
 
 double ewald_sum() {
     double sum = 0.0;
-    for (int k = 0; k < K_VALUES->size(); k++)
-        sum += norm(rho((*K_VALUES)[k])) * (*K_VALUES)[k][3];
+    for (int k = 0; k < K_VECTORS->size(); k++)
+        sum += norm(rho((*K_VECTORS)[k])) * (*K_VECTORS)[k][3];
     return sum * 4.0 * M_PI / pow(BOX_LENGTH, 3.0);
 }
 
@@ -84,11 +111,11 @@ double ewald_diff(int water_index, double * old_position, vector <dcomplex> * rh
     dcomplex diff(0.0, 0.0);
 
     for (int k = 0; k < RHO_K_VALUES->size(); k++) {
-        diff = rho_k_diff(water_index, (*K_VALUES)[k], old_position);
+        diff = rho_k_diff(water_index, (*K_VECTORS)[k], old_position);
         rho_k_diff_values->push_back(diff);
         old_pk2 = norm((*RHO_K_VALUES)[k]);
         (*RHO_K_VALUES)[k] += diff;
-        sum_of_ewald_diffs += (norm((*RHO_K_VALUES)[k]) - old_pk2) * (*K_VALUES)[k][3];
+        sum_of_ewald_diffs += (norm((*RHO_K_VALUES)[k]) - old_pk2) * (*K_VECTORS)[k][3];
     }
     return sum_of_ewald_diffs * 4.0 * M_PI / pow(BOX_LENGTH, 3.0);
 }
@@ -122,14 +149,15 @@ void test_rho_function() {
     return;
 }
 
-void test_k_table() {
-    cout << "---- BEGIN TEST - TEST K TABLE ----" << endl;
+void test_k_vector_table() {
+    cout << "---- BEGIN TEST - TEST K VECTOR TABLE ----" << endl;
 
     BOX_LENGTH = 10.0;
-    initialize_k_values_table();
-    double * coords = (*K_VALUES)[0];
+    initialize_k_vectors_table();
+    initialize_rho_k_values_table();
+    double * coords = (*K_VECTORS)[0];
     cout << setprecision(10) << coords[0] << " " << coords[1] << " " << coords[2] << " " << coords[3] << endl;
 
-    cout << "---- END TEST - TEST K TABLE ----\n" << endl;
+    cout << "---- END TEST - TEST K VECTOR TABLE ----\n" << endl;
     return;
 }

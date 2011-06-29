@@ -23,7 +23,7 @@ const double OH_LENGTH = 1.0000;
 const double HOH_ANGLE_DEG = 109.47;
 
 map <double, double> * ERFC_TABLE = new map <double, double>;
-vector <double *> * K_VALUES = new vector <double *>;
+vector <double *> * K_VECTORS = new vector <double *>;
 vector <dcomplex> * RHO_K_VALUES = new vector <dcomplex>;
 
 double ** water_positions;

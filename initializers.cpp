@@ -24,7 +24,7 @@ void initialize_constants() {
     BETA = 1.0 / (BOLTZMANN_K * TEMPERATURE);
     BOX_LENGTH = pow(NUM_WATERS / WATER_DENSITY, 1.0 / 3.0);
     initialize_erfc_table();
-    initialize_k_values_table();
+    initialize_k_vectors_table();
     return;
 }
 
