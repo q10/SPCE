@@ -29,6 +29,7 @@ void run_mc() {
         mc_sweep();
         if (h % DATA_SAMPLING_RATE == 0)
             radial_dist_sample();
+        cerr << "MC sweep " << h + 1 << " of " << NUM_MC_SWEEPS << " complete." << endl;
     }
     return;
 }
@@ -142,26 +143,23 @@ inline void keep_water_inside_box(int index) {
 }
 
 bool mc_accept(int index, double old_energy_particle_i, double * old_position) {
-    double new_energy_particle_i = energy_of_water_with_index(index);
+    double total_energy_diff = ewald_diff(index) + energy_of_water_with_index(index) - old_energy_particle_i;
 
-    vector <dcomplex> * rho_k_diff_values = new vector <dcomplex>;
-    double ewald_energy_diff = ewald_diff(index, old_position, rho_k_diff_values);
-
-    if (RAN3() < exp(-BETA * (ewald_energy_diff + new_energy_particle_i - old_energy_particle_i)))
-        update_energy(ewald_energy_diff + new_energy_particle_i - old_energy_particle_i);
+    if (RAN3() < exp(-BETA * (total_energy_diff)))
+        update_energy(total_energy_diff);
     else {
         // undo the move if move not accepted
         for (int j = 0; j < 9; j++)
             water_positions[index][j] = old_position[j];
 
-        // reset rho_k's
-        for (int k = 0; k < RHO_K_VALUES->size(); k++)
-            (*RHO_K_VALUES)[k] -= (*rho_k_diff_values)[k];
-        delete rho_k_diff_values;
-
+        // reset partial rho_k's
+        dcomplex *column;
+        for (int k = 0; k < RHO_K_VALUES->size(); k++) {
+            column = (*RHO_K_VALUES)[k];
+            column[NUM_WATERS] += column[NUM_WATERS + 1] - column[index];
+            column[index] = column[NUM_WATERS + 1];
+        }
         return false;
     }
-    delete rho_k_diff_values;
-
     return true;
 }

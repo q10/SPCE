@@ -6,14 +6,14 @@ void run_tests(int argc, char** argv) {
     //test_read_program_flags(argc, argv);      // PASS
     //test_energy_of_water_with_index();        // PASS
     //test_run_mc();
-    //test_radial_dist_sampler();
+    test_radial_dist_sampler();
     //test_write_to_vmd_file(argc, argv);       // PASS
     //test_write_to_config_file(argc, argv);    // PASS
     //test_read_config_file(argc, argv);        // PASS
     //test_rotation();                          // PASS
     //test_mc_acceptances();                    // PASS
     //test_rho_function();                      // PASS
-    test_k_vector_table();                            // PASS
+    //test_k_vector_table();                    // PASS
     cout << "---- END TEST SUITE ----\n" << endl;
     return;
 }
@@ -99,6 +99,7 @@ void test_run_mc() {
     NUM_MC_SWEEPS = 1;
     initialize_erfc_table();
     initialize_waters();
+    initialize_rho_k_values_table();
     calculate_and_init_energy();
     for (int k = 0; k < 10000; k++) {
         run_mc();
