@@ -44,6 +44,7 @@ void test_rotation() {
     NUM_WATERS = 1;
     BOX_LENGTH = 10.0;
     initialize_waters();
+    initialize_other_variables();
     for (int k = 0; k < 10000; k++) {
         mc_rotate();
         cout << setprecision(10) << water_positions[0][0] << ", " << water_positions[0][1] << ", " << water_positions[0][2] << endl;

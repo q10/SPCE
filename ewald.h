@@ -16,6 +16,7 @@ dcomplex rho(double * k_coords);
 dcomplex partial_rho(int water_index, double * k_coords);
 double ewald_sum();
 double ewald_diff(int water_index);
+void set_exp_kr_table(int water_index);
 
 void test_rho_function();
 void test_k_vector_table();

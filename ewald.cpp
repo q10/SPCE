@@ -1,5 +1,7 @@
 #include "common.h"
 
+dcomplex exp_krx_O[11], exp_kry_O[11], exp_krz_O[11], exp_krx_H1[11], exp_kry_H1[11], exp_krz_H1[11], exp_krx_H2[11], exp_kry_H2[11], exp_krz_H2[11];
+
 void initialize_erfc_table() {
     double sqrt_alpha_1000 = sqrt(EWALD_ALPHA) / 1000.0, key;
     for (double r = 0.0; r < HALF_BOX_LENGTH; r += 0.001) {
@@ -94,24 +96,83 @@ double ewald_sum() {
 
 double ewald_diff(int water_index) {
     double sum_of_ewald_diffs = 0.0, old_pk2;
-    dcomplex temp_exp, *column;
+    dcomplex *column;
+    set_exp_kr_table(water_index);
 
+    int nx_count = 0, ny_count = 0, nz_count = 0;
     for (int k = 0; k < RHO_K_VALUES->size(); k++) {
         column = (*RHO_K_VALUES)[k];
         old_pk2 = norm(column[NUM_WATERS]);
 
-        // calculate new rho(K, R)
         // save old rho(K, R)
-        // save new rho(K, R)
-        // update total rho to rho(K, R)_new - rho(K, R)_old        
-        temp_exp = partial_rho(water_index, (*K_VECTORS)[k]);
+        // calculate and save new rho(K, R)
+        // update total rho to rho(K, R)_new - rho(K, R)_old
         column[NUM_WATERS + 1] = column[water_index];
-        column[water_index] = temp_exp;
-        column[NUM_WATERS] += temp_exp - column[NUM_WATERS + 1];
 
+        column[water_index] = exp_krx_O[nx_count] * exp_kry_O[ny_count] * exp_krz_O[nz_count];
+        column[water_index] += exp_krx_H1[nx_count] * exp_kry_H1[ny_count] * exp_krz_H1[nz_count];
+        column[water_index] += exp_krx_H2[nx_count] * exp_kry_H2[ny_count] * exp_krz_H2[nz_count];
+
+        column[NUM_WATERS] += column[water_index] - column[NUM_WATERS + 1];
         sum_of_ewald_diffs += (norm(column[NUM_WATERS]) - old_pk2) * (*K_VECTORS)[k][3];
+
+        // fix counters
+        nz_count++;
+        if (nz_count == 5 && ny_count == 5 && nx_count == 5)
+            nz_count++;
+        if (nz_count > 10) {
+            nz_count = 0;
+            ny_count++;
+        }
+        if (ny_count > 10) {
+            ny_count = 0;
+            nx_count++;
+        }
     }
     return sum_of_ewald_diffs * 4.0 * M_PI / pow(BOX_LENGTH, 3.0);
+}
+
+inline void set_exp_kr_table(int water_index) {
+    dcomplex exp_x_O = exp(dcomplex(0.0, (*K_VECTORS)[71][0] * water_positions[water_index][0]));
+    dcomplex exp_y_O = exp(dcomplex(0.0, (*K_VECTORS)[71][1] * water_positions[water_index][1]));
+    dcomplex exp_z_O = exp(dcomplex(0.0, (*K_VECTORS)[71][2] * water_positions[water_index][2]));
+    dcomplex exp_x_H1 = exp(dcomplex(0.0, (*K_VECTORS)[71][0] * water_positions[water_index][3]));
+    dcomplex exp_y_H1 = exp(dcomplex(0.0, (*K_VECTORS)[71][1] * water_positions[water_index][4]));
+    dcomplex exp_z_H1 = exp(dcomplex(0.0, (*K_VECTORS)[71][2] * water_positions[water_index][5]));
+    dcomplex exp_x_H2 = exp(dcomplex(0.0, (*K_VECTORS)[71][0] * water_positions[water_index][6]));
+    dcomplex exp_y_H2 = exp(dcomplex(0.0, (*K_VECTORS)[71][1] * water_positions[water_index][7]));
+    dcomplex exp_z_H2 = exp(dcomplex(0.0, (*K_VECTORS)[71][2] * water_positions[water_index][8]));
+
+    dcomplex exp_x_1_O = pow(exp_x_O, -1), exp_y_1_O = pow(exp_y_O, -1), exp_z_1_O = pow(exp_z_O, -1);
+    dcomplex exp_x_1_H1 = pow(exp_x_H1, -1), exp_y_1_H1 = pow(exp_y_H1, -1), exp_z_1_H1 = pow(exp_z_H1, -1);
+    dcomplex exp_x_1_H2 = pow(exp_x_H2, -1), exp_y_1_H2 = pow(exp_y_H2, -1), exp_z_1_H2 = pow(exp_z_H2, -1);
+
+    exp_krx_O[5] = exp_kry_O[5] = exp_krz_O[5] = dcomplex(1.0, 0.0);
+
+    for (int i = 1; i <= 5; i++) {
+        exp_krx_O[5 + i] = exp_krx_O[4 + i] * exp_x_O;
+        exp_krx_O[5 - i] = exp_krx_O[6 - i] * exp_x_1_O;
+        exp_kry_O[5 + i] = exp_kry_O[4 + i] * exp_y_O;
+        exp_kry_O[5 - i] = exp_kry_O[6 - i] * exp_y_1_O;
+        exp_krz_O[5 + i] = exp_krz_O[4 + i] * exp_z_O;
+        exp_krz_O[5 - i] = exp_krz_O[6 - i] * exp_z_1_O;
+
+        exp_krx_H1[5 + i] = exp_krx_H1[4 + i] * exp_x_H1;
+        exp_krx_H1[5 - i] = exp_krx_H1[6 - i] * exp_x_1_H1;
+        exp_kry_H1[5 + i] = exp_kry_H1[4 + i] * exp_y_H1;
+        exp_kry_H1[5 - i] = exp_kry_H1[6 - i] * exp_y_1_H1;
+        exp_krz_H1[5 + i] = exp_krz_H1[4 + i] * exp_z_H1;
+        exp_krz_H1[5 - i] = exp_krz_H1[6 - i] * exp_z_1_H1;
+
+
+        exp_krx_H2[5 + i] = exp_krx_H2[4 + i] * exp_x_H2;
+        exp_krx_H2[5 - i] = exp_krx_H2[6 - i] * exp_x_1_H2;
+        exp_kry_H2[5 + i] = exp_kry_H2[4 + i] * exp_y_H2;
+        exp_kry_H2[5 - i] = exp_kry_H2[6 - i] * exp_y_1_H2;
+        exp_krz_H2[5 + i] = exp_krz_H2[4 + i] * exp_z_H2;
+        exp_krz_H2[5 - i] = exp_krz_H2[6 - i] * exp_z_1_H2;
+    }
+    return;
 }
 
 void test_rho_function() {
