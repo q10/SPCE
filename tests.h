@@ -17,4 +17,7 @@ void test_run_mc();
 void test_read_config_file(int argc, char** argv);
 void test_mc_acceptances();
 
+void time_exp_vs_pow ();
+void time_new_operator_overhead();
+
 #endif	/* TESTS_H */

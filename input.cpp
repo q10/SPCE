@@ -96,7 +96,7 @@ void load_configuration_file() {
 
     // initialize constants
     NUM_WATERS = (int) waters.size();
-    initialize_constants();
+    initialize_prog_flag_affected_constants();
 
     // convert data structure back to primitive arrays for performance optimization
     water_positions = new double * [NUM_WATERS];
@@ -107,6 +107,6 @@ void load_configuration_file() {
         for (int j = 0; j < 9; j++)
             water_positions[i][j] = waters[i][j];
     }
-    
+
     return;
 }

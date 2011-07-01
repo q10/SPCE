@@ -125,8 +125,8 @@ void test_read_config_file(int argc, char** argv) {
 void test_mc_acceptances() {
     cout << "---- BEGIN TEST - MC ACCEPTANCES ----" << endl;
 
-    initialize_constants();
-    initialize_waters();
+    NUM_EQUILIBRATION_SWEEPS = 0;
+    initialize();
     NUM_EQUILIBRATION_SWEEPS = 100;
     double displacement_distances[] = {0.2, 0.22, 0.24, 0.26, 0.28, 0.3};
     double displacement_rotations[] = {0.15 * M_PI, 0.16 * M_PI, 0.17 * M_PI, 0.175 * M_PI, 0.18 * M_PI, 0.19 * M_PI};
@@ -140,5 +140,52 @@ void test_mc_acceptances() {
     }
 
     cout << "---- END TEST - MC ACCEPTANCES ----\n" << endl;
+    return;
+}
+
+void time_exp_vs_pow() {
+    cout << "---- BEGIN TIME - EXP VS POW ----" << endl;
+    int start = clock(), times = 100000000;
+    dcomplex d;
+    for (int i = 0; i < times; i++) {
+        d = dcomplex(1.335, 0.34541);
+        d = exp(d);
+    }
+    cout << (clock() - start) << endl;
+    start = clock();
+
+    for (int i = 0; i < 3; i++) {
+        d = dcomplex(1.335, 0.34541);
+        d = exp(d);
+    }
+    for (int i = 0; i < times; i++) {
+        d = dcomplex(1.335, 0.34541);
+        d = pow(d, 5);
+    }
+    cout << (clock() - start) << endl;
+    cout << "---- END TIME - EXP VS POW ----\n" << endl;
+    return;
+}
+
+void time_new_operator_overhead() {
+    cout << "---- BEGIN TIME - NEW OPERATOR OVERHEAD ----" << endl;
+    int start = clock(), times = 10000, length = 100000;
+    double array[length];
+    for (int i = 0; i < times; i++) {
+        for (int j = 0; j < length; j++)
+            array[j] = pow(j, 5);
+    }
+    cout << (clock() - start) << endl;
+    start = clock();
+
+    double * arr_ptr;
+    for (int i = 0; i < times; i++) {
+        arr_ptr = new double [length];
+        for (int j = 0; j < length; j++)
+            arr_ptr[j] = pow(j, 5);
+        delete arr_ptr;
+    }
+    cout << (clock() - start) << endl;
+    cout << "---- END TIME - NEW OPERATOR OVERHEAD ----\n" << endl;
     return;
 }

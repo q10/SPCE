@@ -8,6 +8,7 @@
 #include "common.h"
 
 int main(int argc, char** argv) {
+
     run_tests(argc, argv);
     /*
     read_program_flags(argc, argv);
@@ -16,6 +17,6 @@ int main(int argc, char** argv) {
     print_system_vars();
     print_system_config();
     save_config_to_file();
-    */
+     */
     return 0;
 }

@@ -10,7 +10,9 @@
 #define	INITIALIZERS_H
 
 void initialize();
-void initialize_constants();
+void initialize_prog_flag_affected_constants();
+void initialize_other_constants();
+void initialize_other_variables();
 void initialize_waters();
 
 #endif	/* INITIALIZERS_H */

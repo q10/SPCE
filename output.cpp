@@ -75,9 +75,9 @@ void test_write_to_vmd_file(int argc, char** argv) {
     cout << "---- BEGIN TEST - WRITE TO VMD FILE ----" << endl;
 
     read_program_flags(argc, argv);
+    NUM_EQUILIBRATION_SWEEPS = 0;
+    initialize();
     open_vmd_file();
-    initialize_constants();
-    initialize_waters();
     write_config_to_vmd_file();
     NUM_EQUILIBRATION_SWEEPS = 50;
     for (int g = 0; g < 10; g++) {
@@ -94,7 +94,7 @@ void test_write_to_config_file(int argc, char** argv) {
     cout << "---- BEGIN TEST - WRITE CONFIG FILE ----" << endl;
 
     read_program_flags(argc, argv);
-    initialize_constants();
+    initialize_prog_flag_affected_constants();
     initialize_waters();
     save_config_to_file();
     cout << "---- END TEST - WRITE CONFIG FILE ----\n" << endl;

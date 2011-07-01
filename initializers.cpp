@@ -4,11 +4,11 @@ void initialize() {
     if (using_input_config_file)
         load_configuration_file();
     else {
-        initialize_constants();
+        initialize_prog_flag_affected_constants();
         initialize_waters();
     }
-    initialize_rho_k_values_table();
-    calculate_and_init_energy();
+    initialize_other_constants();
+    initialize_other_variables();
 
     initialize_radial_dist_sampler();
 
@@ -20,11 +20,22 @@ void initialize() {
     return;
 }
 
-void initialize_constants() {
+void initialize_prog_flag_affected_constants() {
     BETA = 1.0 / (BOLTZMANN_K * TEMPERATURE);
     BOX_LENGTH = pow(NUM_WATERS / WATER_DENSITY, 1.0 / 3.0);
+    return;
+}
+
+void initialize_other_constants() {
     initialize_erfc_table();
     initialize_k_vectors_table();
+    return;
+}
+
+void initialize_other_variables() {
+    initialize_rotation_matrix();
+    initialize_rho_k_values_table();
+    calculate_and_init_energy();
     return;
 }
 

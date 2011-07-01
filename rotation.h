@@ -9,8 +9,12 @@
 #ifndef ROTATION_H
 #define	ROTATION_H
 
-double * center_of_mass_of_water_with_index(int i);
-double ** rotation_matrix(double * rand_unit_vector, double theta_rad);
+extern double ** ROTATION_MATRIX;
+extern double * TMP_CENTER_OF_MASS;
+
+void initialize_rotation_matrix();
+void set_center_of_mass_of_water_with_index(int i);
+void set_rotation_matrix(double * rand_unit_vector, double theta_rad);
 
 void test_rotation();
 
