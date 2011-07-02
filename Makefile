@@ -12,6 +12,9 @@ all:
 
 o2:
 	$(CC) -Wall -O2 *.cpp -o $(EXECUTABLE)
+	
+o1:
+	$(CC) -Wall -O1 *.cpp -o $(EXECUTABLE)
 
 verbose: $(SOURCES) $(EXECUTABLE)
 
