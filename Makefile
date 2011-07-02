@@ -10,6 +10,9 @@ all:
 	$(CC) $(CFLAGS) *.cpp -o $(EXECUTABLE)
 	rm -rf *.o *~
 
+o2:
+	$(CC) -Wall -O2 *.cpp -o $(EXECUTABLE)
+
 verbose: $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
@@ -19,3 +22,6 @@ $(EXECUTABLE): $(OBJECTS)
 .cpp.o:
 	$(CC) $(CFLAGS2) $(CFLAGS) $< -o $@
 
+clean:
+	rm -rf *.o *~
+	rm -f $(EXECUTABLE)

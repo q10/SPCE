@@ -96,37 +96,36 @@ double ewald_sum() {
 
 double ewald_diff(int water_index) {
     double sum_of_ewald_diffs = 0.0, old_pk2;
-    dcomplex *column;
+    dcomplex *column, tmp_exp_kr_O, tmp_exp_kr_H1, tmp_exp_kr_H2;
     set_exp_kr_table(water_index);
+    int k = 0;
 
-    int nx_count = 0, ny_count = 0, nz_count = 0;
-    for (int k = 0; k < RHO_K_VALUES->size(); k++) {
-        column = (*RHO_K_VALUES)[k];
-        old_pk2 = norm(column[NUM_WATERS]);
+    for (int nx = 0; nx <= 5; nx++) {
+        tmp_exp_kr_O = WATER_Q_O * exp_krx_O[nx];
+        tmp_exp_kr_H1 = WATER_Q_H * exp_krx_H1[nx];
+        tmp_exp_kr_H2 = WATER_Q_H * exp_krx_H2[nx];
 
-        // save old rho(K, R)
-        // calculate and save new rho(K, R)
-        // update total rho to rho(K, R)_new - rho(K, R)_old
-        column[NUM_WATERS + 1] = column[water_index];
+        for (int ny = 0; ny <= 10; ny++) {
+            tmp_exp_kr_O *= exp_kry_O[ny];
+            tmp_exp_kr_H1 *= exp_kry_H1[ny];
+            tmp_exp_kr_H2 *= exp_kry_H2[ny];
 
-        column[water_index] = exp_krx_O[nx_count] * exp_kry_O[ny_count] * exp_krz_O[nz_count];
-        column[water_index] += exp_krx_H1[nx_count] * exp_kry_H1[ny_count] * exp_krz_H1[nz_count];
-        column[water_index] += exp_krx_H2[nx_count] * exp_kry_H2[ny_count] * exp_krz_H2[nz_count];
+            for (int nz = 0; nz <= 10; nz++) {
+                if (nx != 0 || ny != 5 || nz != 5) {
+                    column = (*RHO_K_VALUES)[k];
+                    old_pk2 = norm(column[NUM_WATERS]);
 
-        column[NUM_WATERS] += column[water_index] - column[NUM_WATERS + 1];
-        sum_of_ewald_diffs += (norm(column[NUM_WATERS]) - old_pk2) * (*K_VECTORS)[k][3];
-
-        // fix counters
-        nz_count++;
-        if (nz_count == 5 && ny_count == 5 && nx_count == 5)
-            nz_count++;
-        if (nz_count > 10) {
-            nz_count = 0;
-            ny_count++;
-        }
-        if (ny_count > 10) {
-            ny_count = 0;
-            nx_count++;
+                    // save old rho(K, R)
+                    // calculate and save new rho(K, R)
+                    // update total rho to rho(K, R)_new - rho(K, R)_old
+                    column[NUM_WATERS + 1] = column[water_index];
+                    column[water_index] = tmp_exp_kr_O * exp_krz_O[nz] + tmp_exp_kr_H1 * exp_krz_H1[nz] + tmp_exp_kr_H2 * exp_krz_H2[nz];
+                    column[NUM_WATERS] += column[water_index] - column[NUM_WATERS + 1];
+                    
+                    sum_of_ewald_diffs += (norm(column[NUM_WATERS]) - old_pk2) * (*K_VECTORS)[k][3];
+                    k++;
+                }
+            }
         }
     }
     return sum_of_ewald_diffs * 4.0 * M_PI / pow(BOX_LENGTH, 3.0);

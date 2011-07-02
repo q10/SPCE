@@ -142,7 +142,7 @@ void test_mc_acceptances() {
     cout << "---- END TEST - MC ACCEPTANCES ----\n" << endl;
     return;
 }
-
+/*
 void time_exp_vs_pow() {
     cout << "---- BEGIN TIME - EXP VS POW ----" << endl;
     int start = clock(), times = 100000000;
@@ -189,3 +189,4 @@ void time_new_operator_overhead() {
     cout << "---- END TIME - NEW OPERATOR OVERHEAD ----\n" << endl;
     return;
 }
+*/

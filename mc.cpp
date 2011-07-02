@@ -44,6 +44,7 @@ void mc_equilibrate() {
 }
 
 inline void mc_sweep() {
+    int start = clock();
     for (int i = 0; i < NUM_MC_ATTEMPTS_PER_SWEEP; i++) {
         if (RAN3() < 0.5) {
             total_attempted_mc_moves++;
@@ -53,6 +54,7 @@ inline void mc_sweep() {
             mc_rotate();
         }
     }
+    cerr << (clock() - start) << endl;
     return;
 }
 
