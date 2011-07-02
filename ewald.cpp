@@ -1,6 +1,7 @@
 #include "common.h"
 
 dcomplex exp_kr_O[3][11], exp_kr_H1[3][11], exp_kr_H2[3][11];
+dcomplex COMPLEX_ONE(1.0, 0.0);
 
 void initialize_erfc_table() {
     double sqrt_alpha_1000 = sqrt(EWALD_ALPHA) / 1000.0, key;
@@ -129,15 +130,15 @@ double ewald_diff(int water_index) {
     return sum_of_ewald_diffs * 4.0 * M_PI / pow(BOX_LENGTH, 3.0);
 }
 
-inline void set_exp_kr_table(int water_index) {
+void set_exp_kr_table(int water_index) {
     for (int i = 0; i < 3; i++) {
         exp_kr_O[i][6] = exp(dcomplex(0.0, (*K_VECTORS)[71][i] * water_positions[water_index][i]));
         exp_kr_H1[i][6] = exp(dcomplex(0.0, (*K_VECTORS)[71][i] * water_positions[water_index][i + 3]));
         exp_kr_H2[i][6] = exp(dcomplex(0.0, (*K_VECTORS)[71][i] * water_positions[water_index][i + 6]));
 
-        exp_kr_O[i][4] = pow(exp_kr_O[i][6], -1);
-        exp_kr_H1[i][4] = pow(exp_kr_H1[i][6], -1);
-        exp_kr_H2[i][4] = pow(exp_kr_H2[i][6], -1);
+        exp_kr_O[i][4] = COMPLEX_ONE / exp_kr_O[i][6];
+        exp_kr_H1[i][4] = COMPLEX_ONE / exp_kr_H1[i][6];
+        exp_kr_H2[i][4] = COMPLEX_ONE / exp_kr_H2[i][6];
     }
 
     for (int i = 2; i <= 5; i++) {

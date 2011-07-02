@@ -142,6 +142,7 @@ void test_mc_acceptances() {
     cout << "---- END TEST - MC ACCEPTANCES ----\n" << endl;
     return;
 }
+
 /*
 void time_exp_vs_pow() {
     cout << "---- BEGIN TIME - EXP VS POW ----" << endl;
@@ -189,4 +190,23 @@ void time_new_operator_overhead() {
     cout << "---- END TIME - NEW OPERATOR OVERHEAD ----\n" << endl;
     return;
 }
-*/
+ */
+
+void time_pow_vs_division() {
+    cout << "---- BEGIN TIME - POW VS DIVISION ----" << endl;
+    int start = clock(), times = 100000000;
+    dcomplex d(1.335, 0.34541), e, f;
+
+    for (int i = 0; i < times; i++)
+        e = pow(d, -1);
+    cout << (clock() - start) << endl;
+    start = clock();
+    dcomplex one(1.0, 0.0);
+
+    for (int i = 0; i < times; i++)
+        f = one / d;
+    cout << (clock() - start) << endl
+            << e << endl << f << endl;
+    cout << "---- END TIME - POW VS DIVISION ----" << endl;
+    return;
+}

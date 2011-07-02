@@ -8,7 +8,6 @@
 #include "common.h"
 
 int main(int argc, char** argv) {
-
     run_tests(argc, argv);
     /*
     read_program_flags(argc, argv);
