@@ -57,7 +57,7 @@ void test_radial_dist_sampler() {
     cout << "---- BEGIN TEST - RADIAL DISTRIBUTION SAMPLER ----" << endl;
 
     NUM_EQUILIBRATION_SWEEPS = 0;
-    // NUM_MC_SWEEPS = 100;
+    NUM_MC_SWEEPS = 100000;
     initialize();
     run_mc();
     compute_radial_dist_results();

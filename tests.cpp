@@ -194,8 +194,8 @@ void time_new_operator_overhead() {
 
 void time_pow_vs_division() {
     cout << "---- BEGIN TIME - POW VS DIVISION ----" << endl;
-    int start = clock(), times = 100000000;
     dcomplex d(1.335, 0.34541), e, f;
+    int start = clock(), times = 100000000;
 
     for (int i = 0; i < times; i++)
         e = pow(d, -1);
@@ -207,6 +207,29 @@ void time_pow_vs_division() {
         f = one / d;
     cout << (clock() - start) << endl
             << e << endl << f << endl;
-    cout << "---- END TIME - POW VS DIVISION ----" << endl;
+    cout << "---- END TIME - POW VS DIVISION ----\n" << endl;
+    return;
+}
+
+void time_array_vs_vector() {
+    cout << "---- BEGIN TIME - ARRAY VS VECTOR ----" << endl;
+    int length = 1000, temp, times = 10000000000;
+    int * array = new int [length];
+    vector<int> * vect = new vector<int>;
+    for (int i = 0; i < length; i++) {
+        array[i] = RANDINT(0, length);
+        vect->push_back(RANDINT(0, length));
+    }
+    
+    int start = clock();
+    for (int i = 0; i < times; i++)
+        temp = array[500];
+    cout << (clock() - start) << endl;
+    start = clock();
+
+    for (int i = 0; i < times; i++)
+        temp = (*vect)[500];
+    cout << (clock() - start) << endl;
+    cout << "---- END TIME - ARRAY VS VECTOR ----\n" << endl;
     return;
 }
