@@ -141,7 +141,7 @@ inline void keep_water_inside_box(int index) {
 bool mc_accept(int index, double old_energy_particle_i, double * old_position) {
     double total_energy_diff = ewald_diff(index) + energy_of_water_with_index(index) - old_energy_particle_i;
 
-    if (RAN3() < exp(-BETA * (total_energy_diff)))
+    if (RAN3() < exp(-BETA * total_energy_diff))
         update_energy(total_energy_diff);
     else {
         // undo the move if move not accepted

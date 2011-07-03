@@ -23,6 +23,7 @@ extern double TEMPERATURE; // Kelvins
 extern double BETA; // mol/kJ
 extern int NUM_WATERS;
 extern double BOX_LENGTH; // box side length (Angstroms)
+extern double BOX_VOLUME; // box volume (Angstrom^3)
 extern double DISPLACEMENT_DISTANCE; // max random displacement distance per attempted move (Angstroms)
 extern double DISPLACEMENT_ROTATION; // max random displacement angle per attempted molecule rotation (radians)
 extern double EWALD_ALPHA; // Ewald screening parameter

@@ -10,10 +10,8 @@ void initialize_rotation_matrix() {
 }
 
 void set_center_of_mass_of_water_with_index(int i) {
-    for (int j = 0; j < 3; j++) {
-        TMP_CENTER_OF_MASS[j] = O_MASS * water_positions[i][j] + H_MASS * water_positions[i][j + 3] + H_MASS * water_positions[i][j + 6];
-        TMP_CENTER_OF_MASS[j] /= WATER_MASS;
-    }
+    for (int j = 0; j < 3; j++)
+        TMP_CENTER_OF_MASS[j] = (O_MASS * water_positions[i][j] + H_MASS * water_positions[i][j + 3] + H_MASS * water_positions[i][j + 6]) / WATER_MASS;
     return;
 }
 
