@@ -150,8 +150,8 @@ bool mc_accept(int index, double old_energy_particle_i, double * old_position) {
 
         // reset partial rho_k's
         dcomplex *column;
-        for (int k = 0; k < RHO_K_VALUES->size(); k++) {
-            column = (*RHO_K_VALUES)[k];
+        for (int k = 0; k < 725; k++) {
+            column = RHO_K_VALUES[k];
             column[NUM_WATERS] += column[NUM_WATERS + 1] - column[index];
             column[index] = column[NUM_WATERS + 1];
         }

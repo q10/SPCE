@@ -42,8 +42,8 @@ extern const double HOH_ANGLE_DEG; // HOH bond angle (degrees)
 
 // other system variables
 extern std::map <double, double> * ERFC_TABLE;
-extern std::vector <double *> * K_VECTORS;
-extern std::vector <dcomplex *> * RHO_K_VALUES;
+extern double ** K_VECTORS;
+extern dcomplex ** RHO_K_VALUES;
 
 // state variables
 extern double ** water_positions; // table of oxygen positions

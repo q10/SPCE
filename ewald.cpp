@@ -15,24 +15,25 @@ void initialize_erfc_table() {
 
 void initialize_k_vectors_table() {
     // K vector order as follows (go through all ny and nzvalues descending, then ascending):    
-    K_VECTORS->clear();
-    double * k_entry, tmp_k2, alpha_inv_4 = -1.0 / (4.0 * EWALD_ALPHA);
-
+    double tmp_k2, alpha_inv_4 = -1.0 / (4.0 * EWALD_ALPHA);
+    int k = 0;
+    
     for (int nx = 0; nx <= 5; nx++) {
         for (int ny = -5; ny <= 5; ny++) {
             for (int nz = -5; nz <= 5; nz++) {
                 if (nx != 0 || ny != 0 || nz != 0) { // removes the K=0 case
-                    k_entry = new double [4];
-                    k_entry[0] = 2.0 * M_PI * nx / BOX_LENGTH;
-                    k_entry[1] = 2.0 * M_PI * ny / BOX_LENGTH;
-                    k_entry[2] = 2.0 * M_PI * nz / BOX_LENGTH;
+                    K_VECTORS[k] = new double[4];
+                    K_VECTORS[k][0] = 2.0 * M_PI * nx / BOX_LENGTH;
+                    K_VECTORS[k][1] = 2.0 * M_PI * ny / BOX_LENGTH;
+                    K_VECTORS[k][2] = 2.0 * M_PI * nz / BOX_LENGTH;
 
                     // k_entry[3] will be the Fourier coefficient exp(-K^2 / (4*alpha)) / K^2, where K^2, or kx^2 + ky^2 + kz^2
-                    tmp_k2 = k_entry[0] * k_entry[0] + k_entry[1] * k_entry[1] + k_entry[2] * k_entry[2];
-                    k_entry[3] = exp(tmp_k2 * alpha_inv_4) / tmp_k2;
+                    tmp_k2 = K_VECTORS[k][0] * K_VECTORS[k][0] + K_VECTORS[k][1] * K_VECTORS[k][1] + K_VECTORS[k][2] * K_VECTORS[k][2];
+                    K_VECTORS[k][3] = exp(tmp_k2 * alpha_inv_4) / tmp_k2;
+                    
                     // placing the 4*pi/V here allows for smaller number of multiplications and divisions later on
-                    k_entry[3] *= 4.0 * M_PI / BOX_VOLUME;
-                    K_VECTORS->push_back(k_entry);
+                    K_VECTORS[k][3] *= 4.0 * M_PI / BOX_VOLUME;
+                    k++;
                 }
             }
         }
@@ -41,20 +42,19 @@ void initialize_k_vectors_table() {
 }
 
 void initialize_rho_k_values_table() {
-    RHO_K_VALUES->clear();
     dcomplex *column, column_sum;
 
-    for (int k = 0; k < K_VECTORS->size(); k++) {
+    for (int k = 0; k < 725; k++) {
         column = new dcomplex [NUM_WATERS + 2];
         column_sum = dcomplex(0.0, 0.0);
 
         for (int w = 0; w < NUM_WATERS; w++) {
-            column[w] = partial_rho(w, (*K_VECTORS)[k]);
+            column[w] = partial_rho(w, K_VECTORS[k]);
             column_sum += column[w];
         }
 
         column[NUM_WATERS] = column_sum;
-        RHO_K_VALUES->push_back(column);
+        RHO_K_VALUES[k] = column;
     }
 
     for (int i = 0; i < 3; i++)
@@ -95,8 +95,8 @@ dcomplex partial_rho(int water_index, double * k_coords) {
 
 double ewald_sum() {
     double sum = 0.0;
-    for (int k = 0; k < K_VECTORS->size(); k++)
-        sum += norm(rho((*K_VECTORS)[k])) * (*K_VECTORS)[k][3];
+    for (int k = 0; k < 725; k++)
+        sum += norm(rho(K_VECTORS[k])) * K_VECTORS[k][3];
     return sum * 4.0 * M_PI / pow(BOX_LENGTH, 3.0);
 }
 
@@ -118,7 +118,7 @@ double ewald_diff(int water_index) {
 
             for (int nz = 0; nz <= 10; nz++) {
                 if (nx != 0 || ny != 5 || nz != 5) {
-                    column = (*RHO_K_VALUES)[k];
+                    column = RHO_K_VALUES[k];
                     old_pk2 = norm(column[NUM_WATERS]);
 
                     // save old rho(K, R)
@@ -128,7 +128,7 @@ double ewald_diff(int water_index) {
                     column[water_index] = tmp_y_O * exp_kr_O[1][2][nz] + tmp_y_H1 * exp_kr_H1[1][2][nz] + tmp_y_H2 * exp_kr_H2[1][2][nz];
                     column[NUM_WATERS] += column[water_index] - column[NUM_WATERS + 1];
 
-                    sum_of_ewald_diffs += (norm(column[NUM_WATERS]) - old_pk2) * (*K_VECTORS)[k][3];
+                    sum_of_ewald_diffs += (norm(column[NUM_WATERS]) - old_pk2) * K_VECTORS[k][3];
                     k++;
                 }
             }
@@ -139,9 +139,9 @@ double ewald_diff(int water_index) {
 
 void set_exp_kr_table(int water_index) {
     for (int i = 0; i < 3; i++) {
-        exp_kr_O[1][i][6] = exp(dcomplex(0.0, (*K_VECTORS)[71][i] * water_positions[water_index][i]));
-        exp_kr_H1[1][i][6] = exp(dcomplex(0.0, (*K_VECTORS)[71][i] * water_positions[water_index][i + 3]));
-        exp_kr_H2[1][i][6] = exp(dcomplex(0.0, (*K_VECTORS)[71][i] * water_positions[water_index][i + 6]));
+        exp_kr_O[1][i][6] = exp(dcomplex(0.0, K_VECTORS[71][i] * water_positions[water_index][i]));
+        exp_kr_H1[1][i][6] = exp(dcomplex(0.0, K_VECTORS[71][i] * water_positions[water_index][i + 3]));
+        exp_kr_H2[1][i][6] = exp(dcomplex(0.0, K_VECTORS[71][i] * water_positions[water_index][i + 6]));
 
         exp_kr_O[1][i][4] = COMPLEX_ONE / exp_kr_O[1][i][6];
         exp_kr_H1[1][i][4] = COMPLEX_ONE / exp_kr_H1[1][i][6];
@@ -195,7 +195,7 @@ void test_k_vector_table() {
 
     BOX_LENGTH = 10.0;
     initialize_k_vectors_table();
-    double * coords = (*K_VECTORS)[0];
+    double * coords = K_VECTORS[0];
     cout << setprecision(10) << coords[0] << " " << coords[1] << " " << coords[2] << " " << coords[3] << endl;
 
     cout << "---- END TEST - TEST K VECTOR TABLE ----\n" << endl;
