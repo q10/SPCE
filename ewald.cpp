@@ -1,6 +1,6 @@
 #include "common.h"
 
-dcomplex exp_kr_O[2][3][11], exp_kr_H1[2][3][11], exp_kr_H2[2][3][11];
+dcomplex exp_kr_O[3][11], exp_kr_H1[3][11], exp_kr_H2[3][11];
 dcomplex COMPLEX_ONE(1.0, 0.0);
 
 void initialize_erfc_table() {
@@ -58,7 +58,7 @@ void initialize_rho_k_values_table() {
     }
 
     for (int i = 0; i < 3; i++)
-        exp_kr_O[1][i][5] = exp_kr_H1[1][i][5] = exp_kr_H2[1][i][5] = dcomplex(1.0, 0.0);
+        exp_kr_O[i][5] = exp_kr_H1[i][5] = exp_kr_H2[i][5] = dcomplex(1.0, 0.0);
 
     return;
 }
@@ -107,14 +107,14 @@ double ewald_diff(int water_index) {
     int k = 0;
 
     for (int nx = 0; nx <= 5; nx++) {
-        tmp_x_O = WATER_Q_O * exp_kr_O[1][0][nx];
-        tmp_x_H1 = WATER_Q_H * exp_kr_H1[1][0][nx];
-        tmp_x_H2 = WATER_Q_H * exp_kr_H2[1][0][nx];
+        tmp_x_O = WATER_Q_O * exp_kr_O[0][nx];
+        tmp_x_H1 = WATER_Q_H * exp_kr_H1[0][nx];
+        tmp_x_H2 = WATER_Q_H * exp_kr_H2[0][nx];
 
         for (int ny = 0; ny <= 10; ny++) {
-            tmp_y_O = tmp_x_O * exp_kr_O[1][1][ny];
-            tmp_y_H1 = tmp_x_H1 * exp_kr_H1[1][1][ny];
-            tmp_y_H2 = tmp_x_H2 * exp_kr_H2[1][1][ny];
+            tmp_y_O = tmp_x_O * exp_kr_O[1][ny];
+            tmp_y_H1 = tmp_x_H1 * exp_kr_H1[1][ny];
+            tmp_y_H2 = tmp_x_H2 * exp_kr_H2[1][ny];
 
             for (int nz = 0; nz <= 10; nz++) {
                 if (nx != 0 || ny != 5 || nz != 5) {
@@ -125,7 +125,7 @@ double ewald_diff(int water_index) {
                     // calculate and save new rho(K, R)
                     // update total rho to rho(K, R)_new - rho(K, R)_old
                     column[NUM_WATERS + 1] = column[water_index];
-                    column[water_index] = tmp_y_O * exp_kr_O[1][2][nz] + tmp_y_H1 * exp_kr_H1[1][2][nz] + tmp_y_H2 * exp_kr_H2[1][2][nz];
+                    column[water_index] = tmp_y_O * exp_kr_O[2][nz] + tmp_y_H1 * exp_kr_H1[2][nz] + tmp_y_H2 * exp_kr_H2[2][nz];
                     column[NUM_WATERS] += column[water_index] - column[NUM_WATERS + 1];
 
                     sum_of_ewald_diffs += (norm(column[NUM_WATERS]) - old_pk2) * K_VECTORS[k][3];
@@ -139,24 +139,24 @@ double ewald_diff(int water_index) {
 
 void set_exp_kr_table(int water_index) {
     for (int i = 0; i < 3; i++) {
-        exp_kr_O[1][i][6] = exp(dcomplex(0.0, K_VECTORS[71][i] * water_positions[water_index][i]));
-        exp_kr_H1[1][i][6] = exp(dcomplex(0.0, K_VECTORS[71][i] * water_positions[water_index][i + 3]));
-        exp_kr_H2[1][i][6] = exp(dcomplex(0.0, K_VECTORS[71][i] * water_positions[water_index][i + 6]));
+        exp_kr_O[i][6] = exp(dcomplex(0.0, K_VECTORS[71][i] * water_positions[water_index][i]));
+        exp_kr_H1[i][6] = exp(dcomplex(0.0, K_VECTORS[71][i] * water_positions[water_index][i + 3]));
+        exp_kr_H2[i][6] = exp(dcomplex(0.0, K_VECTORS[71][i] * water_positions[water_index][i + 6]));
 
-        exp_kr_O[1][i][4] = COMPLEX_ONE / exp_kr_O[1][i][6];
-        exp_kr_H1[1][i][4] = COMPLEX_ONE / exp_kr_H1[1][i][6];
-        exp_kr_H2[1][i][4] = COMPLEX_ONE / exp_kr_H2[1][i][6];
+        exp_kr_O[i][4] = COMPLEX_ONE / exp_kr_O[i][6];
+        exp_kr_H1[i][4] = COMPLEX_ONE / exp_kr_H1[i][6];
+        exp_kr_H2[i][4] = COMPLEX_ONE / exp_kr_H2[i][6];
     }
 
     for (int i = 2; i <= 5; i++) {
-        exp_kr_O[1][i][5 + i] = exp_kr_O[1][i][4 + i] * exp_kr_O[1][i][6];
-        exp_kr_O[1][i][5 - i] = exp_kr_O[1][i][6 - i] * exp_kr_O[1][i][4];
+        exp_kr_O[i][5 + i] = exp_kr_O[i][4 + i] * exp_kr_O[i][6];
+        exp_kr_O[i][5 - i] = exp_kr_O[i][6 - i] * exp_kr_O[i][4];
 
-        exp_kr_H1[1][i][5 + i] = exp_kr_H1[1][i][4 + i] * exp_kr_H1[1][i][6];
-        exp_kr_H1[1][i][5 - i] = exp_kr_H1[1][i][6 - i] * exp_kr_H1[1][i][4];
+        exp_kr_H1[i][5 + i] = exp_kr_H1[i][4 + i] * exp_kr_H1[i][6];
+        exp_kr_H1[i][5 - i] = exp_kr_H1[i][6 - i] * exp_kr_H1[i][4];
 
-        exp_kr_H2[1][i][5 + i] = exp_kr_H2[1][i][4 + i] * exp_kr_H2[1][i][6];
-        exp_kr_H2[1][i][5 - i] = exp_kr_H2[1][i][6 - i] * exp_kr_H2[1][i][4];
+        exp_kr_H2[i][5 + i] = exp_kr_H2[i][4 + i] * exp_kr_H2[i][6];
+        exp_kr_H2[i][5 - i] = exp_kr_H2[i][6 - i] * exp_kr_H2[i][4];
     }
     return;
 }
