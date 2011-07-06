@@ -17,7 +17,7 @@ void initialize_k_vectors_table() {
     // K vector order as follows (go through all ny and nzvalues descending, then ascending):    
     double tmp_k2, alpha_inv_4 = -1.0 / (4.0 * EWALD_ALPHA);
     int k = 0;
-    
+
     for (int nx = 0; nx <= 5; nx++) {
         for (int ny = -5; ny <= 5; ny++) {
             for (int nz = -5; nz <= 5; nz++) {
@@ -30,7 +30,7 @@ void initialize_k_vectors_table() {
                     // k_entry[3] will be the Fourier coefficient exp(-K^2 / (4*alpha)) / K^2, where K^2, or kx^2 + ky^2 + kz^2
                     tmp_k2 = K_VECTORS[k][0] * K_VECTORS[k][0] + K_VECTORS[k][1] * K_VECTORS[k][1] + K_VECTORS[k][2] * K_VECTORS[k][2];
                     K_VECTORS[k][3] = exp(tmp_k2 * alpha_inv_4) / tmp_k2;
-                    
+
                     // placing the 4*pi/V here allows for smaller number of multiplications and divisions later on
                     K_VECTORS[k][3] *= 4.0 * M_PI / BOX_VOLUME;
                     k++;
@@ -146,17 +146,17 @@ void set_exp_kr_table(int water_index) {
         exp_kr_O[i][4] = COMPLEX_ONE / exp_kr_O[i][6];
         exp_kr_H1[i][4] = COMPLEX_ONE / exp_kr_H1[i][6];
         exp_kr_H2[i][4] = COMPLEX_ONE / exp_kr_H2[i][6];
-    }
 
-    for (int i = 2; i <= 5; i++) {
-        exp_kr_O[i][5 + i] = exp_kr_O[i][4 + i] * exp_kr_O[i][6];
-        exp_kr_O[i][5 - i] = exp_kr_O[i][6 - i] * exp_kr_O[i][4];
+        for (int j = 2; j <= 5; j++) {
+            exp_kr_O[i][5 + j] = exp_kr_O[i][4 + j] * exp_kr_O[i][6];
+            exp_kr_O[i][5 - j] = exp_kr_O[i][6 - j] * exp_kr_O[i][4];
 
-        exp_kr_H1[i][5 + i] = exp_kr_H1[i][4 + i] * exp_kr_H1[i][6];
-        exp_kr_H1[i][5 - i] = exp_kr_H1[i][6 - i] * exp_kr_H1[i][4];
+            exp_kr_H1[i][5 + j] = exp_kr_H1[i][4 + j] * exp_kr_H1[i][6];
+            exp_kr_H1[i][5 - j] = exp_kr_H1[i][6 - j] * exp_kr_H1[i][4];
 
-        exp_kr_H2[i][5 + i] = exp_kr_H2[i][4 + i] * exp_kr_H2[i][6];
-        exp_kr_H2[i][5 - i] = exp_kr_H2[i][6 - i] * exp_kr_H2[i][4];
+            exp_kr_H2[i][5 + j] = exp_kr_H2[i][4 + j] * exp_kr_H2[i][6];
+            exp_kr_H2[i][5 - j] = exp_kr_H2[i][6 - j] * exp_kr_H2[i][4];
+        }
     }
     return;
 }
