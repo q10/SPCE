@@ -16,8 +16,8 @@ void set_center_of_mass_of_water_with_index(int i) {
 }
 
 void set_rotation_matrix(double * rand_unit_vector, double theta_rad) {
-    double rx = rand_unit_vector[0], ry = rand_unit_vector[1], rz = rand_unit_vector[2];
-    double cos_t = cos(theta_rad), sin_t = sin(theta_rad);
+    double rx = rand_unit_vector[0], ry = rand_unit_vector[1], rz = rand_unit_vector[2], sin_t = sin(theta_rad);
+    double cos_t = sqrt(1.0 - sin_t * sin_t);
     double l_cos_t = 1.0 - cos_t, rx2 = rx*rx, ry2 = ry*ry, rz2 = rz*rz, rxry = rx*ry, ryrz = ry*rz, rxrz = rx*rz;
 
     ROTATION_MATRIX[0][0] = cos_t + rx2 * l_cos_t;

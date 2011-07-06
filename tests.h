@@ -21,5 +21,6 @@ void time_exp_vs_pow ();
 void time_new_operator_overhead();
 void time_pow_vs_division();
 void time_array_vs_vector();
+void time_sin_cos_sqrt();
 
 #endif	/* TESTS_H */

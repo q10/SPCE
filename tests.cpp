@@ -220,7 +220,7 @@ void time_array_vs_vector() {
         array[i] = RANDINT(0, length);
         vect->push_back(RANDINT(0, length));
     }
-    
+
     int start = clock();
     for (int i = 0; i < times; i++)
         temp = array[500];
@@ -231,5 +231,45 @@ void time_array_vs_vector() {
         temp = (*vect)[500];
     cout << (clock() - start) << endl;
     cout << "---- END TIME - ARRAY VS VECTOR ----\n" << endl;
+    return;
+}
+
+void time_sin_cos_sqrt() {
+    cout << "---- BEGIN TIME - SIN COS SQRT ----" << endl;
+    int times = 10000000;
+    double a, b, val = M_PI / 9.7;
+
+    int start = clock();
+    for (int i = 0; i < times; i++)
+        a = sin(val);
+    cout << (clock() - start) << endl;
+
+    start = clock();
+    for (int i = 0; i < times; i++)
+        b = cos(val);
+    cout << (clock() - start) << endl;
+
+    start = clock();
+    for (int i = 0; i < times; i++) {
+        a = sin(val);
+        b = cos(val);
+    }
+    cout << (clock() - start) << endl;
+
+    start = clock();
+    for (int i = 0; i < times; i++) {
+        a = sin(val);
+        b = sqrt(1.0 - a * a);
+    }
+    cout << (clock() - start) << endl;
+
+    start = clock();
+    for (int i = 0; i < times; i++) {
+        b = cos(val);
+        a = sqrt(1.0 - b * b);
+    }
+    cout << (clock() - start) << endl;
+
+    cout << "---- END TIME - SIN COS SQRT ----\n" << endl;
     return;
 }
