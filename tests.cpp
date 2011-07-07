@@ -190,7 +190,6 @@ void time_new_operator_overhead() {
     cout << "---- END TIME - NEW OPERATOR OVERHEAD ----\n" << endl;
     return;
 }
- */
 
 void time_pow_vs_division() {
     cout << "---- BEGIN TIME - POW VS DIVISION ----" << endl;
@@ -273,3 +272,4 @@ void time_sin_cos_sqrt() {
     cout << "---- END TIME - SIN COS SQRT ----\n" << endl;
     return;
 }
+*/
