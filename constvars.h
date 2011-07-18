@@ -19,9 +19,11 @@ extern const double BOLTZMANN_K; // units of kJ/(mol*K)
 extern const double ELECTROSTATIC_K; // units of (kJ*mol*Angstrom)/(elementary_charge^2) (see below for notes on obtaining this constant)
 
 // system properties
+extern int NUM_WATERS;
+extern int NUM_IONS;
+extern int NUM_TOTAL_PARTICLES;
 extern double TEMPERATURE; // Kelvins
 extern double BETA; // mol/kJ
-extern int NUM_WATERS;
 extern double BOX_LENGTH; // box side length (Angstroms)
 extern double BOX_VOLUME; // box volume (Angstrom^3)
 extern double DISPLACEMENT_DISTANCE; // max random displacement distance per attempted move (Angstroms)
@@ -46,8 +48,9 @@ extern double ** K_VECTORS;
 extern dcomplex ** RHO_K_VALUES;
 
 // state variables
-extern double ** water_positions; // table of oxygen positions
-extern double LJEnergy; // Lennard-Jones Potential (kJ/mol)
+extern double ** WATER_POSITIONS; // table of oxygen positions
+extern double ** IONS;  // table of ion positions AND charge
+extern double TOTAL_ENERGY; // Total of LJ potential, Coulombic potential, and Ewald summation over all waters and ions (kJ/mol)
 
 #endif	/* CONSTVARS_H */
 

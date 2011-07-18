@@ -11,16 +11,16 @@ double energy_of_water_with_index(int index) {
 }
 
 void calculate_and_init_energy() {
-    LJEnergy = 0.0;
+    TOTAL_ENERGY = 0.0;
     for (int i = 0; i < NUM_WATERS - 1; i++) {
         for (int j = i + 1; j < NUM_WATERS; j++) {
-            LJEnergy += energy_between_two_waters(i, j);
+            TOTAL_ENERGY += energy_between_two_waters(i, j);
         }
     }
     return;
 }
 
-inline double energy_between_two_waters(int i, int j) {
+double energy_between_two_waters(int i, int j) {
     static double dx, dy, dz, old_dx, old_dy, old_dz, r, r2, tmp_energy;
     static bool use_same_x, use_same_y, use_same_z;
 
@@ -30,9 +30,9 @@ inline double energy_between_two_waters(int i, int j) {
     // Loop over atoms within the two waters
     for (int atom = 0; atom < 9; atom += 3) {
         for (int atom2 = 0; atom2 < 9; atom2 += 3) {
-            dx = old_dx = abs(water_positions[i][atom] - water_positions[j][atom2]);
-            dy = old_dy = abs(water_positions[i][atom + 1] - water_positions[j][atom2 + 1]);
-            dz = old_dz = abs(water_positions[i][atom + 2] - water_positions[j][atom2 + 2]);
+            dx = old_dx = abs(WATER_POSITIONS[i][atom] - WATER_POSITIONS[j][atom2]);
+            dy = old_dy = abs(WATER_POSITIONS[i][atom + 1] - WATER_POSITIONS[j][atom2 + 1]);
+            dz = old_dz = abs(WATER_POSITIONS[i][atom + 2] - WATER_POSITIONS[j][atom2 + 2]);
 
             // Fix the distances to use the same nearest mirror image for each molecule based on O-O distance
             if (atom == 0 and atom2 == 0) {

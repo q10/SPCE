@@ -14,5 +14,6 @@ void initialize_prog_flag_affected_constants();
 void initialize_other_constants();
 void initialize_other_variables();
 void initialize_waters();
+void initialize_ions();
 
 #endif	/* INITIALIZERS_H */

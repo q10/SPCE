@@ -6,6 +6,7 @@ void initialize() {
     else {
         initialize_prog_flag_affected_constants();
         initialize_waters();
+        initialize_ions();
     }
     initialize_other_constants();
     initialize_other_variables();
@@ -24,6 +25,7 @@ void initialize_prog_flag_affected_constants() {
     BETA = 1.0 / (BOLTZMANN_K * TEMPERATURE);
     BOX_LENGTH = pow(NUM_WATERS / WATER_DENSITY, 1.0 / 3.0);
     BOX_VOLUME = BOX_LENGTH * BOX_LENGTH * BOX_LENGTH;
+    NUM_TOTAL_PARTICLES = NUM_WATERS + NUM_IONS;
     return;
 }
 
@@ -41,27 +43,42 @@ void initialize_other_variables() {
 }
 
 void initialize_waters() {
-    water_positions = new double * [NUM_WATERS];
+    WATER_POSITIONS = new double * [NUM_WATERS];
     double HOH_ANGLE_RAD = DEG2RAD(HOH_ANGLE_DEG);
     double tmp_r = OH_LENGTH * sin(HOH_ANGLE_RAD), rand_angle_rad;
 
     for (int i = 0; i < NUM_WATERS; i++) {
-        water_positions[i] = new double[9];
+        WATER_POSITIONS[i] = new double[9];
 
         // Oxygen
         for (int j = 0; j < 3; j++)
-            water_positions[i][j] = RAN3() * BOX_LENGTH;
+            WATER_POSITIONS[i][j] = RAN3() * BOX_LENGTH;
 
         // First Hydrogen
-        water_positions[i][3] = water_positions[i][0];
-        water_positions[i][4] = water_positions[i][1];
-        water_positions[i][5] = water_positions[i][2] + OH_LENGTH;
+        WATER_POSITIONS[i][3] = WATER_POSITIONS[i][0];
+        WATER_POSITIONS[i][4] = WATER_POSITIONS[i][1];
+        WATER_POSITIONS[i][5] = WATER_POSITIONS[i][2] + OH_LENGTH;
 
         // Second Hydrogen
         rand_angle_rad = 2.0 * M_PI * RAN3();
-        water_positions[i][6] = water_positions[i][0] + tmp_r * cos(rand_angle_rad);
-        water_positions[i][7] = water_positions[i][1] + tmp_r * sin(rand_angle_rad);
-        water_positions[i][8] = water_positions[i][2] + OH_LENGTH * cos(HOH_ANGLE_RAD);
+        WATER_POSITIONS[i][6] = WATER_POSITIONS[i][0] + tmp_r * cos(rand_angle_rad);
+        WATER_POSITIONS[i][7] = WATER_POSITIONS[i][1] + tmp_r * sin(rand_angle_rad);
+        WATER_POSITIONS[i][8] = WATER_POSITIONS[i][2] + OH_LENGTH * cos(HOH_ANGLE_RAD);
+    }
+    return;
+}
+
+void initialize_ions() {
+    IONS = new double * [NUM_IONS];
+    for (int i = 0; i < NUM_IONS; i++) {
+        IONS[i] = new double[4];
+        
+        // ion position
+        for (int j = 0; j < 3; j++)
+            IONS[i][j] = RAN3() * BOX_LENGTH;
+        
+        // ion charge
+        IONS[i][3] = (RAN3() < 0.5) ? 1.0 : -1.0;
     }
     return;
 }

@@ -54,27 +54,27 @@ void test_energy_of_water_with_index() {
     cout << "---- BEGIN TEST - ENERGY AT SINGLE PARTICLE ----" << endl;
     NUM_WATERS = 2;
     BOX_LENGTH = 10.0;
-    water_positions = new double*[NUM_WATERS];
+    WATER_POSITIONS = new double*[NUM_WATERS];
 
     for (int i = 0; i < NUM_WATERS; i++)
-        water_positions[i] = new double[9];
+        WATER_POSITIONS[i] = new double[9];
 
     // First water - Non-realistic coordinates are given for easy calculation check
     for (int i = 0; i < 3; i++)
-        water_positions[0][i] = 1.0;
+        WATER_POSITIONS[0][i] = 1.0;
     for (int i = 3; i < 6; i++)
-        water_positions[0][i] = 0.0;
+        WATER_POSITIONS[0][i] = 0.0;
     for (int i = 6; i < 9; i++)
-        water_positions[0][i] = 2.0;
+        WATER_POSITIONS[0][i] = 2.0;
 
     // Second water
     for (int i = 0; i < 3; i++)
-        water_positions[1][i] = 5.0;
+        WATER_POSITIONS[1][i] = 5.0;
     for (int i = 3; i < 6; i++)
-        water_positions[1][i] = 9.0;
+        WATER_POSITIONS[1][i] = 9.0;
     for (int i = 6; i < 9; i++)
-        water_positions[1][i] = 9.0;
-    water_positions[1][8] = 8.0;
+        WATER_POSITIONS[1][i] = 9.0;
+    WATER_POSITIONS[1][8] = 8.0;
 
     cout << "Case 1 (O-O distance < BOX_LENGTH/2):" << endl;
     for (int i = 0; i < NUM_WATERS; i++)
@@ -82,7 +82,7 @@ void test_energy_of_water_with_index() {
             << energy_of_water_with_index(i) << endl;
 
     for (int i = 0; i < 3; i++)
-        water_positions[1][i] = 8.0;
+        WATER_POSITIONS[1][i] = 8.0;
     cout << "\nCase 2 (O-O distance > BOX_LENGTH/2):" << endl;
     for (int i = 0; i < NUM_WATERS; i++)
         cout << "Energy of water #" << setprecision(10) << i << " (kJ):"
@@ -103,7 +103,7 @@ void test_run_mc() {
     calculate_and_init_energy();
     for (int k = 0; k < 10000; k++) {
         run_mc();
-        cout << "Current system energy: " << setprecision(10) << LJEnergy << endl;
+        cout << "Current system energy: " << setprecision(10) << TOTAL_ENERGY << endl;
     }
 
     cout << "---- END TEST - MC STEPPING ----\n" << endl;

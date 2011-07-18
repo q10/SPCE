@@ -63,7 +63,7 @@ void load_configuration_file() {
     ifstream input_filestream(input_config_filename.c_str());
     ASSERT(input_filestream.is_open(), "Could not open input configuration file " + STRING(input_config_filename));
 
-    vector< vector< double > > waters;
+    vector< vector< double > > waters, ions;
     int line_num = 0;
     string line, line_key;
 
@@ -81,7 +81,14 @@ void load_configuration_file() {
                 cerr << "WARNING: Bad temperature at line " << line_num << " in config file - Using defaults instead." << endl;
 
         } else if (line_key.compare("ION") == 0) {
-
+            vector< double > coords;
+            double val;
+            
+            while (iss >> val)
+                coords.push_back(val);
+            ASSERT((int) coords.size() == 4, "Not enough parameters on line " + STRING(line_num) + " of config file.");
+            ions.push_back(coords);
+            
         } else if (line_key.compare("WATER") == 0) {
             vector< double > coords;
             double val;
@@ -90,22 +97,31 @@ void load_configuration_file() {
                 coords.push_back(val);
             ASSERT((int) coords.size() == 9, "Not enough coordinates on line " + STRING(line_num) + " of config file.");
             waters.push_back(coords);
+            
         } else
             cerr << "WARNING: Malformed line " << line_num << " in config file - Ignoring this line." << endl;
     }
 
     // initialize constants
     NUM_WATERS = (int) waters.size();
+    NUM_IONS = (int) ions.size();
     initialize_prog_flag_affected_constants();
 
     // convert data structure back to primitive arrays for performance optimization
-    water_positions = new double * [NUM_WATERS];
-
+    WATER_POSITIONS = new double * [NUM_WATERS];
     for (int i = 0; i < NUM_WATERS; i++) {
-        water_positions[i] = new double[9];
+        WATER_POSITIONS[i] = new double[9];
 
         for (int j = 0; j < 9; j++)
-            water_positions[i][j] = waters[i][j];
+            WATER_POSITIONS[i][j] = waters[i][j];
+    }
+    
+    IONS = new double * [NUM_IONS];
+    for (int i = 0; i < NUM_IONS; i++) {
+        IONS[i] = new double[4];
+
+        for (int j = 0; j < 4; j++)
+            IONS[i][j] = ions[i][j];
     }
 
     return;

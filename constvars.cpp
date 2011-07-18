@@ -3,9 +3,11 @@
 const double BOLTZMANN_K = 0.00831447122;
 const double ELECTROSTATIC_K = 1389.354325379097;
 
+int NUM_WATERS = 200;
+int NUM_IONS = 1;
+int NUM_TOTAL_PARTICLES = NUM_WATERS + NUM_IONS;
 double TEMPERATURE = 300.0;
 double BETA = 1.0 / (BOLTZMANN_K * TEMPERATURE);
-int NUM_WATERS = 200;
 double BOX_LENGTH;
 double BOX_VOLUME;
 double DISPLACEMENT_DISTANCE = 0.2;
@@ -27,5 +29,6 @@ map <double, double> * ERFC_TABLE = new map <double, double>;
 double ** K_VECTORS = new double * [725];
 dcomplex ** RHO_K_VALUES = new dcomplex * [725];
 
-double ** water_positions;
-double LJEnergy;
+double ** WATER_POSITIONS;
+double ** IONS;
+double TOTAL_ENERGY;

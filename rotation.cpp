@@ -11,7 +11,7 @@ void initialize_rotation_matrix() {
 
 void set_center_of_mass_of_water_with_index(int i) {
     for (int j = 0; j < 3; j++)
-        TMP_CENTER_OF_MASS[j] = (O_MASS * water_positions[i][j] + H_MASS * water_positions[i][j + 3] + H_MASS * water_positions[i][j + 6]) / WATER_MASS;
+        TMP_CENTER_OF_MASS[j] = (O_MASS * WATER_POSITIONS[i][j] + H_MASS * WATER_POSITIONS[i][j + 3] + H_MASS * WATER_POSITIONS[i][j + 6]) / WATER_MASS;
     return;
 }
 
@@ -45,7 +45,7 @@ void test_rotation() {
     initialize_other_variables();
     for (int k = 0; k < 10000; k++) {
         mc_rotate();
-        cout << setprecision(10) << water_positions[0][0] << ", " << water_positions[0][1] << ", " << water_positions[0][2] << endl;
+        cout << setprecision(10) << WATER_POSITIONS[0][0] << ", " << WATER_POSITIONS[0][1] << ", " << WATER_POSITIONS[0][2] << endl;
     }
 
     cout << "---- END TEST - ROTATION ----\n" << endl;

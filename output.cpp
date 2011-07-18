@@ -2,10 +2,8 @@
 
 bool use_custom_output_vmd_filename = false;
 bool use_custom_output_config_filename = false;
-ofstream VMD_FILE;
-ofstream OUTPUT_CONFIG_FILE;
-string output_vmd_filename;
-string output_config_filename;
+ofstream VMD_FILE, OUTPUT_CONFIG_FILE;
+string output_vmd_filename, output_config_filename;
 
 void open_vmd_file() {
     if (!use_custom_output_vmd_filename)
@@ -22,7 +20,7 @@ void write_config_to_vmd_file() {
     VMD_FILE << "ITEM: TIMESTEP" << endl
             << vmd_timestep++ << endl
             << "ITEM: NUMBER OF ATOMS" << endl
-            << 3 * NUM_WATERS << endl
+            << (3 * NUM_WATERS + NUM_IONS) << endl
             << "ITEM: BOX BOUNDS" << endl
             << "0 " << BOX_LENGTH << endl
             << "0 " << BOX_LENGTH << endl
@@ -31,18 +29,24 @@ void write_config_to_vmd_file() {
     int atom_count = 0;
     for (int i = 0; i < NUM_WATERS; i++) {
         VMD_FILE << ++atom_count << " 1 "
-                << water_positions[i][0] / BOX_LENGTH << " "
-                << water_positions[i][1] / BOX_LENGTH << " "
-                << water_positions[i][2] / BOX_LENGTH << endl;
+                << WATER_POSITIONS[i][0] / BOX_LENGTH << " "
+                << WATER_POSITIONS[i][1] / BOX_LENGTH << " "
+                << WATER_POSITIONS[i][2] / BOX_LENGTH << endl;
         VMD_FILE << ++atom_count << " 2 "
-                << water_positions[i][3] / BOX_LENGTH << " "
-                << water_positions[i][4] / BOX_LENGTH << " "
-                << water_positions[i][5] / BOX_LENGTH << endl;
+                << WATER_POSITIONS[i][3] / BOX_LENGTH << " "
+                << WATER_POSITIONS[i][4] / BOX_LENGTH << " "
+                << WATER_POSITIONS[i][5] / BOX_LENGTH << endl;
         VMD_FILE << ++atom_count << " 2 "
-                << water_positions[i][6] / BOX_LENGTH << " "
-                << water_positions[i][7] / BOX_LENGTH << " "
-                << water_positions[i][8] / BOX_LENGTH << endl;
+                << WATER_POSITIONS[i][6] / BOX_LENGTH << " "
+                << WATER_POSITIONS[i][7] / BOX_LENGTH << " "
+                << WATER_POSITIONS[i][8] / BOX_LENGTH << endl;
     }
+
+    for (int i = 0; i < NUM_IONS; i++)
+        VMD_FILE << ++atom_count << " 3 "
+            << IONS[i][0] / BOX_LENGTH << " "
+            << IONS[i][1] / BOX_LENGTH << " "
+            << IONS[i][2] / BOX_LENGTH << endl;
     return;
 }
 
@@ -63,7 +67,14 @@ void save_config_to_file() {
     for (int i = 0; i < NUM_WATERS; i++) {
         OUTPUT_CONFIG_FILE << "WATER";
         for (int j = 0; j < 9; j++)
-            OUTPUT_CONFIG_FILE << "\t" << setprecision(10) << water_positions[i][j];
+            OUTPUT_CONFIG_FILE << "\t" << setprecision(10) << WATER_POSITIONS[i][j];
+        OUTPUT_CONFIG_FILE << endl;
+    }
+
+    for (int i = 0; i < NUM_IONS; i++) {
+        OUTPUT_CONFIG_FILE << "ION";
+        for (int j = 0; j < 4; j++)
+            OUTPUT_CONFIG_FILE << "\t" << setprecision(10) << IONS[i][j];
         OUTPUT_CONFIG_FILE << endl;
     }
 
