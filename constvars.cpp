@@ -15,6 +15,8 @@ double DISPLACEMENT_ROTATION = 0.17 * M_PI;
 double EWALD_ALPHA = 0.25;
 
 const double WATER_SIGMA = 3.166;
+const double ION_SIGMA = 5.0;
+const double ION_EPSILON = 1.0;
 const double WATER_EPSILON = 0.650;
 const double WATER_DENSITY = 0.0334225755;
 const double WATER_Q_H = 0.4238;

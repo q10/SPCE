@@ -32,6 +32,8 @@ extern double EWALD_ALPHA; // Ewald screening parameter
 
 // water properties
 extern const double WATER_SIGMA; // diameter (Angstroms)
+extern const double ION_SIGMA;
+extern const double ION_EPSILON;
 extern const double WATER_EPSILON; // energy unit (kJ/mol)
 extern const double WATER_DENSITY; // particles per Angstroms^3
 extern const double WATER_Q_H; // charge of hydrogen (elementary charge unit)

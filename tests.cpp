@@ -79,14 +79,14 @@ void test_energy_of_water_with_index() {
     cout << "Case 1 (O-O distance < BOX_LENGTH/2):" << endl;
     for (int i = 0; i < NUM_WATERS; i++)
         cout << "Energy of water #" << setprecision(10) << i << " (kJ):"
-            << energy_of_water_with_index(i) << endl;
+            << energy_of_particle_with_index(i) << endl;
 
     for (int i = 0; i < 3; i++)
         WATER_POSITIONS[1][i] = 8.0;
     cout << "\nCase 2 (O-O distance > BOX_LENGTH/2):" << endl;
     for (int i = 0; i < NUM_WATERS; i++)
         cout << "Energy of water #" << setprecision(10) << i << " (kJ):"
-            << energy_of_water_with_index(i) << endl;
+            << energy_of_particle_with_index(i) << endl;
 
     cout << "---- END TEST - ENERGY AT SINGLE PARTICLE ----\n" << endl;
     return;

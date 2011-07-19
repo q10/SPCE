@@ -59,8 +59,8 @@ inline void mc_sweep() {
 }
 
 void mc_move() {
-    int rand_i = RANDINT(0, NUM_WATERS);
-    double old_position[9], rand_displacement, old_energy_particle_i = energy_of_water_with_index(rand_i);
+    int rand_i = RANDINT(0, NUM_TOTAL_PARTICLES);
+    double old_position[9], rand_displacement, old_energy_particle_i = energy_of_particle_with_index(rand_i);
     bool is_water = (rand_i < NUM_WATERS);
 
     // save old position
@@ -86,8 +86,8 @@ void mc_move() {
         }
     }
 
-    // make sure the oxygen stays inside boundaries; otherwise shift appropriately
-    keep_water_inside_box(rand_i);
+    // make sure the oxygen/ion stays inside boundaries; otherwise shift appropriately
+    keep_particle_inside_box(rand_i);
 
     // calculate difference from new energy and attempt to move particle with acceptance probability
     if (mc_accept(rand_i, old_energy_particle_i, old_position))
@@ -97,7 +97,7 @@ void mc_move() {
 
 void mc_rotate() {
     int rand_i = RANDINT(0, NUM_WATERS);
-    double old_position[9], old_energy_particle_i = energy_of_water_with_index(rand_i);
+    double old_position[9], old_energy_particle_i = energy_of_particle_with_index(rand_i);
 
     double rand_theta_rad = DISPLACEMENT_ROTATION * (2.0 * RAN3() - 1.0);
     set_center_of_mass_of_water_with_index(rand_i);
@@ -124,7 +124,7 @@ void mc_rotate() {
         old_position[g] += TMP_CENTER_OF_MASS[g % 3];
     }
     // make sure the oxygen stays inside boundaries; otherwise shift appropriately
-    keep_water_inside_box(rand_i);
+    keep_particle_inside_box(rand_i);
 
     // calculate difference from new energy and attempt to rotate particle with acceptance probability (use old_position set of coords)
     if (mc_accept(rand_i, old_energy_particle_i, old_position))
@@ -133,7 +133,7 @@ void mc_rotate() {
     return;
 }
 
-inline void keep_water_inside_box(int index) {
+inline void keep_particle_inside_box(int index) {
     if (index >= NUM_WATERS) {
         for (int j = 0; j < 3; j++) {
             if (IONS[index][j] > BOX_LENGTH)
@@ -160,7 +160,7 @@ inline void keep_water_inside_box(int index) {
 }
 
 bool mc_accept(int index, double old_energy_particle_i, double * old_position) {
-    double total_energy_diff = ewald_diff(index) + energy_of_water_with_index(index) - old_energy_particle_i;
+    double total_energy_diff = ewald_diff(index) + energy_of_particle_with_index(index) - old_energy_particle_i;
 
     if (RAN3() < exp(-BETA * total_energy_diff))
         update_energy(total_energy_diff);

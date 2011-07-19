@@ -23,9 +23,9 @@ void initialize() {
 
 void initialize_prog_flag_affected_constants() {
     BETA = 1.0 / (BOLTZMANN_K * TEMPERATURE);
-    BOX_LENGTH = pow(NUM_WATERS / WATER_DENSITY, 1.0 / 3.0);
-    BOX_VOLUME = BOX_LENGTH * BOX_LENGTH * BOX_LENGTH;
     NUM_TOTAL_PARTICLES = NUM_WATERS + NUM_IONS;
+    BOX_LENGTH = pow(NUM_TOTAL_PARTICLES / WATER_DENSITY, 1.0 / 3.0);
+    BOX_VOLUME = BOX_LENGTH * BOX_LENGTH * BOX_LENGTH;
     return;
 }
 

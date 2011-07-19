@@ -17,6 +17,8 @@ void initialize_radial_dist_sampler() {
 void radial_dist_sample() {
     num_gr++;
     double dx, dy, dz, dr;
+    
+    // water-water
     for (int i = 0; i < NUM_WATERS - 1; i++) {
         for (int j = i + 1; j < NUM_WATERS; j++) {
             dx = abs(WATER_POSITIONS[i][0] - WATER_POSITIONS[j][0]);
@@ -32,8 +34,8 @@ void radial_dist_sample() {
             }
         }
     }
-
-
+/*
+    // ion-ion
     for (int i = 0; i < NUM_IONS - 1; i++) {
         for (int j = i + 1; j < NUM_IONS; j++) {
             dx = abs(IONS[i][0] - IONS[j][0]);
@@ -49,7 +51,9 @@ void radial_dist_sample() {
             }
         }
     }
+*/
 
+    // ion-water
     for (int i = 0; i < NUM_IONS; i++) {
         for (int j = 0; j < NUM_WATERS; j++) {
             dx = abs(IONS[i][0] - WATER_POSITIONS[j][0]);
@@ -77,6 +81,8 @@ void compute_radial_dist_results() {
         vb = (pow(i + 1, 3.0) - pow(i, 3.0)) * pow(delg, 3.0);
         nid = (4 / 3) * M_PI * vb * WATER_DENSITY;
         radial_dist_data[i] /= num_gr * NUM_WATERS * nid;
+        
+        //nid = (4 / 3) * M_PI * vb * ION_DENSITY;
         ion_radial_dist_data[i] /= num_gr * NUM_WATERS * nid;
     }
     return;
