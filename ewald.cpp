@@ -65,24 +65,6 @@ void initialize_rho_k_values_table() {
     return;
 }
 
-/*
-dcomplex rho(double * k_coords) {
-    double rx, ry, rz, q;
-    dcomplex rho(0.0, 0.0);
-
-    for (int i = 0; i < NUM_WATERS; i++) {
-        for (int atom = 0; atom < 9; atom += 3) {
-            q = (atom == 0) ? WATER_Q_O : WATER_Q_H;
-            rx = WATER_POSITIONS[i][atom];
-            ry = WATER_POSITIONS[i][atom + 1];
-            rz = WATER_POSITIONS[i][atom + 2];
-            rho += q * exp(dcomplex(0.0, k_coords[0] * rx + k_coords[1] * ry + k_coords[2] * rz));
-        }
-    }
-    return rho;
-}
- */
-
 dcomplex partial_rho(int index, double * k_coords) {
     double rx, ry, rz, q;
     dcomplex part_rho(0.0, 0.0);
@@ -105,16 +87,13 @@ dcomplex partial_rho(int index, double * k_coords) {
     return part_rho;
 }
 
-// deprecated
-
-/*
-double ewald_sum() {
-    double sum = 0.0;
-    for (int k = 0; k < 725; k++)
-        sum += norm(rho(K_VECTORS[k])) * K_VECTORS[k][3];
-    return sum * 4.0 * M_PI / BOX_VOLUME;
+double total_ewald_energy() {
+    double ewald_energy = 0.0;
+    for (int k = 0; k < 725; k++) {
+        ewald_energy += norm(RHO_K_VALUES[k][NUM_TOTAL_PARTICLES]) * K_VECTORS[k][3];
+    }
+    return ewald_energy;
 }
- */
 
 double ewald_diff(int index) {
     return (index >= NUM_WATERS) ? ewald_diff_ion(index) : ewald_diff_water(index);
@@ -228,36 +207,6 @@ void set_exp_kr_table_for_ion(int ion_index) {
     return;
 }
 
-/*
-void test_rho_function() {
-    cout << "---- BEGIN TEST - RHO FUNCTION ----" << endl;
-
-    NUM_WATERS = 1;
-    WATER_POSITIONS = new double*[NUM_WATERS];
-    for (int i = 0; i < NUM_WATERS; i++)
-        WATER_POSITIONS[i] = new double[9];
-    for (int i = 0; i < 3; i++)
-        WATER_POSITIONS[0][i] = 2.0;
-    for (int i = 3; i < 6; i++)
-        WATER_POSITIONS[0][i] = 1.0;
-    for (int i = 6; i < 9; i++)
-        WATER_POSITIONS[0][i] = 3.0;
-
-    double * coords = new double [3];
-    coords[0] = 5.5;
-    coords[1] = 6.8;
-    coords[2] = 9.2;
-    dcomplex pk = rho(coords);
-    delete coords;
-    cout << "Output of rho function with k=(5.5, 6.8, 9.2): "
-            << setprecision(10) << pk << endl
-            << "Norm of rho(5.5, 6.8, 9.2) is: " << norm(pk) << endl;
-    // should be -0.885409418 + 1.32668626i and 2.54404627
-
-    cout << "---- END TEST - RHO FUNCTION ----\n" << endl;
-    return;
-}
-*/
 void test_k_vector_table() {
     cout << "---- BEGIN TEST - TEST K VECTOR TABLE ----" << endl;
 

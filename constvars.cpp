@@ -12,7 +12,7 @@ double BOX_LENGTH;
 double BOX_VOLUME;
 double DISPLACEMENT_DISTANCE = 0.2;
 double DISPLACEMENT_ROTATION = 0.17 * M_PI;
-double EWALD_ALPHA = 0.25;
+double EWALD_ALPHA = 0.0784;
 
 const double WATER_SIGMA = 3.166;
 const double ION_SIGMA = 5.0;

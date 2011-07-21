@@ -13,6 +13,7 @@ void initialize_k_vectors_table();
 void initialize_rho_k_values_table();
 dcomplex rho_k_diff(int water_index, double * k_vect, double * old_position);
 dcomplex partial_rho(int water_index, double * k_coords);
+double total_ewald_energy();
 double ewald_diff(int index);
 double ewald_diff_water(int water_index);
 double ewald_diff_ion(int index);

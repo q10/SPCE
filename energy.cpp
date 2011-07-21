@@ -30,6 +30,7 @@ void calculate_and_init_energy() {
             TOTAL_ENERGY += energy_between_two_waters(i, j);
         }
     }
+    TOTAL_ENERGY += total_ewald_energy();
     return;
 }
 
