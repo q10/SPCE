@@ -25,12 +25,14 @@ void print_mc_acceptance_records() {
 }
 
 void run_mc() {
+    int run_start = clock();
     for (int h = 0; h < NUM_MC_SWEEPS; h++) {
         mc_sweep();
         if (h % DATA_SAMPLING_RATE == 0)
             radial_dist_sample();
         cerr << "MC sweep " << h + 1 << " of " << NUM_MC_SWEEPS << " complete." << endl;
     }
+    cerr << "MC run completed in " << setprecision(10) << ((double) (clock() - run_start) / (double) CLOCKS_PER_SEC) / 3600 << " hours." << endl;
     return;
 }
 
@@ -44,7 +46,7 @@ void mc_equilibrate() {
 }
 
 inline void mc_sweep() {
-    int start = clock();
+    int sweep_start = clock();
     for (int i = 0; i < NUM_MC_ATTEMPTS_PER_SWEEP; i++) {
         if (RAN3() < 0.5) {
             total_attempted_mc_moves++;
@@ -54,7 +56,7 @@ inline void mc_sweep() {
             mc_rotate();
         }
     }
-    cerr << (double) (clock() - start) / (double) CLOCKS_PER_SEC << endl;
+    cerr << (double) (clock() - sweep_start) / (double) CLOCKS_PER_SEC << endl;
     return;
 }
 

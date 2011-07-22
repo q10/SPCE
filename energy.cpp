@@ -24,14 +24,16 @@ double energy_of_particle_with_index(int index) {
 }
 
 void calculate_and_init_energy() {
-    TOTAL_ENERGY = 0.0;
-    for (int i = 0; i < NUM_WATERS - 1; i++) {
-        for (int j = i + 1; j < NUM_WATERS; j++) {
-            TOTAL_ENERGY += energy_between_two_waters(i, j);
-        }
-    }
-    TOTAL_ENERGY += total_ewald_energy();
+    TOTAL_ENERGY = total_real_space_energy() + total_ewald_energy();
     return;
+}
+
+double total_real_space_energy() {
+    double real_space_energy = 0.0;
+    for (int i = 0; i < NUM_TOTAL_PARTICLES; i++) {
+        real_space_energy += energy_of_particle_with_index(i);
+    }
+    return real_space_energy / 2.0;
 }
 
 double energy_between_ion_and_water(int i, int j) {

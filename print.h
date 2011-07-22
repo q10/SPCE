@@ -10,7 +10,11 @@
 #define	PRINT_H
 
 void print_all();
+void print_universal_constants();
 void print_system_vars();
+void print_energy();
+void print_water_parameters();
+void print_ion_parameters();
 void print_program_flags();
 void print_system_config();
 
