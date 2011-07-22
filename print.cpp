@@ -29,9 +29,9 @@ void print_system_vars() {
 }
 
 void print_energy() {
-    cout << "Total system energy (kJ): " << TOTAL_ENERGY << endl
-            << "Lennard-Jones and ERFC-adjusted Coulombic portion (all real space) combined: " << total_real_space_energy() << endl
-            << "Ewald K-space portion: " << total_ewald_energy() << endl << endl;
+    cout << "Total system energy (kJ/mol): " << TOTAL_ENERGY << endl
+            << "Lennard-Jones and ERFC-adjusted Coulombic portion (all real space) combined (kJ/mol): " << total_real_space_energy() << endl
+            << "Ewald K-space portion (kJ/mol): " << total_ewald_energy() << endl << endl;
     return;
 }
 
