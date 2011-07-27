@@ -15,7 +15,7 @@ void initialize_erfc_table() {
 
 void initialize_k_vectors_table() {
     // K vector order as follows (go through all ny and nzvalues descending, then ascending):    
-    double tmp_k2, half_factor, alpha_inv_4 = -1.0 / (4.0 * EWALD_ALPHA), four_pi_volume = 4.0 * M_PI / BOX_VOLUME;
+    double tmp_k2, half_factor, alpha_inv_4 = -1.0 / (4.0 * EWALD_ALPHA), four_pi_volume_ek = 4.0 * ELECTROSTATIC_K * M_PI / BOX_VOLUME;
     int k = 0;
 
     for (int nx = 0; nx <= 5; nx++) {
@@ -34,7 +34,7 @@ void initialize_k_vectors_table() {
                     // placing the 4*pi/V here allows for smaller number of multiplications and divisions later on
                     // half_factor accounts for double weighting of Fourier coefficients along the nx=0 plane
                     half_factor = (nx == 0) ? 0.5 : 1.0;
-                    K_VECTORS[k][3] *= ELECTROSTATIC_K * half_factor * four_pi_volume;
+                    K_VECTORS[k][3] *= half_factor * four_pi_volume_ek;
                     k++;
                 }
             }
