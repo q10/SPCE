@@ -34,7 +34,7 @@ void initialize_k_vectors_table() {
                     // placing the 4*pi/V here allows for smaller number of multiplications and divisions later on
                     // half_factor accounts for double weighting of Fourier coefficients along the nx=0 plane
                     half_factor = (nx == 0) ? 0.5 : 1.0;
-                    K_VECTORS[k][3] *= half_factor * four_pi_volume;
+                    K_VECTORS[k][3] *= ELECTROSTATIC_K * half_factor * four_pi_volume;
                     k++;
                 }
             }
