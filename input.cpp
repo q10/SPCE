@@ -14,7 +14,7 @@ const program_flags_t PROGRAM_FLAGS[] = {
 
 void read_program_flags(int argc, char** argv) {
     int option;
-
+    
     while (1) {
         /* getopt_long stores the option index here. */
         int options_i = 0;

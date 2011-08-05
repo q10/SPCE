@@ -15,7 +15,6 @@ void calculate_and_init_energy();
 double total_real_space_energy();
 double energy_between_ion_and_water(int i, int j);
 double energy_between_two_ions(int i, int j);
-double energy_between_two_waters(int i, int j);
 
 inline void update_energy(double delta_energy) {
     TOTAL_ENERGY += delta_energy;

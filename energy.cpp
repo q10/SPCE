@@ -4,18 +4,16 @@ double energy_of_particle_with_index(int index) {
     double energy = 0.0;
     if (index < NUM_WATERS) {
         for (int i = 0; i < NUM_WATERS; i++) {
-            if (i != index) {
+            if (i != index)
                 energy += energy_between_two_waters(index, i);
-            }
         }
         for (int i = 0; i < NUM_IONS; i++)
             energy += energy_between_ion_and_water(i, index);
     } else {
-        index = NUM_WATERS - index;
+        index = index - NUM_WATERS;
         for (int i = 0; i < NUM_IONS; i++) {
-            if (i != index) {
+            if (i != index)
                 energy += energy_between_two_ions(index, i);
-            }
         }
         for (int i = 0; i < NUM_WATERS; i++)
             energy += energy_between_ion_and_water(index, i);
@@ -30,9 +28,8 @@ void calculate_and_init_energy() {
 
 double total_real_space_energy() {
     double real_space_energy = 0.0;
-    for (int i = 0; i < NUM_TOTAL_PARTICLES; i++) {
+    for (int i = 0; i < NUM_TOTAL_PARTICLES; i++)
         real_space_energy += energy_of_particle_with_index(i);
-    }
     return real_space_energy / 2.0;
 }
 

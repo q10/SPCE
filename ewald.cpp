@@ -171,9 +171,9 @@ double ewald_diff_ion(int index) {
 
 void set_exp_kr_table_for_water(int water_index) {
     for (int i = 0; i < 3; i++) {
-        exp_kr_O[i][6] = exp(dcomplex(0.0, K_VECTORS[71][i] * WATER_POSITIONS[water_index][i]));
-        exp_kr_H1[i][6] = exp(dcomplex(0.0, K_VECTORS[71][i] * WATER_POSITIONS[water_index][i + 3]));
-        exp_kr_H2[i][6] = exp(dcomplex(0.0, K_VECTORS[71][i] * WATER_POSITIONS[water_index][i + 6]));
+        exp_kr_O[i][6] = exp(dcomplex(0.0, K_VECTORS[192][i] * WATER_POSITIONS[water_index][i]));
+        exp_kr_H1[i][6] = exp(dcomplex(0.0, K_VECTORS[192][i] * WATER_POSITIONS[water_index][i + 3]));
+        exp_kr_H2[i][6] = exp(dcomplex(0.0, K_VECTORS[192][i] * WATER_POSITIONS[water_index][i + 6]));
 
         exp_kr_O[i][4] = COMPLEX_ONE / exp_kr_O[i][6];
         exp_kr_H1[i][4] = COMPLEX_ONE / exp_kr_H1[i][6];
@@ -195,7 +195,7 @@ void set_exp_kr_table_for_water(int water_index) {
 
 void set_exp_kr_table_for_ion(int ion_index) {
     for (int i = 0; i < 3; i++) {
-        exp_kr_ion[i][6] = exp(dcomplex(0.0, K_VECTORS[71][i] * IONS[ion_index][i]));
+        exp_kr_ion[i][6] = exp(dcomplex(0.0, K_VECTORS[192][i] * IONS[ion_index][i]));
 
         exp_kr_ion[i][4] = COMPLEX_ONE / exp_kr_ion[i][6];
 

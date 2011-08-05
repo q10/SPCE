@@ -137,7 +137,7 @@ void mc_rotate() {
 
 inline void keep_particle_inside_box(int index) {
     if (index >= NUM_WATERS) {
-        index = NUM_WATERS - index;
+        index =  index - NUM_WATERS;
         for (int j = 0; j < 3; j++) {
             if (IONS[index][j] > BOX_LENGTH)
                 IONS[index][j] -= BOX_LENGTH;
